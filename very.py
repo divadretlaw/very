@@ -1,0 +1,191 @@
+import os
+import sys
+import json
+
+home = os.path.expanduser("~")
+
+with open(home + '/.config/very/very.json') as data_file:
+    config = json.load(data_file)
+
+def getConfig():
+    if len(sys.argv) < 3:
+        errorMessage()
+    else:
+        if sys.argv[2] == "ls":
+            printCommands()
+        elif sys.argv[2] == "description":
+            printDescriptions()
+        elif sys.argv[2] == "search":
+            x = getPackageManager()
+            if x is not None:
+                os.system(x["search"])
+        elif sys.argv[2] == "list":
+            x = getPackageManager()
+            if x is not None:
+                os.system(x["list"])
+        else:
+            errorMessage()
+    return
+
+
+def getPackageManager():
+    for x in config["package-managers"]:
+        if hasPackage(x["id"]):
+            return x
+
+
+def hasPackage(package):
+    return os.popen("which " + package).read() != ""
+
+
+def errorMessage():
+    print "Usage: python very.py [command]"
+    print "\nAvailable commands:"
+    printCommands()
+    return
+
+
+def printCommands():
+    print "install"
+    print "remove"
+    print "clean"
+    print "update"
+    print "system-update"
+    print "much-update"
+    print "very-update"
+    print "ip"
+    print "download"
+    print "hosts"
+    print "wallpaper"
+    return
+
+
+def printDescriptions():
+    print "Install one ore more packages"  # install
+    print "Remove one ore more packages"  # remove
+    print "Cleans the system"  # clean
+    print "Checks for package updates and installs them"  # update
+    print "Checks for system updates and installs them"  # system-update
+    print "Checks for package and system updates and installs them"  # much-update
+    print "Updates the script to the newest version"  # very-update
+    print "Prints global IP"  # ip
+    print "Starts a download test"  # download
+    print "Updates /etc/hosts from someonewhocares.org"  # hosts
+    print "Sets the wallpaper"  # wallpaper
+    return
+
+
+def installPackages():
+    packages = ""
+    for x in range(2, len(sys.argv)):
+        packages += " " + sys.argv[x]
+
+    x = getPackageManager()
+    if x is None:
+        return
+    os.system(x["install"] + packages)
+    return
+
+
+def removePackages():
+    packages = ""
+    for x in range(2, len(sys.argv)):
+        packages += " " + sys.argv[x]
+
+    x = getPackageManager()
+    if x is not None:
+        os.system(x["remove"] + packages)
+    return
+
+
+def clean():
+    print "Cleaning system..."
+    for x in config["package-managers"]:
+        os.system(x["clean"])
+    return
+
+
+def download():
+    print "Starting download test"
+    os.system("curl -S -L -k -o /dev/null http://davidwalter.at/d/downloadtest/download.php")
+    return
+
+
+def updateSystem():
+    for p in config["package-managers"]:
+        if hasPackage(p["id"]):
+            os.system(p["update"])
+            os.system(p["upgrade"])
+
+    for x in config["additional"]:
+        if hasPackage(x["id"]):
+            os.system(x["update"])
+    return
+
+
+def upgradeSystem():
+    for p in config["package-managers"]:
+        if hasPackage(p["id"]):
+            os.system(p["system-upgrade"])
+    return
+
+
+def setWallpaper():
+    print "Downloading wallpaper..."
+    os.system("curl -S -L -k -o $HOME/Pictures/Wallpaper.jpg http://davidwalter.at/d/Wallpaper.jpg")
+
+    print "Setting wallpaper..."
+    if sys.platform == "darwin":
+        os.system(
+            "sqlite3 ~/Library/Application\ Support/Dock/desktoppicture.db \"update data set value = '~/Pictures/Wallpaper.jpg'\" && killall Dock")
+    elif sys.platform.startswith('linux'):
+        if hasPackage("gsettings"):
+            os.system("gsettings set org.gnome.desktop.background picture-uri file://$HOME/Pictures/Wallpaper.jpg")
+            os.system("gsettings set org.gnome.desktop.screensaver picture-uri file://$HOME/Pictures/Wallpaper.jpg")
+    return
+
+
+def updateVery():
+    print "Updating very..."
+    os.system("curl -S -L -k -o $HOME/.very.py http://davidwalter.at/d/very.py")
+    return
+
+
+def updateHosts():
+    print "Updating hosts file..."
+    os.system("echo '127.0.0.1 localhost\n::1 localhost\n255.255.255.255 broadcasthost\n127.0.0.1 " +
+              os.uname()[1] + "\n' | sudo tee /etc/hosts > /dev/null")
+    os.system("curl -S -L -k http://winhelp2002.mvps.org/hosts.txt | grep 0.0.0.0 | sudo tee -a /etc/hosts > /dev/null")
+    return
+
+
+if len(sys.argv) < 2:
+    errorMessage()
+else:
+    if sys.argv[1] == "very":
+        getConfig()
+    elif sys.argv[1] == "install":
+        installPackages()
+    elif sys.argv[1] == "remove":
+        removePackages()
+    elif sys.argv[1] == "clean":
+        clean()
+    elif sys.argv[1] == "update":
+        updateSystem()
+    elif sys.argv[1] == "system-update":
+        upgradeSystem()
+    elif sys.argv[1] == "much-update":
+        updateSystem()
+        upgradeSystem()
+    elif sys.argv[1] == "download":
+        download()
+    elif sys.argv[1] == "hosts":
+        updateHosts()
+    elif sys.argv[1] == "ip":
+        os.system("curl http://ipecho.net/plain")
+    elif sys.argv[1] == "wallpaper":
+        setWallpaper()
+    elif sys.argv[1] == "very-update":
+        updateVery()
+    else:
+        errorMessage()

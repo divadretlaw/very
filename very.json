@@ -1,0 +1,49 @@
+{
+  "package-managers": [
+    {
+      "id": "brew",
+      "install": "brew install",
+      "remove": "brew remove",
+      "clean": "brew cleanup",
+      "update": "brew update",
+      "upgrade": "brew upgrade",
+      "system-upgrade": "softwareupdate -i -a",
+      "search": "brew search",
+      "list": "brew list"
+    },
+    {
+      "id": "apt-get",
+      "install": "sudo apt-get install",
+      "remove": "sudo apt-get remove",
+      "clean": "sudo apt-get autoremove",
+      "update": "sudo apt-get update",
+      "upgrade": "sudo apt-get upgrade",
+      "system-upgrade": "sudo apt-get dist-upgrade",
+      "search": "apt-cache pkgnames",
+      "list": "dpkg --get-selections | grep -v deinstall"
+    },
+    {
+      "id": "pacman",
+      "install": "pacman -S",
+      "remove": "sudo pacman -Rs",
+      "clean": "pacman -Rs",
+      "update": "",
+      "upgrade": "pacman -Syu",
+      "system-upgrade": "pacman -Syu",
+      "search": "pacman -Ss",
+      "list": "pacman -Q"
+    }
+  ],
+  "additional": [
+    {
+      "id": "apm",
+      "install": "apm install",
+      "remove": "brew remove",
+      "clean": "apm clean",
+      "update": "apm update",
+      "upgrade": "apm upgrade",
+      "search": "apm search",
+      "list": "apm list"
+    }
+  ]
+}
