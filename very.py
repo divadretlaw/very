@@ -101,7 +101,8 @@ def removePackages():
 def clean():
     print "Cleaning system..."
     for x in config["package-managers"]:
-        os.system(x["clean"])
+        if hasPackage(x["id"]):
+            os.system(x["clean"])
     return
 
 
