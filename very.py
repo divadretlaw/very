@@ -35,7 +35,7 @@ def getPackageManager():
 
 
 def hasPackage(package):
-    return os.popen("which " + package).read() != ""
+    return os.popen("command -v " + package).read() != ""
 
 
 def errorMessage():
