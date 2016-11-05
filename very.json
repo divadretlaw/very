@@ -24,12 +24,12 @@
     },
     {
       "id": "pacman",
-      "install": "pacman -S",
+      "install": "sudo pacman -S",
       "remove": "sudo pacman -Rs",
-      "clean": "pacman -Rs",
+      "clean": "sudo pacman -Rs",
       "update": "",
-      "upgrade": "pacman -Syu",
-      "system-upgrade": "pacman -Syu",
+      "upgrade": "sudo pacman -Syu",
+      "system-upgrade": "sudo pacman -Syu",
       "search": "pacman -Ss",
       "list": "pacman -Q"
     }
