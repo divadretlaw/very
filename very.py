@@ -39,39 +39,39 @@ def hasPackage(package):
 
 
 def errorMessage():
-    print "Usage: python very.py [command]"
-    print "\nAvailable commands:"
+    print("Usage: python very.py [command]")
+    print("\nAvailable commands:")
     printCommands()
     return
 
 
 def printCommands():
-    print "install"
-    print "remove"
-    print "clean"
-    print "update"
-    print "system-update"
-    print "much-update"
-    print "very-update"
-    print "ip"
-    print "download"
-    print "hosts"
-    print "wallpaper"
+    print("install")
+    print("remove")
+    print("clean")
+    print("update")
+    print("system-update")
+    print("much-update")
+    print("very-update")
+    print("ip")
+    print("download")
+    print("hosts")
+    print("wallpaper")
     return
 
 
 def printDescriptions():
-    print "Install one ore more packages"  # install
-    print "Remove one ore more packages"  # remove
-    print "Cleans the system"  # clean
-    print "Checks for package updates and installs them"  # update
-    print "Checks for system updates and installs them"  # system-update
-    print "Checks for package and system updates and installs them"  # much-update
-    print "Updates the script to the newest version"  # very-update
-    print "Prints global IP"  # ip
-    print "Starts a download test"  # download
-    print "Updates /etc/hosts from winhelp2002.mvps.org"  # hosts
-    print "Sets the wallpaper"  # wallpaper
+    print("Install one ore more packages")  # install
+    print("Remove one ore more packages")  # remove
+    print("Cleans the system")  # clean
+    print("Checks for package updates and installs them")  # update
+    print("Checks for system updates and installs them")  # system-update
+    print("Checks for package and system updates and installs them")  # much-update
+    print("Updates the script to the newest version")  # very-update
+    print("Prints global IP")  # ip
+    print("Starts a download test")  # download
+    print("Updates /etc/hosts from winhelp2002.mvps.org")  # hosts
+    print("Sets the wallpaper")  # wallpaper
     return
 
 
@@ -99,7 +99,7 @@ def removePackages():
 
 
 def clean():
-    print "Cleaning system..."
+    print("Cleaning system...")
     for x in config["package-managers"]:
         if hasPackage(x["id"]):
             os.system(x["clean"])
@@ -107,7 +107,7 @@ def clean():
 
 
 def download():
-    print "Starting download test"
+    print("Starting download test")
     os.system("curl -SLko /dev/null http://davidwalter.at/d/downloadtest/download.php")
     return
 
@@ -132,10 +132,10 @@ def upgradeSystem():
 
 
 def setWallpaper():
-    print "Downloading wallpaper..."
+    print("Downloading wallpaper...")
     os.system("curl -SLko $HOME/Pictures/Wallpaper.jpg " + config["wallpaper-source"])
 
-    print "Setting wallpaper..."
+    print("Setting wallpaper...")
     if sys.platform == "darwin":
         os.system(
             "sqlite3 ~/Library/Application\ Support/Dock/desktoppicture.db \"update data set value = '~/Pictures/Wallpaper.jpg'\" && killall Dock")
@@ -147,13 +147,13 @@ def setWallpaper():
 
 
 def updateVery():
-    print "Updating very..."
+    print("Updating very...")
     os.system("curl -SLko $HOME/.very.py https://raw.githubusercontent.com/divadretlaw/very/master/very.py")
     return
 
 
 def updateHosts():
-    print "Updating hosts file..."
+    print("Updating hosts file...")
     os.system("echo '127.0.0.1 localhost\n::1 localhost\n255.255.255.255 broadcasthost\n127.0.0.1 " +
               os.uname()[1] + "\n' | sudo tee /etc/hosts > /dev/null")
     os.system("curl -SLk http://winhelp2002.mvps.org/hosts.txt | grep 0.0.0.0 | sudo tee -a /etc/hosts > /dev/null")
