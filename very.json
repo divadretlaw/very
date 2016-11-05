@@ -26,12 +26,12 @@
       "id": "pacman",
       "install": "sudo pacman -S",
       "remove": "sudo pacman -Rs",
-      "clean": "sudo pacman -Rs",
+      "clean": "sudo pacman -Qdtq | sudo pacman -Rs",
       "update": "",
       "upgrade": "sudo pacman -Syu",
       "system-upgrade": "sudo pacman -Syu",
-      "search": "pacman -Ss",
-      "list": "pacman -Q"
+      "search": "pacman -Ssq",
+      "list": "pacman -Qq"
     }
   ],
   "additional": [
