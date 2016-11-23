@@ -38,8 +38,8 @@ def hasPackage(package):
     return os.popen("command -v " + package).read() != ""
 
 
-def errorMessage():
-    print("Usage: python very.py [command]")
+def errorMessage(file):
+    print("Usage: python " + file + " [command]")
     print("\nAvailable commands:")
     printCommands()
     return
@@ -161,7 +161,7 @@ def updateHosts():
 
 
 if len(sys.argv) < 2:
-    errorMessage()
+    errorMessage(sys.argv[0])
 else:
     if sys.argv[1] == "very":
         getConfig()
@@ -189,4 +189,4 @@ else:
     elif sys.argv[1] == "very-update":
         updateVery()
     else:
-        errorMessage()
+        errorMessage(sys.argv[0])
