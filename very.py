@@ -108,7 +108,7 @@ def clean():
 
 def download():
     print("Starting download test")
-    os.system("curl -SLko /dev/null http://davidwalter.at/d/downloadtest/download.php")
+    os.system("curl -SLko /dev/null " + config["downloadtest-source"])
     return
 
 
