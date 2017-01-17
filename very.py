@@ -9,7 +9,7 @@ with open(home + '/.config/very/very.json') as data_file:
 
 def getConfig():
     if len(sys.argv) < 3:
-        errorMessage()
+        errorMessage(sys.argv[0])
     else:
         if sys.argv[2] == "ls":
             printCommands()
@@ -24,7 +24,7 @@ def getConfig():
             if x is not None:
                 os.system(x["list"])
         else:
-            errorMessage()
+            errorMessage(sys.argv[0])
     return
 
 

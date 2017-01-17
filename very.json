@@ -40,7 +40,7 @@
       "install": "apm install",
       "remove": "brew remove",
       "clean": "apm clean",
-      "update": "apm update",
+      "update": "apm update --no-confirm",
       "upgrade": "apm upgrade",
       "search": "apm search",
       "list": "apm list"
