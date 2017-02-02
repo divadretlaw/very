@@ -107,7 +107,7 @@ def clean():
 
 
 def download():
-    print("Starting download test")
+    print("Starting download test...")
     os.system("curl -SLko /dev/null " + config["downloadtest-source"])
     return
 
@@ -115,16 +115,19 @@ def download():
 def updateSystem():
     for p in config["package-managers"]:
         if hasPackage(p["id"]):
+            print("Updating packages using '" + p["id"] + "'...")
             os.system(p["update"])
             os.system(p["upgrade"])
 
     for x in config["additional"]:
         if hasPackage(x["id"]):
+            print("Updating packages using '" + x["id"] + "'...")
             os.system(x["update"])
     return
 
 
 def upgradeSystem():
+    print("Upgrading System...")
     for p in config["package-managers"]:
         if hasPackage(p["id"]):
             os.system(p["system-upgrade"])
@@ -132,7 +135,7 @@ def upgradeSystem():
 
 
 def setWallpaper():
-    print("Downloading wallpaper...")
+    print("Downloading Wallpaper from '" + config["wallpaper-source"] + "'...")
     os.system("curl -SLko $HOME/Pictures/Wallpaper.jpg " + config["wallpaper-source"])
 
     print("Setting wallpaper...")
@@ -147,15 +150,14 @@ def setWallpaper():
 
 
 def updateVery():
-    print("Updating very...")
+    print("Updating 'very'...")
     os.system("curl -SLko $HOME/.very.py https://raw.githubusercontent.com/divadretlaw/very/master/very.py")
     return
 
 
 def updateHosts():
-    print("Updating hosts file...")
-    os.system("echo '127.0.0.1 localhost\n::1 localhost\n255.255.255.255 broadcasthost\n127.0.0.1 " +
-              os.uname()[1] + "\n' | sudo tee /etc/hosts > /dev/null")
+    print("Updating '/etc/hosts'...")
+    os.system("echo '127.0.0.1 localhost\n::1 localhost\n255.255.255.255 broadcasthost\n127.0.0.1 " + os.uname()[1] + "\n' | sudo tee /etc/hosts > /dev/null")
     os.system("curl -SLk http://winhelp2002.mvps.org/hosts.txt | grep 0.0.0.0 | sudo tee -a /etc/hosts > /dev/null")
     return
 
