@@ -99,11 +99,11 @@ def removePackages():
 
 
 def clean():
-    print("Cleaning system...")
+    print(u'\U0000267B\U0000fe0f' + "  Cleaning system...")
     for x in config["package-managers"]:
         if hasPackage(x["id"]):
             os.system(x["clean"])
-    print("Emptying trash...")
+    print(u'\U0001f5d1' + "  Emptying trash...")
     if sys.platform == "darwin":
         os.system("rm -rf $HOME/.Trash/*")
     else:
@@ -113,7 +113,7 @@ def clean():
 
 
 def download():
-    print("Starting download test...")
+    print(u'\U00002b07\U0000fe0f' + "  Starting download test...")
     os.system("curl -SLko /dev/null " + config["downloadtest-source"])
     return
 
@@ -121,13 +121,13 @@ def download():
 def updateSystem():
     for p in config["package-managers"]:
         if hasPackage(p["id"]):
-            print("Updating packages using '" + p["id"] + "'...")
+            print(u'\U0001f504' + "  Updating packages using '" + p["id"] + "'...")
             os.system(p["update"])
             os.system(p["upgrade"])
 
     for x in config["additional"]:
         if hasPackage(x["id"]):
-            print("Updating packages using '" + x["id"] + "'...")
+            print(u'\U0001f504' + "  Updating packages using '" + x["id"] + "'...")
             os.system(x["update"])
     return
 
@@ -141,10 +141,10 @@ def upgradeSystem():
 
 
 def setWallpaper():
-    print("Downloading Wallpaper from '" + config["wallpaper-source"] + "'...")
+    print(u'\U00002b07\U0000fe0f' + "  Downloading Wallpaper from '" + config["wallpaper-source"] + "'...")
     os.system("curl -SLko $HOME/Pictures/Wallpaper.jpg " + config["wallpaper-source"])
 
-    print("Setting wallpaper...")
+    print(u'\U0001f5bc' + "  Setting wallpaper...")
     if sys.platform == "darwin":
         os.system(
             "sqlite3 ~/Library/Application\ Support/Dock/desktoppicture.db \"update data set value = '~/Pictures/Wallpaper.jpg'\" && killall Dock")
@@ -156,13 +156,13 @@ def setWallpaper():
 
 
 def updateVery():
-    print("Updating 'very'...")
+    print(u'\U00002935\U0000fe0f' + "  Updating 'very'...")
     os.system("curl -SLko $HOME/.very.py https://raw.githubusercontent.com/divadretlaw/very/master/very.py")
     return
 
 
 def updateHosts():
-    print("Updating '/etc/hosts'...")
+    print(u'\U0001F4DD' + "  Updating '/etc/hosts'...")
     os.system("echo '127.0.0.1 localhost\n::1 localhost\n255.255.255.255 broadcasthost\n127.0.0.1 " + os.uname()[1] + "\n' | sudo tee /etc/hosts > /dev/null")
     os.system("curl -SLk http://winhelp2002.mvps.org/hosts.txt | grep 0.0.0.0 | sudo tee -a /etc/hosts > /dev/null")
     return
