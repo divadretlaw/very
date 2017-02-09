@@ -166,21 +166,22 @@ def updateVery():
 def updateHosts():
     print(u'\U0001F4DD' + "  Updating '/etc/hosts'...")
     os.system("echo '127.0.0.1 localhost\n::1 localhost\n255.255.255.255 broadcasthost\n127.0.0.1 " + os.uname()[1] + "\n' | sudo tee /etc/hosts > /dev/null")
-    os.system("curl -#SLk http://winhelp2002.mvps.org/hosts.txt | grep 0.0.0.0 | sudo tee -a /etc/hosts > /dev/null")
+    os.system("curl -#SLk " + config["hosts-source"] + " | grep 0.0.0.0 | sudo tee -a /etc/hosts > /dev/null")
     return
 
 
 def ip():
     os.system("curl " + config["ip-source"])
-    exit()
     return
 
 
 if len(sys.argv) < 2:
     errorMessage(sys.argv[0])
+    exit()
 else:
     if sys.argv[1] == "very":
         getConfig()
+        exit()
     elif sys.argv[1] == "install":
         installPackages()
     elif sys.argv[1] == "remove":
@@ -200,10 +201,12 @@ else:
         updateHosts()
     elif sys.argv[1] == "ip":
         ip()
+        exit()
     elif sys.argv[1] == "wallpaper":
         setWallpaper()
     elif sys.argv[1] == "very-update":
         updateVery()
     else:
         errorMessage(sys.argv[0])
+        exit()
     print(u'\U00002705' + "  Done.")
