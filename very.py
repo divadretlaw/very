@@ -144,7 +144,7 @@ def upgradeSystem():
 
 def setWallpaper():
     print(u'\U00002b07\U0000fe0f' + "  Downloading Wallpaper from '" + config["wallpaper-source"] + "'...")
-    os.system("curl -SLko $HOME/Pictures/Wallpaper.jpg " + config["wallpaper-source"])
+    os.system("curl -#SLko $HOME/Pictures/Wallpaper.jpg " + config["wallpaper-source"])
 
     print(u'\U0001f5bc' + "  Setting wallpaper...")
     if sys.platform == "darwin":
@@ -159,14 +159,20 @@ def setWallpaper():
 
 def updateVery():
     print(u'\U00002935\U0000fe0f' + "  Updating 'very'...")
-    os.system("curl -SLko $HOME/.very.py https://raw.githubusercontent.com/divadretlaw/very/master/very.py")
+    os.system("curl -#SLko $HOME/.very.py https://raw.githubusercontent.com/divadretlaw/very/master/very.py")
     return
 
 
 def updateHosts():
     print(u'\U0001F4DD' + "  Updating '/etc/hosts'...")
     os.system("echo '127.0.0.1 localhost\n::1 localhost\n255.255.255.255 broadcasthost\n127.0.0.1 " + os.uname()[1] + "\n' | sudo tee /etc/hosts > /dev/null")
-    os.system("curl -SLk http://winhelp2002.mvps.org/hosts.txt | grep 0.0.0.0 | sudo tee -a /etc/hosts > /dev/null")
+    os.system("curl -#SLk http://winhelp2002.mvps.org/hosts.txt | grep 0.0.0.0 | sudo tee -a /etc/hosts > /dev/null")
+    return
+
+
+def ip():
+    os.system("curl " + config["ip-source"])
+    exit()
     return
 
 
@@ -193,8 +199,7 @@ else:
     elif sys.argv[1] == "hosts":
         updateHosts()
     elif sys.argv[1] == "ip":
-        os.system("curl " + config["ip-source"])
-        exit()
+        ip()
     elif sys.argv[1] == "wallpaper":
         setWallpaper()
     elif sys.argv[1] == "very-update":
