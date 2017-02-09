@@ -61,8 +61,8 @@ def printCommands():
 
 
 def printDescriptions():
-    print("Install one ore more packages")  # install
-    print("Remove one ore more packages")  # remove
+    print("Install one or more packages")  # install
+    print("Remove one or more packages")  # remove
     print("Cleans the system")  # clean
     print("Checks for package updates and installs them")  # update
     print("Checks for system updates and installs them")  # system-update
