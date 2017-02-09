@@ -70,7 +70,7 @@ def printDescriptions():
     print("Updates the script to the newest version")  # very-update
     print("Prints global IP")  # ip
     print("Starts a download test")  # download
-    print("Updates /etc/hosts from winhelp2002.mvps.org")  # hosts
+    print("Updates /etc/hosts")  # hosts
     print("Sets the wallpaper")  # wallpaper
     return
 
