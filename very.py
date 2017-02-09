@@ -193,10 +193,12 @@ else:
     elif sys.argv[1] == "hosts":
         updateHosts()
     elif sys.argv[1] == "ip":
-        os.system("curl http://ipecho.net/plain")
+        os.system("curl " + config["ip-source"])
+        exit()
     elif sys.argv[1] == "wallpaper":
         setWallpaper()
     elif sys.argv[1] == "very-update":
         updateVery()
     else:
         errorMessage(sys.argv[0])
+    print(u'\U00002705' + "  Done.")
