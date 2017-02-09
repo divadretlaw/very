@@ -103,6 +103,12 @@ def clean():
     for x in config["package-managers"]:
         if hasPackage(x["id"]):
             os.system(x["clean"])
+    print("Emptying trash...")
+    if sys.platform == "darwin":
+        os.system("rm -rf $HOME/.Trash/*")
+    else:
+        os.system("rm -rf $HOME/.local/share/Trash/files/*")
+        os.system("rm -rf $HOME/.local/share/Trash/info/*.trashinfo")
     return
 
 
