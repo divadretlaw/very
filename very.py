@@ -95,7 +95,7 @@ def removePackages():
 
     x = getPackageManager()
     if x is not None:
-        print(u'\U00002796' + "  Install packages using '" + x["id"] + "'...")
+        print(u'\U00002796' + "  Removing packages using '" + x["id"] + "'...")
         os.system(x["remove"] + packages)
     return
 
@@ -135,7 +135,7 @@ def updateSystem():
 
 
 def upgradeSystem():
-    print("Upgrading System...")
+    print(u'\U0001f504' + "  Upgrading System...")
     for p in config["package-managers"]:
         if hasPackage(p["id"]):
             os.system(p["system-upgrade"])
