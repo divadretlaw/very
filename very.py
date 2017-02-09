@@ -83,6 +83,7 @@ def installPackages():
     x = getPackageManager()
     if x is None:
         return
+    print(u'\U00002795' + "  Install packages using '" + x["id"] + "'...")
     os.system(x["install"] + packages)
     return
 
@@ -94,6 +95,7 @@ def removePackages():
 
     x = getPackageManager()
     if x is not None:
+        print(u'\U00002796' + "  Install packages using '" + x["id"] + "'...")
         os.system(x["remove"] + packages)
     return
 
