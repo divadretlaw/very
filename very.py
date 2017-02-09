@@ -164,7 +164,7 @@ def updateVery():
 
 
 def updateHosts():
-    print(u'\U0001F4DD' + "  Updating '/etc/hosts'...")
+    print(u'\U0001F4DD' + "  Updating '/etc/hosts' from '" + config["hosts-source"] + "'...")
     os.system("echo '127.0.0.1 localhost\n::1 localhost\n255.255.255.255 broadcasthost\n127.0.0.1 " + os.uname()[1] + "\n' | sudo tee /etc/hosts > /dev/null")
     os.system("curl -#SLk " + config["hosts-source"] + " | grep 0.0.0.0 | sudo tee -a /etc/hosts > /dev/null")
     return
