@@ -37,13 +37,25 @@
   "additional": [
     {
       "id": "apm",
+      "very-command": "atom",
       "install": "apm install",
-      "remove": "brew remove",
+      "remove": "apm remove",
       "clean": "apm clean",
       "update": "apm update --no-confirm",
       "upgrade": "apm upgrade",
       "search": "apm search",
       "list": "apm list"
+    },
+    {
+      "id": "cask",
+      "very-command": "brew cask",
+      "install": "brew cask install",
+      "remove": "brew cask remove",
+      "clean": "brew cask cleanup",
+      "update": "brew update",
+      "upgrade": "brew upgrade",
+      "search": "brew cask search",
+      "list": "brew cask list"
     }
   ],
   "wallpaper-source": "",

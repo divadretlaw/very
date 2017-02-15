@@ -16,21 +16,33 @@ def getConfig():
         elif sys.argv[2] == "description":
             printDescriptions()
         elif sys.argv[2] == "search":
-            x = getPackageManager()
+            x = getMainPackageManager()
             if x is not None:
                 os.system(x["search"])
         elif sys.argv[2] == "list":
-            x = getPackageManager()
+            x = getMainPackageManager()
             if x is not None:
                 os.system(x["list"])
+        elif sys.argv[2] == "additional":
+            for x in config["additional"]:
+                if hasPackage(x["command"]):
+                    print(x["id"])
+        elif sys.argv[2] == "cmd":
+            print("install")
+            print("remove")
+            print("clean")
+            print("update")
+            print("upgrade")
+            print("search")
+            print("list")
         else:
             errorMessage(sys.argv[0])
     return
 
 
-def getPackageManager():
+def getMainPackageManager():
     for x in config["package-managers"]:
-        if hasPackage(x["id"]):
+        if hasPackage(x["command"]):
             return x
 
 
@@ -40,7 +52,7 @@ def hasPackage(package):
 
 def errorMessage(file):
     print("Usage: python " + file + " [command]")
-    print("\nAvailable commands:")
+    print("\n" + u'\U00002139\U0000fe0f' + "  Available commands:")
     printCommands()
     return
 
@@ -57,6 +69,9 @@ def printCommands():
     print("download")
     print("hosts")
     print("wallpaper")
+    for x in config["additional"]:
+        if hasPackage(x["command"]):
+            print(x["id"])
     return
 
 
@@ -72,18 +87,40 @@ def printDescriptions():
     print("Starts a download test")  # download
     print("Updates /etc/hosts")  # hosts
     print("Sets the wallpaper")  # wallpaper
+    for x in config["additional"]:
+        if hasPackage(x["command"]):
+            print(x["command"])
     return
 
+def getAdditionalCommands(id):
+    for x in config["additional"]:
+        if x["id"] == id:
+            return x
+
+def additionalCommand(command):
+    cmd = getAdditionalCommands(command)
+    
+    packages = ""
+    for x in range(3, len(sys.argv)):
+        packages += " " + sys.argv[x]
+    
+    if sys.argv[2] in cmd and cmd[sys.argv[2]] != "":
+        os.system(cmd[sys.argv[2]] + packages)
+    else:
+        print("Unknown command")
+        exit()
+        
+    return
 
 def installPackages():
     packages = ""
     for x in range(2, len(sys.argv)):
         packages += " " + sys.argv[x]
 
-    x = getPackageManager()
+    x = getMainPackageManager()
     if x is None:
         return
-    print(u'\U00002795' + "  Install packages using '" + x["id"] + "'...")
+    print(u'\U00002795' + "  Installing packages using '" + x["command"] + "'...")
     os.system(x["install"] + packages)
     return
 
@@ -93,9 +130,9 @@ def removePackages():
     for x in range(2, len(sys.argv)):
         packages += " " + sys.argv[x]
 
-    x = getPackageManager()
+    x = getMainPackageManager()
     if x is not None:
-        print(u'\U00002796' + "  Removing packages using '" + x["id"] + "'...")
+        print(u'\U00002796' + "  Removing packages using '" + x["command"] + "'...")
         os.system(x["remove"] + packages)
     return
 
@@ -103,7 +140,10 @@ def removePackages():
 def clean():
     print(u'\U0000267B\U0000fe0f' + "  Cleaning system...")
     for x in config["package-managers"]:
-        if hasPackage(x["id"]):
+        if hasPackage(x["command"]):
+            os.system(x["clean"])
+    for x in config["additional"]:
+        if hasPackage(x["command"]) and x["clean"] != "":
             os.system(x["clean"])
     print(u'\U0001f5d1' + "  Emptying trash...")
     if sys.platform == "darwin":
@@ -122,14 +162,14 @@ def download():
 
 def updateSystem():
     for p in config["package-managers"]:
-        if hasPackage(p["id"]):
-            print(u'\U0001f504' + "  Updating packages using '" + p["id"] + "'...")
+        if hasPackage(p["command"]):
+            print(u'\U0001f504' + "  Updating packages using '" + p["command"] + "'...")
             os.system(p["update"])
             os.system(p["upgrade"])
 
     for x in config["additional"]:
-        if hasPackage(x["id"]):
-            print(u'\U0001f504' + "  Updating packages using '" + x["id"] + "'...")
+        if hasPackage(x["command"]) and x["update"] != "":
+            print(u'\U0001f504' + "  Updating packages using '" + x["command"] + "'...")
             os.system(x["update"])
     return
 
@@ -137,7 +177,7 @@ def updateSystem():
 def upgradeSystem():
     print(u'\U0001f504' + "  Upgrading System...")
     for p in config["package-managers"]:
-        if hasPackage(p["id"]):
+        if hasPackage(p["command"]):
             os.system(p["system-upgrade"])
     return
 
@@ -206,6 +246,8 @@ else:
         setWallpaper()
     elif sys.argv[1] == "very-update":
         updateVery()
+    elif any(sys.argv[1] in s["id"] for s in config["additional"]):
+        additionalCommand(sys.argv[1])
     else:
         errorMessage(sys.argv[0])
         exit()

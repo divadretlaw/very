@@ -26,6 +26,14 @@ function __fish_very_needs_command
   return 1
 end
 
+function __fish_very_additional_needs_command
+  set cmd (commandline -opc)
+  if [ (count $cmd) -eq 2 -a $cmd[1] = 'very' ]
+    return 0
+  end
+  return 1
+end
+
 set -l dlist (very very description)
 set -l count 1
 
@@ -36,3 +44,9 @@ end
 
 complete -f -c very -n '__fish_very_using_command install' -a '(__fish_very_install)'
 complete -f -c very -n '__fish_very_using_command remove' -a '(__fish_very_remove)'
+
+for x in (very very additional)
+  for y in (very very cmd)
+    complete -f -c very -n '__fish_very_additional_needs_command' -a $y
+  end
+end
