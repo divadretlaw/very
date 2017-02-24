@@ -7,25 +7,26 @@ home = os.path.expanduser("~")
 with open(home + '/.config/very/very.json') as data_file:
     config = json.load(data_file)
 
-def getConfig():
+
+def get_config():
     if len(sys.argv) < 3:
-        errorMessage(sys.argv[0])
+        print_error_message(sys.argv[0])
     else:
         if sys.argv[2] == "ls":
-            printCommands()
+            print_commands()
         elif sys.argv[2] == "description":
-            printDescriptions()
+            print_descriptions()
         elif sys.argv[2] == "search":
-            x = getMainPackageManager()
+            x = get_main_package_manager()
             if x is not None:
                 os.system(x["search"])
         elif sys.argv[2] == "list":
-            x = getMainPackageManager()
+            x = get_main_package_manager()
             if x is not None:
                 os.system(x["list"])
         elif sys.argv[2] == "additional":
             for x in config["additional"]:
-                if hasPackage(x["command"]):
+                if has_package(x["command"]):
                     print(x["id"])
         elif sys.argv[2] == "cmd":
             print("install")
@@ -36,28 +37,28 @@ def getConfig():
             print("search")
             print("list")
         else:
-            errorMessage(sys.argv[0])
+            print_error_message(sys.argv[0])
     return
 
 
-def getMainPackageManager():
+def get_main_package_manager():
     for x in config["package-managers"]:
-        if hasPackage(x["command"]):
+        if has_package(x["command"]):
             return x
 
 
-def hasPackage(package):
+def has_package(package):
     return os.popen("command -v " + package).read() != ""
 
 
-def errorMessage(file):
-    print("Usage: python " + file + " [command]")
+def print_error_message(filename):
+    print("Usage: python " + filename + " [command]")
     print("\n" + u'\U00002139\U0000fe0f' + "  Available commands:")
-    printCommands()
+    print_commands()
     return
 
 
-def printCommands():
+def print_commands():
     print("install")
     print("remove")
     print("clean")
@@ -69,13 +70,15 @@ def printCommands():
     print("download")
     print("hosts")
     print("wallpaper")
+
     for x in config["additional"]:
-        if hasPackage(x["command"]):
+        if has_package(x["command"]):
             print(x["id"])
+
     return
 
 
-def printDescriptions():
+def print_descriptions():
     print("Install one or more packages")  # install
     print("Remove one or more packages")  # remove
     print("Cleans the system")  # clean
@@ -87,37 +90,42 @@ def printDescriptions():
     print("Starts a download test")  # download
     print("Updates /etc/hosts")  # hosts
     print("Sets the wallpaper")  # wallpaper
+
     for x in config["additional"]:
-        if hasPackage(x["command"]):
+        if has_package(x["command"]):
             print(x["command"])
+
     return
 
-def getAdditionalCommands(id):
+
+def get_additional_commands(id):
     for x in config["additional"]:
         if x["id"] == id:
             return x
 
-def additionalCommand(command):
-    cmd = getAdditionalCommands(command)
-    
+
+def additional_command(command):
+    cmd = get_additional_commands(command)
+
     packages = ""
     for x in range(3, len(sys.argv)):
         packages += " " + sys.argv[x]
-    
+
     if sys.argv[2] in cmd and cmd[sys.argv[2]] != "":
         os.system(cmd[sys.argv[2]] + packages)
     else:
         print("Unknown command")
         exit()
-        
+
     return
 
-def installPackages():
+
+def install():
     packages = ""
     for x in range(2, len(sys.argv)):
         packages += " " + sys.argv[x]
 
-    x = getMainPackageManager()
+    x = get_main_package_manager()
     if x is None:
         return
     print(u'\U00002795' + "  Installing packages using '" + x["command"] + "'...")
@@ -125,12 +133,12 @@ def installPackages():
     return
 
 
-def removePackages():
+def remove():
     packages = ""
     for x in range(2, len(sys.argv)):
         packages += " " + sys.argv[x]
 
-    x = getMainPackageManager()
+    x = get_main_package_manager()
     if x is not None:
         print(u'\U00002796' + "  Removing packages using '" + x["command"] + "'...")
         os.system(x["remove"] + packages)
@@ -140,10 +148,10 @@ def removePackages():
 def clean():
     print(u'\U0000267B\U0000fe0f' + "  Cleaning system...")
     for x in config["package-managers"]:
-        if hasPackage(x["command"]):
+        if has_package(x["command"]):
             os.system(x["clean"])
     for x in config["additional"]:
-        if hasPackage(x["command"]) and x["clean"] != "":
+        if has_package(x["command"]) and x["clean"] != "":
             os.system(x["clean"])
     print(u'\U0001f5d1' + "  Emptying trash...")
     if sys.platform == "darwin":
@@ -154,59 +162,25 @@ def clean():
     return
 
 
-def download():
-    print(u'\U00002b07\U0000fe0f' + "  Starting download test...")
-    os.system("curl -SLko /dev/null " + config["downloadtest-source"])
-    return
-
-
-def updateSystem():
+def update():
     for p in config["package-managers"]:
-        if hasPackage(p["command"]):
+        if has_package(p["command"]):
             print(u'\U0001f504' + "  Updating packages using '" + p["command"] + "'...")
             os.system(p["update"])
             os.system(p["upgrade"])
 
     for x in config["additional"]:
-        if hasPackage(x["command"]) and x["update"] != "":
+        if has_package(x["command"]) and x["update"] != "":
             print(u'\U0001f504' + "  Updating packages using '" + x["command"] + "'...")
             os.system(x["update"])
     return
 
 
-def upgradeSystem():
+def upgrade():
     print(u'\U0001f504' + "  Upgrading System...")
     for p in config["package-managers"]:
-        if hasPackage(p["command"]):
+        if has_package(p["command"]):
             os.system(p["system-upgrade"])
-    return
-
-
-def setWallpaper():
-    print(u'\U00002b07\U0000fe0f' + "  Downloading Wallpaper from '" + config["wallpaper-source"] + "'...")
-    os.system("curl -#SLko $HOME/Pictures/Wallpaper.jpg " + config["wallpaper-source"])
-
-    print(u'\U0001f5bc' + "  Setting wallpaper...")
-    if sys.platform == "darwin":
-        os.system(
-            "sqlite3 ~/Library/Application\ Support/Dock/desktoppicture.db \"update data set value = '~/Pictures/Wallpaper.jpg'\" && killall Dock")
-    elif sys.platform.startswith('linux'):
-        if hasPackage("gsettings"):
-            os.system("gsettings set org.gnome.desktop.background picture-uri file://$HOME/Pictures/Wallpaper.jpg")
-            os.system("gsettings set org.gnome.desktop.screensaver picture-uri file://$HOME/Pictures/Wallpaper.jpg")
-    return
-
-
-def updateVery():
-    print(u'\U00002935\U0000fe0f' + "  Updating 'very'...")
-    os.system("curl -#SLko $HOME/.very.py https://raw.githubusercontent.com/divadretlaw/very/master/very.py")
-    return
-
-
-def updateHosts():
-    print(u'\U0001F4DD' + "  Updating '/etc/hosts' from '" + config["hosts-source"] + "'...")
-    os.system("echo '127.0.0.1 localhost\n::1 localhost\n255.255.255.255 broadcasthost\n127.0.0.1 " + os.uname()[1] + "\n' | sudo tee /etc/hosts > /dev/null")
-    os.system("curl -#SLk " + config["hosts-source"] + " | grep 0.0.0.0 | sudo tee -a /etc/hosts > /dev/null")
     return
 
 
@@ -215,40 +189,75 @@ def ip():
     return
 
 
+def download():
+    print(u'\U00002b07\U0000fe0f' + "  Starting download test...")
+    os.system("curl -SLko /dev/null " + config["downloadtest-source"])
+    return
+
+
+def hosts():
+    print(u'\U0001F4DD' + "  Updating '/etc/hosts' from '" + config["hosts-source"] + "'...")
+    os.system("echo '127.0.0.1 localhost\n::1 localhost\n255.255.255.255 broadcasthost\n127.0.0.1 " + os.uname()[
+        1] + "\n' | sudo tee /etc/hosts > /dev/null")
+    os.system("curl -#SLk " + config["hosts-source"] + " | grep 0.0.0.0 | sudo tee -a /etc/hosts > /dev/null")
+    return
+
+
+def wallpaper():
+    print(u'\U00002b07\U0000fe0f' + "  Downloading Wallpaper from '" + config["wallpaper-source"] + "'...")
+    os.system("curl -#SLko $HOME/Pictures/Wallpaper.jpg " + config["wallpaper-source"])
+
+    print(u'\U0001f5bc' + "  Setting wallpaper...")
+    if sys.platform == "darwin":
+        os.system(
+            "sqlite3 ~/Library/Application\ Support/Dock/desktoppicture.db \"update data set value = '~/Pictures/Wallpaper.jpg'\" && killall Dock")
+    elif sys.platform.startswith('linux'):
+        if has_package("gsettings"):
+            os.system("gsettings set org.gnome.desktop.background picture-uri file://$HOME/Pictures/Wallpaper.jpg")
+            os.system("gsettings set org.gnome.desktop.screensaver picture-uri file://$HOME/Pictures/Wallpaper.jpg")
+    return
+
+
+def update_very():
+    print(u'\U00002935\U0000fe0f' + "  Updating 'very'...")
+    os.system("curl -#SLko $HOME/.very.py https://raw.githubusercontent.com/divadretlaw/very/master/very.py")
+    return
+
+
 if len(sys.argv) < 2:
-    errorMessage(sys.argv[0])
+    print_error_message(sys.argv[0])
     exit()
 else:
     if sys.argv[1] == "very":
-        getConfig()
+        get_config()
         exit()
     elif sys.argv[1] == "install":
-        installPackages()
+        install()
     elif sys.argv[1] == "remove":
-        removePackages()
+        remove()
     elif sys.argv[1] == "clean":
         clean()
     elif sys.argv[1] == "update":
-        updateSystem()
+        update()
     elif sys.argv[1] == "system-update":
-        upgradeSystem()
+        upgrade()
     elif sys.argv[1] == "much-update":
-        updateSystem()
-        upgradeSystem()
-    elif sys.argv[1] == "download":
-        download()
-    elif sys.argv[1] == "hosts":
-        updateHosts()
+        update()
+        upgrade()
     elif sys.argv[1] == "ip":
         ip()
         exit()
+    elif sys.argv[1] == "download":
+        download()
+    elif sys.argv[1] == "hosts":
+        hosts()
     elif sys.argv[1] == "wallpaper":
-        setWallpaper()
+        wallpaper()
     elif sys.argv[1] == "very-update":
-        updateVery()
+        update_very()
     elif any(sys.argv[1] in s["id"] for s in config["additional"]):
-        additionalCommand(sys.argv[1])
+        additional_command(sys.argv[1])
     else:
-        errorMessage(sys.argv[0])
+        print_error_message(sys.argv[0])
         exit()
     print(u'\U00002705' + "  Done.")
