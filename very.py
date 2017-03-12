@@ -16,14 +16,6 @@ def get_config():
             print_commands()
         elif sys.argv[2] == "description":
             print_descriptions()
-        elif sys.argv[2] == "search":
-            x = get_main_package_manager()
-            if x is not None:
-                os.system(x["search"])
-        elif sys.argv[2] == "list":
-            x = get_main_package_manager()
-            if x is not None:
-                os.system(x["list"])
         elif sys.argv[2] == "additional":
             for x in config["additional"]:
                 if has_package(x["command"]):
@@ -61,6 +53,8 @@ def print_error_message(filename):
 def print_commands():
     print("install")
     print("remove")
+    print("search")
+    print("ls")
     print("clean")
     print("update")
     print("system-update")
@@ -81,6 +75,8 @@ def print_commands():
 def print_descriptions():
     print("Install one or more packages")  # install
     print("Remove one or more packages")  # remove
+    print("Search for packages by name") # search
+    print("List installed packages") # ls
     print("Cleans the system")  # clean
     print("Checks for package updates and installs them")  # update
     print("Checks for system updates and installs them")  # system-update
@@ -120,28 +116,50 @@ def additional_command(command):
     return
 
 
+def commands(from_):
+    commands = ""
+    for x in range(from_, len(sys.argv)):
+        commands += " " + sys.argv[x]
+    return commands
+
+
 def install():
-    packages = ""
-    for x in range(2, len(sys.argv)):
-        packages += " " + sys.argv[x]
+    packages = commands(2)
 
     x = get_main_package_manager()
-    if x is None:
-        return
-    print(u'\U00002795' + "  Installing packages using '" + x["command"] + "'...")
-    os.system(x["install"] + packages)
+    if x is not None:
+        print(u'\U00002795' + "  Installing packages using '" + x["command"] + "'...")
+        os.system(x["install"] + packages)
     return
 
 
 def remove():
-    packages = ""
-    for x in range(2, len(sys.argv)):
-        packages += " " + sys.argv[x]
+    packages = commands(2)
 
     x = get_main_package_manager()
     if x is not None:
         print(u'\U00002796' + "  Removing packages using '" + x["command"] + "'...")
         os.system(x["remove"] + packages)
+    return
+
+
+def search():
+    packages = commands(2)
+    
+    x = get_main_package_manager()
+    if x is not None:
+        print("Searching packages from '" + x["search"] + "'...")
+        os.system(x["search"] + packages)
+    return
+
+
+def ls():
+    packages = commands(2)
+    
+    x = get_main_package_manager()
+    if x is not None:
+        print("Listing installed from using '" + x["list"] + "'...")
+        os.system(x["list"] + packages)
     return
 
 
@@ -235,6 +253,10 @@ else:
         install()
     elif sys.argv[1] == "remove":
         remove()
+    elif sys.argv[1] == "search":
+        search()
+    elif sys.argv[1] == "ls":
+        ls()
     elif sys.argv[1] == "clean":
         clean()
     elif sys.argv[1] == "update":

@@ -1,11 +1,11 @@
 #!fish
 
 function __fish_very_install
-    very very search
+    very search
 end
 
 function __fish_very_remove
-    very very list
+    very ls
 end
 
 function __fish_very_using_command

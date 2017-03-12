@@ -1,7 +1,7 @@
 {
   "package-managers": [
     {
-      "id": "brew",
+      "command": "brew",
       "install": "brew install",
       "remove": "brew remove",
       "clean": "brew cleanup",
@@ -12,7 +12,7 @@
       "list": "brew list"
     },
     {
-      "id": "apt-get",
+      "command": "apt-get",
       "install": "sudo apt-get install",
       "remove": "sudo apt-get remove",
       "clean": "sudo apt-get autoremove",
@@ -23,7 +23,7 @@
       "list": "dpkg --get-selections | grep -v deinstall"
     },
     {
-      "id": "pacman",
+      "command": "pacman",
       "install": "sudo pacman -S",
       "remove": "sudo pacman -Rs",
       "clean": "sudo pacman -Qdtq | sudo pacman -Rs",
@@ -37,7 +37,7 @@
   "additional": [
     {
       "id": "apm",
-      "very-command": "atom",
+      "command": "atom",
       "install": "apm install",
       "remove": "apm remove",
       "clean": "apm clean",
@@ -48,7 +48,7 @@
     },
     {
       "id": "cask",
-      "very-command": "brew cask",
+      "command": "brew cask",
       "install": "brew cask install",
       "remove": "brew cask remove",
       "clean": "brew cask cleanup",
@@ -56,6 +56,17 @@
       "upgrade": "brew upgrade",
       "search": "brew cask search",
       "list": "brew cask list"
+    },
+    {
+      "id": "mas",
+      "command": "mas",
+      "install": "mas install",
+      "remove": "",
+      "clean": "",
+      "update": "mas outdated",
+      "upgrade": "mas upgrade",
+      "search": "mas search",
+      "list": "mas list"
     }
   ],
   "wallpaper-source": "",
