@@ -10,6 +10,8 @@ python very.py [command]
 
 * **install** Install one ore more packages
 * **remove** Remove one ore more packages
+* **search** Search for packages by name
+* **ls** List installed packages
 * **clean** Cleans the system
 * **update** Checks for package updates and installs them
 * **system-update** Checks for system updates and installs them
