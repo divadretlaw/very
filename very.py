@@ -103,15 +103,16 @@ def get_additional_commands(id):
 def additional_command(command):
     cmd = get_additional_commands(command)
 
-    packages = ""
-    for x in range(3, len(sys.argv)):
-        packages += " " + sys.argv[x]
+    if cmd is not None:
+        packages = ""
+        for x in range(3, len(sys.argv)):
+            packages += " " + sys.argv[x]
 
-    if sys.argv[2] in cmd and cmd[sys.argv[2]] != "":
-        os.system(cmd[sys.argv[2]] + packages)
-    else:
-        print("Unknown command")
-        exit()
+        if sys.argv[2] in cmd and cmd[sys.argv[2]] != "":
+            os.system(cmd[sys.argv[2]] + packages)
+        else:
+            print("Unknown command")
+            exit()
 
     return
 
@@ -199,6 +200,10 @@ def upgrade():
     for p in config["package-managers"]:
         if has_package(p["command"]):
             os.system(p["system-upgrade"])
+    for x in config["additional"]:
+        if has_package(x["command"]) and x["update"] != "":
+            print(u'\U0001f504' + "  Upgrading packages using '" + x["command"] + "'...")
+            os.system(x["upgrade"])
     return
 
 
