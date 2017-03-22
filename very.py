@@ -186,11 +186,13 @@ def update():
         if has_package(p["command"]):
             print(u'\U0001f504' + "  Updating packages using '" + p["command"] + "'...")
             os.system(p["update"])
+            os.system(p["upgrade"])
 
     for x in config["additional"]:
         if has_package(x["command"]) and x["update"] != "":
             print(u'\U0001f504' + "  Updating packages using '" + x["command"] + "'...")
             os.system(x["update"])
+            os.system(p["upgrade"])
     return
 
 
@@ -199,10 +201,6 @@ def upgrade():
     for p in config["package-managers"]:
         if has_package(p["command"]):
             os.system(p["system-upgrade"])
-    for x in config["additional"]:
-        if has_package(x["command"]) and x["update"] != "":
-            print(u'\U0001f504' + "  Upgrading packages using '" + x["command"] + "'...")
-            os.system(x["upgrade"])
     return
 
 
