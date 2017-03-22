@@ -186,7 +186,6 @@ def update():
         if has_package(p["command"]):
             print(u'\U0001f504' + "  Updating packages using '" + p["command"] + "'...")
             os.system(p["update"])
-            os.system(p["upgrade"])
 
     for x in config["additional"]:
         if has_package(x["command"]) and x["update"] != "":
