@@ -190,11 +190,11 @@ def update():
 
     for x in config["additional"]:
         if has_package(x["command"]):
-            print(u'\U0001f504' + "  Updating packages using '" + x["command"] + "'...")
             if (x["update"] != ""):
+                print(u'\U0001f504' + "  Updating packages using '" + x["command"] + "'...")
                 os.system(x["update"])
-            if (x["upgrade"] != ""):
-                os.system(x["upgrade"])
+                if (x["upgrade"] != ""):
+                    os.system(x["upgrade"])
     return
 
 

@@ -36,13 +36,13 @@
   ],
   "additional": [
     {
-      "id": "apm",
-      "command": "atom",
+      "id": "atom",
+      "command": "apm",
       "install": "apm install",
       "remove": "apm remove",
       "clean": "apm clean",
       "update": "apm update --no-confirm",
-      "upgrade": "apm upgrade",
+      "upgrade": "",
       "search": "apm search",
       "list": "apm list"
     },
@@ -52,8 +52,8 @@
       "install": "brew cask install",
       "remove": "brew cask remove",
       "clean": "brew cask cleanup",
-      "update": "brew update",
-      "upgrade": "brew upgrade",
+      "update": "",
+      "upgrade": "",
       "search": "brew cask search",
       "list": "brew cask list"
     },
