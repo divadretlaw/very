@@ -22,7 +22,7 @@ def get_config():
                     print(x["id"])
         elif sys.argv[2] == "cmd":
             print("install")
-            print("remove")
+            print("remove")q
             print("clean")
             print("update")
             print("upgrade")
@@ -149,7 +149,7 @@ def search():
     
     x = get_main_package_manager()
     if x is not None:
-        print("Searching packages from '" + x["search"] + "'...")
+        print("Searching available packages using '" + x["search"] + "'...")
         os.system(x["search"] + packages)
     return
 
@@ -159,7 +159,7 @@ def ls():
     
     x = get_main_package_manager()
     if x is not None:
-        print("Listing installed from using '" + x["list"] + "'...")
+        print("Listing installed packages using '" + x["list"] + "'...")
         os.system(x["list"] + packages)
     return
 
