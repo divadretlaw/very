@@ -22,7 +22,7 @@ def get_config():
                     print(x["id"])
         elif sys.argv[2] == "cmd":
             print("install")
-            print("remove")q
+            print("remove")
             print("clean")
             print("update")
             print("upgrade")
