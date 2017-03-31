@@ -149,7 +149,6 @@ def search():
 
 	x = get_main_package_manager()
 	if x is not None:
-		print(u'\U0001F50D' + "  Searching available packages using '" + x["search"] + "'...")
 		os.system(x["search"] + packages)
 	return
 
@@ -159,7 +158,6 @@ def ls():
 
 	x = get_main_package_manager()
 	if x is not None:
-		print(u'\U0001F4E6' + "  Listing installed packages using '" + x["list"] + "'...")
 		os.system(x["list"] + packages)
 	return
 
