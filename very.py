@@ -259,8 +259,10 @@ else:
         remove()
     elif sys.argv[1] == "search":
         search()
+		exit()
     elif sys.argv[1] == "ls":
         ls()
+		exit()
     elif sys.argv[1] == "clean":
         clean()
     elif sys.argv[1] == "update":
