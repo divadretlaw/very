@@ -54,7 +54,7 @@ def print_commands():
 	print("install")
 	print("remove")
 	print("search")
-	print("ls")
+	print("list")
 	print("clean")
 	print("update")
 	print("system-update")
@@ -76,7 +76,7 @@ def print_descriptions():
 	print("Install one or more packages")  # install
 	print("Remove one or more packages")  # remove
 	print("Search for packages by name")  # search
-	print("List installed packages")  # ls
+	print("List installed packages")  # list
 	print("Cleans the system")  # clean
 	print("Checks for package updates and installs them")  # update
 	print("Checks for system updates and installs them")  # system-update
@@ -258,7 +258,7 @@ else:
 	elif sys.argv[1] == "search":
 		search()
 		exit()
-	elif sys.argv[1] == "ls":
+	elif sys.argv[1] == "list" or sys.argv[1] == "ls":
 		ls()
 		exit()
 	elif sys.argv[1] == "clean":
