@@ -1,6 +1,5 @@
 {
-  "package-managers": [
-    {
+  "package-managers": [{
       "command": "brew",
       "install": "brew install",
       "remove": "brew remove",
@@ -27,29 +26,28 @@
       "install": "sudo pacman -S",
       "remove": "sudo pacman -Rs",
       "clean": "sudo pacman -Qdtq | sudo pacman -Rs",
-      "update": "",
-      "upgrade": "sudo pacman -Syu",
+      "update": "sudo pacman -Syu",
+      "upgrade": "",
       "system-upgrade": "sudo pacman -Syu",
       "search": "pacman -Ssq",
       "list": "pacman -Qq"
     }
   ],
-  "additional": [
-    {
+  "additional": [{
       "id": "atom",
-			"description": "Atom Package Manager",
+      "description": "Atom Package Manager",
       "command": "apm",
       "install": "apm install",
       "remove": "apm remove",
       "clean": "apm clean",
-      "update": "",
-      "upgrade": "apm update --no-confirm",
+      "update": "apm update --no-confirm",
+      "upgrade": "",
       "search": "apm search",
       "list": "apm list"
     },
     {
       "id": "cask",
-			"description": "Homebrew Cask",
+      "description": "Homebrew Cask",
       "command": "brew cask",
       "install": "brew cask install",
       "remove": "brew cask remove",
@@ -61,7 +59,7 @@
     },
     {
       "id": "mas",
-			"description": "Mac App Store",
+      "description": "Mac App Store",
       "command": "mas",
       "install": "mas install",
       "remove": "",
@@ -70,6 +68,18 @@
       "upgrade": "mas upgrade",
       "search": "mas search",
       "list": "mas list"
+    },
+    {
+      "id": "npm",
+      "description": "Node.js Package Manager",
+      "command": "npm",
+      "install": "npm -g install",
+      "remove": "npm -g remove",
+      "clean": "",
+      "update": "npm -g update",
+      "upgrade": "",
+      "search": "npm -g find",
+      "list": "npm -g list"
     }
   ],
   "wallpaper-source": "",
