@@ -37,17 +37,19 @@
   "additional": [
     {
       "id": "atom",
+			"description": "Atom Package Manager",
       "command": "apm",
       "install": "apm install",
       "remove": "apm remove",
       "clean": "apm clean",
-      "update": "apm update --no-confirm",
-      "upgrade": "",
+      "update": "",
+      "upgrade": "apm update --no-confirm",
       "search": "apm search",
       "list": "apm list"
     },
     {
       "id": "cask",
+			"description": "Homebrew Cask",
       "command": "brew cask",
       "install": "brew cask install",
       "remove": "brew cask remove",
@@ -59,6 +61,7 @@
     },
     {
       "id": "mas",
+			"description": "Mac App Store",
       "command": "mas",
       "install": "mas install",
       "remove": "",

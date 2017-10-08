@@ -89,7 +89,7 @@ def print_descriptions():
 
 	for x in config["additional"]:
 		if has_package(x["command"]):
-			print(x["command"])
+			print(x["description"])
 
 	return
 
