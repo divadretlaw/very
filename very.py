@@ -184,7 +184,8 @@ def update():
 		if has_package(p["command"]):
 			print(u'\U0001f4e6' + "  Updating packages using '" + p["command"] + "'...")
 			os.system(p["update"])
-			os.system(p["upgrade"])
+			if x["upgrade"] != "":
+				os.system(p["upgrade"])
 
 	for x in config["additional"]:
 		if has_package(x["command"]):
@@ -217,8 +218,7 @@ def download():
 
 def hosts():
 	print(u'\U0001F4DD' + "  Updating '/etc/hosts' from '" + config["hosts-source"] + "'...")
-	os.system("echo '127.0.0.1 localhost\n::1 localhost\n255.255.255.255 broadcasthost\n127.0.0.1 " + os.uname()[
-		1] + "\n' | sudo tee /etc/hosts > /dev/null")
+	os.system("echo '127.0.0.1 localhost\n::1 localhost\n255.255.255.255 broadcasthost\n127.0.0.1 " + os.uname()[1] + "\n' | sudo tee /etc/hosts > /dev/null")
 	os.system("curl -#SLk " + config["hosts-source"] + " | grep 0.0.0.0 | sudo tee -a /etc/hosts > /dev/null")
 	return
 
@@ -229,8 +229,7 @@ def wallpaper():
 
 	print(u'\U0001f5bc' + "  Setting wallpaper...")
 	if sys.platform == "darwin":
-		os.system(
-			"sqlite3 ~/Library/Application\ Support/Dock/desktoppicture.db \"update data set value = '~/Pictures/Wallpaper.jpg'\" && killall Dock")
+		os.system("sqlite3 ~/Library/Application\ Support/Dock/desktoppicture.db \"update data set value = '~/Pictures/Wallpaper.jpg'\" && killall Dock")
 	elif sys.platform.startswith('linux'):
 		if has_package("gsettings"):
 			os.system("gsettings set org.gnome.desktop.background picture-uri file://$HOME/Pictures/Wallpaper.jpg")
