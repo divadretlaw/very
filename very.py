@@ -111,8 +111,7 @@ def additional_command(command):
 		if sys.argv[2] in cmd and cmd[sys.argv[2]] != "":
 			os.system(cmd[sys.argv[2]] + packages)
 		else:
-			print("Unknown command")
-			exit()
+			print(u'\U0001F6AB' + " Unknown command '" + sys.argv[1] + "'")
 
 	return
 
@@ -129,7 +128,7 @@ def install():
 
 	x = get_main_package_manager()
 	if x is not None:
-		print(u'\U00002795' + "  Installing packages using '" + x["command"] + "'...")
+		print(u'\U00002795' + " Installing packages using '" + x["command"] + "'...")
 		os.system(x["install"] + packages)
 	return
 
@@ -139,7 +138,7 @@ def remove():
 
 	x = get_main_package_manager()
 	if x is not None:
-		print(u'\U00002796' + "  Removing packages using '" + x["command"] + "'...")
+		print(u'\U00002796' + " Removing packages using '" + x["command"] + "'...")
 		os.system(x["remove"] + packages)
 	return
 
@@ -182,7 +181,7 @@ def clean():
 def update():
 	for p in config["package-managers"]:
 		if has_package(p["command"]):
-			print(u'\U0001f4e6' + "  Updating packages using '" + p["command"] + "'...")
+			print(u'\U0001f4e6' + " Updating packages using '" + p["command"] + "'...")
 			os.system(p["update"])
 			if p["upgrade"] != "":
 				os.system(p["upgrade"])
@@ -190,7 +189,7 @@ def update():
 	for x in config["additional"]:
 		if has_package(x["command"]):
 			if x["update"] != "":
-				print(u'\U0001f4e6' + "  Updating packages using '" + x["command"] + "'...")
+				print(u'\U0001f4e6' + " Updating packages using '" + x["command"] + "'...")
 				os.system(x["update"])
 				if x["upgrade"] != "":
 					os.system(x["upgrade"])
@@ -198,7 +197,7 @@ def update():
 
 
 def upgrade():
-	print(u'\U0001f504' + "  Upgrading System...")
+	print(u'\U0001f504' + " Upgrading System...")
 	for p in config["package-managers"]:
 		if has_package(p["command"]):
 			os.system(p["system-upgrade"])
@@ -217,7 +216,7 @@ def download():
 
 
 def hosts():
-	print(u'\U0001F4DD' + "  Updating '/etc/hosts' from '" + config["hosts-source"] + "'...")
+	print(u'\U0001F4DD' + " Updating '/etc/hosts' from '" + config["hosts-source"] + "'...")
 	os.system("echo '127.0.0.1 localhost\n::1 localhost\n255.255.255.255 broadcasthost\n127.0.0.1 " + os.uname()[1] + "\n' | sudo tee /etc/hosts > /dev/null")
 	os.system("curl -#SLk " + config["hosts-source"] + " | grep 0.0.0.0 | sudo tee -a /etc/hosts > /dev/null")
 	return
@@ -227,7 +226,7 @@ def wallpaper():
 	print(u'\U00002b07\U0000fe0f' + "  Downloading Wallpaper from '" + config["wallpaper-source"] + "'...")
 	os.system("curl -#SLko $HOME/Pictures/Wallpaper.jpg " + config["wallpaper-source"])
 
-	print(u'\U0001f5bc' + "  Setting wallpaper...")
+	print(u'\U0001f5bc' + " Setting wallpaper...")
 	if sys.platform == "darwin":
 		os.system("sqlite3 ~/Library/Application\ Support/Dock/desktoppicture.db \"update data set value = '~/Pictures/Wallpaper.jpg'\" && killall Dock")
 	elif sys.platform.startswith('linux'):
@@ -282,7 +281,9 @@ else:
 		update_very()
 	elif any(sys.argv[1] in s["id"] for s in config["additional"]):
 		additional_command(sys.argv[1])
+		exit()
 	else:
+		print(u'\U0001F6AB' + " Unknown command '" + sys.argv[1] + "'\n")
 		print_error_message(sys.argv[0])
 		exit()
-	print(u'\U00002705' + "  Done.")
+	print(u'\U00002705' + " Done.")
