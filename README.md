@@ -19,7 +19,7 @@ python very.py [command]
 * **very-update** Updates the script to the newest version
 * **ip** Prints global IP
 * **download** Starts a download test
-* **hosts** Updates /etc/hosts from winhelp2002.mvps.org
+* **hosts** Updates `/etc/hosts` from [http://winhelp2002.mvps.org](http://winhelp2002.mvps.org)
 * **wallpaper** Sets the wallpaper
 
 # License
