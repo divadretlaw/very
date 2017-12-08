@@ -85,5 +85,6 @@
   "wallpaper-source": "",
   "downloadtest-source": "",
   "hosts-source": "http://winhelp2002.mvps.org/hosts.txt",
-  "ip-source": "http://ipecho.net/plain"
+  "ip-source": "http://ipecho.net/plain",
+	"additional_clean_commands": []
 }

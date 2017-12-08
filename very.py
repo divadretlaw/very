@@ -65,9 +65,9 @@ def print_commands():
 	print("hosts")
 	print("wallpaper")
 
-	for x in config["additional"]:
-		if has_package(x["command"]):
-			print(x["id"])
+	for a in config["additional"]:
+		if has_package(a["command"]):
+			print(a["id"])
 
 	return
 
@@ -87,17 +87,17 @@ def print_descriptions():
 	print("Updates /etc/hosts")  # hosts
 	print("Sets the wallpaper")  # wallpaper
 
-	for x in config["additional"]:
-		if has_package(x["command"]):
-			print(x["description"])
+	for a in config["additional"]:
+		if has_package(a["command"]):
+			print(a["description"])
 
 	return
 
 
 def get_additional_commands(id):
-	for x in config["additional"]:
-		if x["id"] == id:
-			return x
+	for a in config["additional"]:
+		if a["id"] == id:
+			return a
 
 
 def additional_command(command):
@@ -163,18 +163,28 @@ def ls():
 
 def clean():
 	print(u'\U0000267B\U0000fe0f' + "  Cleaning system...")
-	for x in config["package-managers"]:
-		if has_package(x["command"]):
-			os.system(x["clean"])
-	for x in config["additional"]:
-		if has_package(x["command"]) and x["clean"] != "":
-			os.system(x["clean"])
+	for pm in config["package-managers"]:
+		if has_package(pm["command"]):
+			os.system(pm["clean"])
+	
+	for a in config["additional"]:
+		if has_package(a["command"]) and a["clean"] != "":
+			os.system(a["clean"])
+	
 	print(u'\U0001f5d1' + "  Emptying trash...")
+	
 	if sys.platform == "darwin":
 		os.system("rm -rf $HOME/.Trash/*")
 	else:
 		os.system("rm -rf $HOME/.local/share/Trash/files/*")
 		os.system("rm -rf $HOME/.local/share/Trash/info/*.trashinfo")
+	
+	print(u'\U0000267B\U0000fe0f' + "  Running additional clean commands...")
+	
+	for x in config["additional_clean_commands"]:
+		print("Running '" + x + "'...")
+		os.system(x)
+	
 	return
 
 
