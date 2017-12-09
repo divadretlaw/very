@@ -56,6 +56,7 @@ def print_commands():
 	print("search")
 	print("list")
 	print("clean")
+	print("much-clean")
 	print("update")
 	print("system-update")
 	print("much-update")
@@ -78,6 +79,7 @@ def print_descriptions():
 	print("Search for packages by name")  # search
 	print("List installed packages")  # list
 	print("Cleans the system")  # clean
+	print("Cleans the system and emptys the trash")  # much-clean
 	print("Checks for package updates and installs them")  # update
 	print("Checks for system updates and installs them")  # system-update
 	print("Checks for package and system updates and installs them")  # much-update
@@ -171,6 +173,9 @@ def clean():
 		if has_package(a["command"]) and a["clean"] != "":
 			os.system(a["clean"])
 	
+	return
+
+def much_clean():
 	print(u'\U0001f5d1' + "  Emptying trash...")
 	
 	if sys.platform == "darwin":
@@ -184,9 +189,6 @@ def clean():
 	for x in config["additional_clean_commands"]:
 		print("Running '" + x + "'...")
 		os.system(x)
-	
-	return
-
 
 def update():
 	for p in config["package-managers"]:
@@ -271,6 +273,9 @@ else:
 		exit()
 	elif sys.argv[1] == "clean":
 		clean()
+	elif sys.argv[1] == "much-clean":
+		clean()
+		much_clean()
 	elif sys.argv[1] == "update":
 		update()
 	elif sys.argv[1] == "system-update":

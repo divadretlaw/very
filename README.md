@@ -13,6 +13,7 @@ python very.py [command]
 * **search** Search for packages by name
 * **list** List installed packages
 * **clean** Cleans the system
+* **much-clean** Cleans the system and emptys the trash
 * **update** Checks for package updates and installs them
 * **system-update** Checks for system updates and installs them
 * **much-update** Checks for package and system updates and installs them
