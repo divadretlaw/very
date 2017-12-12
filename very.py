@@ -56,7 +56,7 @@ def print_commands():
 	print("search")
 	print("list")
 	print("clean")
-	print("much-clean")
+	print("wow-clean")
 	print("update")
 	print("system-update")
 	print("much-update")
@@ -79,7 +79,7 @@ def print_descriptions():
 	print("Search for packages by name")  # search
 	print("List installed packages")  # list
 	print("Cleans the system")  # clean
-	print("Cleans the system and emptys the trash")  # much-clean
+	print("Cleans the system and emptys the trash")  # wow-clean
 	print("Checks for package updates and installs them")  # update
 	print("Checks for system updates and installs them")  # system-update
 	print("Checks for package and system updates and installs them")  # much-update
@@ -175,7 +175,7 @@ def clean():
 	
 	return
 
-def much_clean():
+def wow_clean():
 	print(u'\U0001f5d1' + "  Emptying trash...")
 	
 	if sys.platform == "darwin":
@@ -273,9 +273,9 @@ else:
 		exit()
 	elif sys.argv[1] == "clean":
 		clean()
-	elif sys.argv[1] == "much-clean":
+	elif sys.argv[1] == "wow-clean":
 		clean()
-		much_clean()
+		wow_clean()
 	elif sys.argv[1] == "update":
 		update()
 	elif sys.argv[1] == "system-update":
