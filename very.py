@@ -172,10 +172,7 @@ def clean():
 	for a in config["additional"]:
 		if has_package(a["command"]) and a["clean"] != "":
 			os.system(a["clean"])
-	
-	return
-
-def wow_clean():
+			
 	print(u'\U0001f5d1' + "  Emptying trash...")
 	
 	if sys.platform == "darwin":
@@ -184,6 +181,9 @@ def wow_clean():
 		os.system("rm -rf $HOME/.local/share/Trash/files/*")
 		os.system("rm -rf $HOME/.local/share/Trash/info/*.trashinfo")
 	
+	return
+
+def wow_clean():
 	print(u'\U0000267B\U0000fe0f' + "  Running additional clean commands...")
 	
 	for x in config["additional_clean_commands"]:
