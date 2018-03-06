@@ -1,6 +1,7 @@
 import os
 import sys
 import json
+import datetime
 
 home = os.path.expanduser("~")
 
@@ -233,8 +234,9 @@ def hosts():
 		sudo = "sudo"
 	target = config["hosts-target"]["value"]
 	print(u'\U0001F4DD' + " Updating '" + target + "' from '" + config["hosts-source"] + "'...")
+	os.system("echo '# Last updated: {:%Y-%m-%d %H:%M:%S}".format(datetime.datetime.now()) + "\n' | " + sudo + " tee " + target + " > /dev/null")
 	if config["hosts-target"]["defaults"]:
-		os.system("echo '127.0.0.1 localhost\n::1 localhost\n255.255.255.255 broadcasthost\n127.0.0.1 " + os.uname()[1] + "\n' | " + sudo + " tee " + target + " > /dev/null")
+		os.system("echo '127.0.0.1 localhost\n::1 localhost\n255.255.255.255 broadcasthost\n127.0.0.1 " + os.uname()[1] + "\n' | " + sudo + " tee -a " + target + " > /dev/null")
 	os.system("curl -#SLk " + config["hosts-source"] + " | grep 0.0.0.0 | " + sudo + " tee -a " + target + " > /dev/null")
 	return
 
