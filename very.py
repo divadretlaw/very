@@ -86,7 +86,7 @@ def print_descriptions():
 	print("Updates the script to the newest version")  # very-update
 	print("Prints global IP")  # ip
 	print("Starts a download test")  # download
-	print("Updates /etc/hosts")  # hosts
+	print("Updates '" + config["hosts-target"] + "'")  # hosts
 	print("Sets the wallpaper")  # wallpaper
 
 	for a in config["additional"]:
@@ -228,9 +228,11 @@ def download():
 
 
 def hosts():
-	print(u'\U0001F4DD' + " Updating '/etc/hosts' from '" + config["hosts-source"] + "'...")
-	os.system("echo '127.0.0.1 localhost\n::1 localhost\n255.255.255.255 broadcasthost\n127.0.0.1 " + os.uname()[1] + "\n' | sudo tee /etc/hosts > /dev/null")
-	os.system("curl -#SLk " + config["hosts-source"] + " | grep 0.0.0.0 | sudo tee -a /etc/hosts > /dev/null")
+	target = config["hosts-target"]["value"]
+	print(u'\U0001F4DD' + " Updating '" + target + "' from '" + config["hosts-source"] + "'...")
+	if config["hosts-target"]["defaults"]:
+		os.system("echo '127.0.0.1 localhost\n::1 localhost\n255.255.255.255 broadcasthost\n127.0.0.1 " + os.uname()[1] + "\n' | sudo tee " + target + " > /dev/null")
+	os.system("curl -#SLk " + config["hosts-source"] + " | grep 0.0.0.0 | sudo tee -a " + target + " > /dev/null")
 	return
 
 
