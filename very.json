@@ -84,7 +84,10 @@
   ],
   "wallpaper-source": "",
   "downloadtest-source": "",
-	"hosts-target": "/etc/hosts",
+	"hosts-target": {
+		"defaults": true,
+		"value": "/etc/hosts"
+		},
   "hosts-source": "http://winhelp2002.mvps.org/hosts.txt",
   "ip-source": "http://ipecho.net/plain",
 	"additional_clean_commands": []
