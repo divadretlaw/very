@@ -230,7 +230,7 @@ def download():
 
 def hosts():
 	sudo = ""
-	if config["hosts-target"]["value"]:
+	if config["hosts-target"]["sudo"]:
 		sudo = "sudo"
 	target = config["hosts-target"]["value"]
 	print(u'\U0001F4DD' + " Updating '" + target + "' from '" + config["hosts-source"] + "'...")
