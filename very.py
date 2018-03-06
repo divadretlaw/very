@@ -228,11 +228,14 @@ def download():
 
 
 def hosts():
+	sudo = ""
+	if config["hosts-target"]["value"]:
+		sudo = "sudo"
 	target = config["hosts-target"]["value"]
 	print(u'\U0001F4DD' + " Updating '" + target + "' from '" + config["hosts-source"] + "'...")
 	if config["hosts-target"]["defaults"]:
-		os.system("echo '127.0.0.1 localhost\n::1 localhost\n255.255.255.255 broadcasthost\n127.0.0.1 " + os.uname()[1] + "\n' | sudo tee " + target + " > /dev/null")
-	os.system("curl -#SLk " + config["hosts-source"] + " | grep 0.0.0.0 | sudo tee -a " + target + " > /dev/null")
+		os.system("echo '127.0.0.1 localhost\n::1 localhost\n255.255.255.255 broadcasthost\n127.0.0.1 " + os.uname()[1] + "\n' | " + sudo + " tee " + target + " > /dev/null")
+	os.system("curl -#SLk " + config["hosts-source"] + " | grep 0.0.0.0 | " + sudo + " tee -a " + target + " > /dev/null")
 	return
 
 

@@ -85,6 +85,7 @@
   "wallpaper-source": "",
   "downloadtest-source": "",
 	"hosts-target": {
+		"sudo": true,
 		"defaults": true,
 		"value": "/etc/hosts"
 		},
