@@ -87,7 +87,7 @@ def print_descriptions():
 	print("Updates the script to the newest version")  # very-update
 	print("Prints global IP")  # ip
 	print("Starts a download test")  # download
-	print("Updates '" + config["hosts-target"] + "'")  # hosts
+	print("Updates '" + config["hosts"]["target"] + "'")  # hosts
 	print("Sets the wallpaper")  # wallpaper
 
 	for a in config["additional"]:
@@ -229,15 +229,16 @@ def download():
 
 
 def hosts():
+	hosts = config["hosts"]
 	sudo = ""
-	if config["hosts-target"]["sudo"]:
+	if hosts["sudo"]:
 		sudo = "sudo"
-	target = config["hosts-target"]["value"]
-	print(u'\U0001F4DD' + " Updating '" + target + "' from '" + config["hosts-source"] + "'...")
+	target = hosts["target"]
+	print(u'\U0001F4DD' + " Updating '" + target + "' from '" + hosts["source"] + "'...")
 	os.system("echo '# Last updated: {:%Y-%m-%d %H:%M:%S}".format(datetime.datetime.now()) + "\n' | " + sudo + " tee " + target + " > /dev/null")
-	if config["hosts-target"]["defaults"]:
+	if hosts["defaults"]:
 		os.system("echo '127.0.0.1 localhost\n::1 localhost\n255.255.255.255 broadcasthost\n127.0.0.1 " + os.uname()[1] + "\n' | " + sudo + " tee -a " + target + " > /dev/null")
-	os.system("curl -#SLk " + config["hosts-source"] + " | grep 0.0.0.0 | " + sudo + " tee -a " + target + " > /dev/null")
+	os.system("curl -#SLk " + hosts["source"] + " | grep 0.0.0.0 | " + sudo + " tee -a " + target + " > /dev/null")
 	return
 
 
