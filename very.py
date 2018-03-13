@@ -238,7 +238,7 @@ def hosts():
 	os.system("echo '# Last updated: {:%Y-%m-%d %H:%M:%S}".format(datetime.datetime.now()) + "\n' | " + sudo + " tee " + target + " > /dev/null")
 	if hosts["defaults"]:
 		os.system("echo '127.0.0.1 localhost\n::1 localhost\n255.255.255.255 broadcasthost\n127.0.0.1 " + os.uname()[1] + "\n' | " + sudo + " tee -a " + target + " > /dev/null")
-	os.system("curl -#SLk " + hosts["source"] + " | grep 0.0.0.0 | " + sudo + " tee -a " + target + " > /dev/null")
+	os.system("curl -#SLk " + hosts["source"] + " | grep '^[^#]' | grep 0.0.0.0 | " + sudo + " tee -a " + target + " > /dev/null")
 	return
 
 
