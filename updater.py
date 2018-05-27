@@ -7,6 +7,7 @@ class Updater:
 
     @staticmethod
     def update_file(file: str):
+        print("Downloading '" + file + "'")
         os.system("curl -#SLko " + path + "/" + file
                   + " https://raw.githubusercontent.com/divadretlaw/very/master/" + file)
 
