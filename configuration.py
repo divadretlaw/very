@@ -16,10 +16,8 @@ class Singleton(type):
 
 class Configuration(metaclass=Singleton):
     def __init__(self):
-        with open('very/very.json') as data_file:
+        with open(OSHelper.home() + '/.config/very/very.json') as data_file:
             self.data = json.load(data_file)
-#        with open(OSHelper.home() + '/.config/very/very.json') as data_file:
-#            self.data = json.load(data_file)
 
     def get_sources(self):
         return self.data["sources"]
