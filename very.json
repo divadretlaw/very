@@ -1,12 +1,13 @@
 {
-  "package-managers": [{
+  "package_managers": [
+    {
       "command": "brew",
       "install": "brew install",
       "remove": "brew remove",
       "clean": "brew cleanup",
       "update": "brew update",
       "upgrade": "brew upgrade",
-      "system-upgrade": "softwareupdate -i -a",
+      "system_upgrade": "softwareupdate -i -a",
       "search": "brew search",
       "list": "brew list"
     },
@@ -17,7 +18,7 @@
       "clean": "sudo apt-get autoremove",
       "update": "sudo apt-get update",
       "upgrade": "sudo apt-get upgrade",
-      "system-upgrade": "sudo apt-get dist-upgrade",
+      "system_upgrade": "sudo apt-get dist-upgrade",
       "search": "apt-cache pkgnames",
       "list": "dpkg --get-selections | grep -v deinstall"
     },
@@ -28,12 +29,13 @@
       "clean": "sudo pacman -Qdtq | sudo pacman -Rs",
       "update": "sudo pacman -Syu",
       "upgrade": "",
-      "system-upgrade": "sudo pacman -Syu",
+      "system_upgrade": "sudo pacman -Syu",
       "search": "pacman -Ssq",
       "list": "pacman -Qq"
     }
   ],
-  "additional": [{
+  "additional": [
+    {
       "id": "atom",
       "description": "Atom Package Manager",
       "command": "apm",
@@ -82,14 +84,17 @@
       "list": "npm -g list"
     }
   ],
-  "wallpaper-source": "",
-  "downloadtest-source": "",
-  "hosts": {
-		"sudo": true,
-		"defaults": true,
-    "source": "http://winhelp2002.mvps.org/hosts.txt",
-		"target": "/etc/hosts"
-	},
-  "ip-source": "http://ipecho.net/plain",
-	"additional_clean_commands": []
+  "sources": {
+    "downloadtest": "",
+    "ip": "http://ipecho.net/plain",
+    "ping": "1.1.1.1",
+    "wallpaper": "",
+    "hosts": {
+      "sudo": true,
+      "defaults": true,
+      "source": "http://winhelp2002.mvps.org/hosts.txt",
+      "target": "/etc/hosts"
+    }
+  },
+  "additional_clean_commands": []
 }
