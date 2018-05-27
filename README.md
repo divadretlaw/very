@@ -7,7 +7,7 @@ A package manager wrapper and some simple additional commands
 ### Usage
 
 ```
-python very.py [command]
+python3 very.py [command]
 ```
 
 * **install** Install one ore more packages

@@ -1,13 +1,13 @@
 import os
 
-dir_path = os.path.dirname(os.path.realpath(__file__))
+path = os.path.dirname(os.path.realpath(__file__))
 
 
 class Updater:
 
     @staticmethod
     def update_file(file):
-        os.system("curl -#SLko " + dir_path + "/" + file
+        os.system("curl -#SLko " + path + "/" + file
                   + " https://raw.githubusercontent.com/divadretlaw/very/master/" + file)
 
     @staticmethod
