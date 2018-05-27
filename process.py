@@ -4,6 +4,10 @@ import os
 class Process:
 
     @staticmethod
+    def get_directory():
+        return os.path.dirname(os.path.realpath(__file__))
+
+    @staticmethod
     def home():
         return os.path.expanduser("~")
 

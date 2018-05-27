@@ -184,7 +184,7 @@ def wallpaper():
 def update_very():
     print(u'\U00002935\U0000fe0f' + "  Updating 'very'...")
     Updater.update_file("updater.py")
-    Process.run("python3 updater.py")
+    Process.run("python3 " + Process.get_directory() + "/updater.py")
     return
 
 
