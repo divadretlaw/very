@@ -17,6 +17,7 @@ class Installer:
         Installer.install_file("configuration.py")
         Installer.install_file("printer.py")
         Installer.install_file("osHelper.py")
+        Installer.install_file("updater.py")
 
 
 if __name__ == "__main__":
