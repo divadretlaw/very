@@ -1,3 +1,3 @@
 function very
-	python $HOME/.very.py $argv
+	python3 $HOME/.very $argv
 end

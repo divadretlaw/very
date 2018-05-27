@@ -1,7 +1,5 @@
 import os
 
-from osHelper import OSHelper
-
 dir_path = os.path.dirname(os.path.realpath(__file__))
 
 
@@ -9,8 +7,8 @@ class Updater:
 
     @staticmethod
     def update_file(file):
-        OSHelper.run("curl -#SLko " + dir_path + "/" + file
-                     + " https://raw.githubusercontent.com/divadretlaw/very/master/" + file)
+        os.system("curl -#SLko " + dir_path + "/" + file
+                  + " https://raw.githubusercontent.com/divadretlaw/very/master/" + file)
 
     @staticmethod
     def update():

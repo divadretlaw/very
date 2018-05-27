@@ -13,4 +13,4 @@ else
 echo 'alias very="python $HOME/.very.py"' >> $HOME/.bashrc
 fi
 
-curl -SLko $HOME/.very.py https://raw.githubusercontent.com/divadretlaw/very/master/very.py
+python3 install.py
