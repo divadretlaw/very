@@ -21,6 +21,14 @@ class OSHelper:
             os.system(run)
 
     @staticmethod
-    def run_if(check, run):
-        if OSHelper.has_package(check):
-            OSHelper.run(run)
+    def run_if(package, command):
+        if OSHelper.has_package(package):
+            OSHelper.run(command)
+
+    @staticmethod
+    def run_and_print(package_manager, command, arguments, message):
+        if package_manager is not None:
+            if package_manager[command] != "":
+                if message is not None and message != "":
+                    print(message)
+                OSHelper.run(package_manager[command] + arguments)

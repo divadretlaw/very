@@ -12,10 +12,10 @@ from updater import Updater
 config = Configuration()
 
 
-def additional_command(command):
-    cmd = config.get_additional_commands_of(command)
+def additional_command(package_manager):
+    commands = config.get_additional_commands_of(package_manager)
 
-    if cmd is not None:
+    if commands is not None:
         packages = ""
 
         if len(sys.argv) < 3:
@@ -25,8 +25,8 @@ def additional_command(command):
         for x in range(3, len(sys.argv)):
             packages += " " + sys.argv[x]
 
-        if sys.argv[2] in cmd and cmd[sys.argv[2]] != "":
-            OSHelper.run(cmd[sys.argv[2]] + packages)
+        if sys.argv[2] in commands and commands[sys.argv[2]] != "":
+            OSHelper.run(commands[sys.argv[2]] + packages)
         else:
             print(u'\U0001F6AB' + " Unknown subcommand of '" + sys.argv[1] + "'")
 
@@ -44,9 +44,8 @@ def install():
     packages = arguments_from(2)
 
     main = config.get_main_package_manager()
-    if main is not None:
-        print(u'\U00002795' + " Installing packages using '" + main["command"] + "'...")
-        OSHelper.run(main["install"] + packages)
+    message = u'\U00002795' + " Installing packages using '" + main["command"] + "'..."
+    OSHelper.run_and_print(main, "install", packages, message)
     return
 
 
@@ -54,9 +53,8 @@ def remove():
     packages = arguments_from(2)
 
     main = config.get_main_package_manager()
-    if main is not None:
-        print(u'\U00002796' + " Removing packages using '" + main["command"] + "'...")
-        OSHelper.run(main["remove"] + packages)
+    message = u'\U00002795' + " Removing packages using '" + main["command"] + "'..."
+    OSHelper.run_and_print(main, "remove", packages, message)
     return
 
 
@@ -64,8 +62,7 @@ def search():
     packages = arguments_from(2)
 
     main = config.get_main_package_manager()
-    if main is not None:
-        OSHelper.run(main["search"] + packages)
+    OSHelper.run_and_print(main, "search", packages, None)
     return
 
 
@@ -73,15 +70,13 @@ def ls():
     packages = arguments_from(2)
 
     main = config.get_main_package_manager()
-    if main is not None:
-        OSHelper.run(main["list"] + packages)
+    OSHelper.run_and_print(main, "list", packages, None)
     return
 
 
 def clean():
-    print(u'\U0000267B\U0000fe0f' + "  Cleaning system...")
     main = config.get_main_package_manager()
-    OSHelper.run_if(main["command"], main["clean"])
+    OSHelper.run_and_print(main, "clean", "", u'\U0000267B\U0000fe0f' + "  Cleaning system...")
 
     for packageManger in config.get_additional():
         OSHelper.run_if(packageManger["command"], packageManger["clean"])
@@ -100,31 +95,30 @@ def clean():
 def additional_clean():
     print(u'\U0000267B\U0000fe0f' + "  Running additional clean commands...")
 
-    for x in config.data["additional_clean_commands"]:
-        print("Running '" + x + "'...")
-        OSHelper.run(x)
+    for command in config.data["additional_clean_commands"]:
+        print("Running '" + command + "'...")
+        OSHelper.run(command)
+    return
 
 
 def update():
-    for p in config.get_package_mangers():
-        if OSHelper.has_package(p["command"]):
-            print(u'\U0001f4e6' + " Updating packages using '" + p["command"] + "'...")
-            OSHelper.run(p["update"])
-            OSHelper.run(p["upgrade"])
+    main = config.get_main_package_manager()
+    message = u'\U0001f4e6' + " Updating packages using '" + main["command"] + "'..."
+    OSHelper.run_and_print(main, "update", "", message)
+    OSHelper.run_and_print(main, "upgrade", "", None)
 
-    for x in config.get_additional():
-        if OSHelper.has_package(x["command"]):
-            if x["update"] != "":
-                print(u'\U0001f4e6' + " Updating packages using '" + x["command"] + "'...")
-                OSHelper.run(x["update"])
-                OSHelper.run(x["upgrade"])
+    for packageManager in config.get_additional():
+        if OSHelper.has_package(packageManager["command"]):
+            message = u'\U0001f4e6' + " Updating packages using '" + packageManager["command"] + "'..."
+            OSHelper.run_and_print(packageManager, "update", "", message)
+            OSHelper.run_and_print(packageManager, "upgrade", "", None)
     return
 
 
 def upgrade():
     print(u'\U0001f504' + " Upgrading System...")
-    for p in config.get_package_mangers():
-        OSHelper.run_if(p["command"], p["system_upgrade"])
+    for packageManager in config.get_package_mangers():
+        OSHelper.run_if(packageManager["command"], packageManager["system_upgrade"])
     return
 
 
@@ -141,24 +135,24 @@ def ping():
 
 def download():
     print(u'\U00002b07\U0000fe0f' + "  Starting download test...")
-    OSHelper.run("curl _sLko /dev/null " + config.get_sources()["downloadtest"])
+    OSHelper.run("curl -sLko /dev/null " + config.get_sources()["downloadtest"])
     return
 
 
 def hosts():
-    hosts = config.get_sources()["hosts"]
+    hosts_config = config.get_sources()["hosts"]
     sudo = ""
-    if hosts["sudo"]:
+    if hosts_config["sudo"]:
         sudo = "sudo"
 
-    target = hosts["target"]
+    target = hosts_config["target"]
 
-    print(u'\U0001F4DD' + " Updating '" + target + "' from '" + hosts["source"] + "'...")
+    print(u'\U0001F4DD' + " Updating '" + target + "' from '" + hosts_config["source"] + "'...")
 
     OSHelper.run("echo '# Last updated: {:%Y-%m-%d %H:%M:%S}".format(
         datetime.datetime.now()) + "\n' | " + sudo + " tee " + target + " > /dev/null")
 
-    if hosts["defaults"]:
+    if hosts_config["defaults"]:
         OSHelper.run(
             "echo '127.0.0.1 localhost\n::1 localhost\n255.255.255.255 broadcasthost\n127.0.0.1 "
             + OSHelper.name()
@@ -166,7 +160,7 @@ def hosts():
             + sudo + " tee -a "
             + target + " > /dev/null")
 
-    OSHelper.run("curl -#SLk " + hosts[
+    OSHelper.run("curl -#SLk " + hosts_config[
         "source"] + " | grep '^[^#]' | grep 0.0.0.0 | " + sudo + " tee -a " + target + " > /dev/null")
     return
 
@@ -177,13 +171,14 @@ def wallpaper():
 
     print(u'\U0001f5bc' + " Setting wallpaper...")
     if sys.platform == "darwin":
-        OSHelper.run(
-            "sqlite3 ~/Library/Application\ Support/Dock/desktoppicture.db "
-            + "\"update data set value = '~/Pictures/Wallpaper.jpg'\" && killall Dock")
+        OSHelper.run_if("sqlite3",
+                        "sqlite3 ~/Library/Application\ Support/Dock/desktoppicture.db "
+                        + "\"update data set value = '~/Pictures/Wallpaper.jpg'\" && killall Dock")
     elif sys.platform.startswith('linux'):
-        if OSHelper.has_package("gsettings"):
-            OSHelper.run("gsettings set org.gnome.desktop.background picture-uri file://$HOME/Pictures/Wallpaper.jpg")
-            OSHelper.run("gsettings set org.gnome.desktop.screensaver picture-uri file://$HOME/Pictures/Wallpaper.jpg")
+        OSHelper.run_if("gsettings",
+                        "gsettings set org.gnome.desktop.background picture-uri file://$HOME/Pictures/Wallpaper.jpg")
+        OSHelper.run_if("gsettings",
+                        "gsettings set org.gnome.desktop.screensaver picture-uri file://$HOME/Pictures/Wallpaper.jpg")
     return
 
 
