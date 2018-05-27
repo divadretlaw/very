@@ -6,7 +6,7 @@ path = os.path.expanduser("~") + "/.very"
 class Installer:
 
     @staticmethod
-    def install_file(file):
+    def install_file(file: str):
         os.system("curl -#SLko " + path + "/" + file
                   + " https://raw.githubusercontent.com/divadretlaw/very/master/" + file)
 
@@ -16,7 +16,7 @@ class Installer:
         Installer.install_file("__main__.py")
         Installer.install_file("configuration.py")
         Installer.install_file("printer.py")
-        Installer.install_file("osHelper.py")
+        Installer.install_file("process.py")
         Installer.install_file("updater.py")
 
 

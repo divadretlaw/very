@@ -1,14 +1,14 @@
 import os
 
 
-class OSHelper:
+class Process:
 
     @staticmethod
     def home():
         return os.path.expanduser("~")
 
     @staticmethod
-    def name():
+    def uname():
         return os.uname()[1]
 
     @staticmethod
@@ -16,19 +16,19 @@ class OSHelper:
         return os.popen("command -v " + package).read() != ""
 
     @staticmethod
-    def run(run):
-        if run is not None and run != "":
-            os.system(run)
+    def run(command: str):
+        if command is not None and command != "":
+            os.system(command)
 
     @staticmethod
-    def run_if(package, command):
-        if OSHelper.has_package(package):
-            OSHelper.run(command)
+    def run_if_has(package: str, command: str):
+        if Process.has_package(package):
+            Process.run(command)
 
     @staticmethod
-    def run_and_print(package_manager, command, arguments, message):
+    def run_with_message(package_manager, command: str, arguments: str, message: str):
         if package_manager is not None:
             if package_manager[command] != "":
                 if message is not None and message != "":
                     print(message)
-                OSHelper.run(package_manager[command] + arguments)
+                Process.run(package_manager[command] + arguments)

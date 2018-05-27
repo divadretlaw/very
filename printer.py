@@ -1,5 +1,5 @@
 import configuration
-from osHelper import OSHelper
+from process import Process
 
 
 class Printer:
@@ -8,7 +8,7 @@ class Printer:
         return
 
     @staticmethod
-    def error_message(filename):
+    def error_message(filename: str):
         print("Usage: python " + filename + " [command]")
         print("\n" + u'\U00002139\U0000fe0f' + "  Available commands:")
         Printer.commands()
@@ -35,7 +35,7 @@ class Printer:
         config = configuration.Configuration()
 
         for packageManager in config.get_additional():
-            if OSHelper.has_package(packageManager["command"]):
+            if Process.has_package(packageManager["command"]):
                 print(packageManager["id"])
 
         return
@@ -61,7 +61,7 @@ class Printer:
         print("Sets the wallpaper")  # wallpaper
 
         for packageManager in config.get_additional()["additional"]:
-            if OSHelper.has_package(packageManager["command"]):
+            if Process.has_package(packageManager["command"]):
                 print(packageManager["description"])
 
         return
