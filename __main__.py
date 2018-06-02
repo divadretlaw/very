@@ -154,7 +154,7 @@ def hosts():
     if hosts_config["defaults"]:
         Process.run(
             "echo '127.0.0.1 localhost\n::1 localhost\n255.255.255.255 broadcasthost\n127.0.0.1 "
-            + Process.uname()
+            + Process.machine_name()
             + "\n' | "
             + sudo + " tee -a "
             + target + " > /dev/null")

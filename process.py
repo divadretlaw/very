@@ -1,4 +1,5 @@
 import os
+from typing import Optional
 
 
 class Process:
@@ -12,7 +13,7 @@ class Process:
         return os.path.expanduser("~")
 
     @staticmethod
-    def uname():
+    def machine_name():
         return os.uname()[1]
 
     @staticmethod
@@ -30,7 +31,7 @@ class Process:
             Process.run(command)
 
     @staticmethod
-    def run_with_message(package_manager, command: str, arguments: str, message: str):
+    def run_with_message(package_manager, command: str, arguments: str, message: Optional[str]):
         if package_manager is not None:
             if package_manager[command] != "":
                 if message is not None and message != "":

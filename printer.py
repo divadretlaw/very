@@ -9,7 +9,7 @@ class Printer:
 
     @staticmethod
     def error_message(filename: str):
-        print("Usage: python " + filename + " [command]")
+        print("Usage: python3 " + filename + " [command]")
         print("\n" + u'\U00002139\U0000fe0f' + "  Available commands:")
         Printer.commands()
         return
@@ -60,7 +60,7 @@ class Printer:
         print("Updates '" + config.get_sources()["hosts"]["target"] + "'")  # hosts
         print("Sets the wallpaper")  # wallpaper
 
-        for packageManager in config.get_additional()["additional"]:
+        for packageManager in config.get_additional():
             if Process.has_package(packageManager["command"]):
                 print(packageManager["description"])
 
