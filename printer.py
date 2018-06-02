@@ -31,6 +31,7 @@ class Printer:
         print("download")
         print("hosts")
         print("wallpaper")
+        print("gitignore")
 
         config = configuration.Configuration()
 
@@ -48,8 +49,8 @@ class Printer:
         print("Remove one or more packages")  # remove
         print("Search for packages by name")  # search
         print("List installed packages")  # list
-        print("Cleans the system")  # clean
-        print("Cleans the system and empties the trash")  # wow-clean
+        print("Cleans the system and empties the trash")  # clean
+        print("Cleans the system and runs the additional clean commands")  # wow-clean
         print("Checks for package updates and installs them")  # update
         print("Checks for system updates and installs them")  # system-update
         print("Checks for package and system updates and installs them")  # much-update
@@ -59,6 +60,7 @@ class Printer:
         print("Starts a download test")  # download
         print("Updates '" + config.get_sources()["hosts"]["target"] + "'")  # hosts
         print("Sets the wallpaper")  # wallpaper
+        print("Loads a .gitignore file from gitignore.io") # gitignore
 
         for packageManager in config.get_additional():
             if Process.has_package(packageManager["command"]):

@@ -121,6 +121,13 @@ def upgrade():
     return
 
 
+def gitignore():
+    packages = arguments_from(2)[1:].replace(" ", ",")
+    print(u'\U0001F310' + " Downloading .gitignore file...")
+    Process.run("curl -sLko .gitignore https://www.gitignore.io/api/" + packages)
+    return
+
+
 def ip():
     Process.run("curl " + config.get_sources()["ip"])
     return
@@ -222,6 +229,8 @@ def very():
         elif sys.argv[1] == "much-update":
             update()
             upgrade()
+        elif sys.argv[1] == "gitignore":
+            gitignore()
         elif sys.argv[1] == "ip":
             ip()
             exit()
