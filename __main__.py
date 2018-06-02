@@ -194,8 +194,11 @@ def very():
         Printer.error_message(name)
         exit()
     else:
-        if sys.argv[1] == "very":
-            config.get_config(name, sys.argv[2])
+        if sys.argv[1] == "--_completion":
+            if len(sys.argv) == 2:
+                config.get_config(name, "ls")
+            else:
+                config.get_config(name, sys.argv[2])
             exit()
         elif sys.argv[1] == "install":
             install()
