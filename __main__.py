@@ -124,7 +124,7 @@ def upgrade():
 def gitignore():
     packages = arguments_from(2)[1:].replace(" ", ",")
     print(u'\U0001F310' + " Downloading .gitignore file...")
-    Process.run("curl -sLko .gitignore https://www.gitignore.io/api/" + packages)
+    Process.run("curl -sLo .gitignore https://www.gitignore.io/api/" + packages)
     return
 
 
@@ -141,7 +141,7 @@ def ping():
 
 def download():
     print(u'\U00002b07\U0000fe0f' + "  Starting download test...")
-    Process.run("curl -sLko /dev/null " + config.get_sources()["downloadtest"])
+    Process.run("curl -Lo /dev/null " + config.get_sources()["downloadtest"])
     return
 
 
@@ -166,14 +166,14 @@ def hosts():
             + sudo + " tee -a "
             + target + " > /dev/null")
 
-    Process.run("curl -#SLk " + hosts_config[
+    Process.run("curl -#L " + hosts_config[
         "source"] + " | grep '^[^#]' | grep 0.0.0.0 | " + sudo + " tee -a " + target + " > /dev/null")
     return
 
 
 def wallpaper():
     print(u'\U00002b07\U0000fe0f' + "  Downloading Wallpaper from '" + config.get_sources()["wallpaper"] + "'...")
-    Process.run("curl -#SLko $HOME/Pictures/Wallpaper.jpg " + config.get_sources()["wallpaper"])
+    Process.run("curl -#Lo $HOME/Pictures/Wallpaper.jpg " + config.get_sources()["wallpaper"])
 
     print(u'\U0001f5bc' + " Setting wallpaper...")
     if sys.platform == "darwin":
