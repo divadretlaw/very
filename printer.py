@@ -60,7 +60,7 @@ class Printer:
         print("Starts a download test")  # download
         print("Updates '" + config.get_sources()["hosts"]["target"] + "'")  # hosts
         print("Sets the wallpaper")  # wallpaper
-        print("Loads a .gitignore file from gitignore.io") # gitignore
+        print("Loads a .gitignore file from gitignore.io")  # gitignore
 
         for packageManager in config.get_additional():
             if Process.has_package(packageManager["command"]):

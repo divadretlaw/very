@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # coding: utf-8
+from builtins import len
 
 import datetime
 import sys
@@ -199,7 +200,7 @@ def very():
     name = sys.argv[0]
     if len(sys.argv) < 2:
         Printer.error_message(name)
-        exit()
+        sys.exit()
     else:
         if sys.argv[1] == "--_completion":
             if len(sys.argv) == 2:
@@ -233,7 +234,7 @@ def very():
             gitignore()
         elif sys.argv[1] == "ip":
             ip()
-            exit()
+            sys.exit()
         elif sys.argv[1] == "ping":
             ping()
         elif sys.argv[1] == "download":
@@ -246,11 +247,11 @@ def very():
             update_very()
         elif any(sys.argv[1] in additional["id"] for additional in config.get_additional()):
             additional_command(sys.argv[1])
-            exit()
+            sys.exit()
         else:
             print(u'\U0001F6AB' + " Unknown command '" + sys.argv[1] + "'\n")
             Printer.error_message(name)
-            exit()
+            sys.exit()
         print(u'\U00002705' + " Done.")
 
 
