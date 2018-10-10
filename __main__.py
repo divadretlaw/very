@@ -99,7 +99,7 @@ def clear_logs():
     Process.run("sudo -v")
     for directory in config.get_clean()["log_directories"]:
         print("Clearing '" + directory + "'")
-        Process.run("sudo rm -rf " + directory + " &>/dev/null")
+        Process.run("sudo rm -rf " + directory)
 
 
 def additional_clean():
@@ -135,7 +135,7 @@ def upgrade():
     return
 
 
-def gitignore():
+def git_ignore():
     packages = arguments_from(2)[1:].replace(" ", ",")
     print(u'\U0001F310' + " Downloading .gitignore file...")
     Process.run("curl -sLo .gitignore https://www.gitignore.io/api/" + packages)
@@ -245,7 +245,7 @@ def very():
             update()
             upgrade()
         elif sys.argv[1] == "gitignore":
-            gitignore()
+            git_ignore()
         elif sys.argv[1] == "ip":
             ip()
             sys.exit()
