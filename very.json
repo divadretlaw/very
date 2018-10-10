@@ -96,5 +96,9 @@
       "target": "/etc/hosts"
     }
   },
-  "additional_clean_commands": []
+  "clean": {
+    "additional_clean_commands": [],
+    "logs": true,
+    "log_directories": []
+  }
 }

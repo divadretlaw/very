@@ -92,10 +92,23 @@ def clean():
     return
 
 
+def clear_logs():
+    if not config.get_clean()["logs"]:
+        return
+    print(u'\U0000267B\U0000fe0f' + "  Clearing log files...")
+    Process.run("sudo -v")
+    for directory in config.get_clean()["log_directories"]:
+        print("Clearing '" + directory + "'")
+        Process.run("sudo rm -rf " + directory + " &>/dev/null")
+
+
 def additional_clean():
     print(u'\U0000267B\U0000fe0f' + "  Running additional clean commands...")
 
-    for command in config.data["additional_clean_commands"]:
+    if not config.get_clean()["additional_clean_commands"]:
+        return
+
+    for command in config.get_clean()["additional_clean_commands"]:
         print("Running '" + command + "'...")
         Process.run(command)
     return
@@ -222,6 +235,7 @@ def very():
             clean()
         elif sys.argv[1] == "wow-clean":
             clean()
+            clear_logs()
             additional_clean()
         elif sys.argv[1] == "update":
             update()

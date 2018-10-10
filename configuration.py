@@ -60,3 +60,6 @@ class Configuration(metaclass=Singleton):
         for packageManger in self.get_package_mangers():
             if Process.has_package(packageManger["command"]):
                 return packageManger
+
+    def get_clean(self) -> dict:
+        return self.data["clean"]
