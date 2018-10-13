@@ -95,7 +95,7 @@ def clean():
 def clean_directories():
     if not config.get_clean()["directories"]:
         return
-    print(u'\U00001F4C1' + "  Clearing directories...")
+    print(u'\U0001F4C1' + " Clearing directories...")
     for directory in config.get_clean()["directories"]:
         print("Clearing '" + directory + "'")
         Process.run("sudo rm -rf " + directory)
@@ -105,7 +105,7 @@ def clean_additional():
     if not config.get_clean()["commands"]:
         return
 
-    print(u'\U00001F4DF' + "  Running additional clean commands...")
+    print(u'\U0001F4DF' + " Running additional clean commands...")
 
     for command in config.get_clean()["commands"]:
         print("Running '" + command + "'...")
