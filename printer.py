@@ -8,6 +8,22 @@ class Printer:
         return
 
     @staticmethod
+    def print_saved(old_space: int):
+        new_space = Process.get_space_available()
+        saved = new_space - old_space
+        if saved < 0:
+            saved = 0
+        print(u'\U00002705 Done - ' + Printer.int_to_bytes(saved) + " of space was cleaned")
+
+    @staticmethod
+    def int_to_bytes(num, suffix='B'):
+        for unit in ['', 'K', 'M', 'G', 'T', 'P', 'E', 'Z']:
+            if abs(num) < 1024.0:
+                return "%3.1f%s%s" % (num, unit, suffix)
+            num /= 1024.0
+        return "%.1f%s%s" % (num, 'Y', suffix)
+
+    @staticmethod
     def error_message(filename: str):
         print("Usage: python3 " + filename + " [command]")
         print("\n" + u'\U00002139\U0000fe0f' + "  Available commands:")

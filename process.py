@@ -1,8 +1,23 @@
 import os
+import subprocess
 from typing import Optional
 
 
 class Process:
+
+    @staticmethod
+    def get_space_available() -> int:
+        result = subprocess.run(["df", "/"], stdout=subprocess.PIPE)
+        if result.stderr is not None:
+            return -1
+
+        result = subprocess.run(["tail", "-1"], stdout=subprocess.PIPE, input=result.stdout)
+        if result.stderr is not None:
+            return -1
+
+        result = result.stdout.decode('utf-8')
+        result = result.split(" ")
+        return int(result[4])
 
     @staticmethod
     def get_directory():

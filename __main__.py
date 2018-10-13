@@ -96,17 +96,16 @@ def clear_logs():
     if not config.get_clean()["logs"]:
         return
     print(u'\U0000267B\U0000fe0f' + "  Clearing log files...")
-    Process.run("sudo -v")
     for directory in config.get_clean()["log_directories"]:
         print("Clearing '" + directory + "'")
-        Process.run("sudo rm -rf " + directory)
+        Process.run("rm -rf " + directory)
 
 
 def additional_clean():
-    print(u'\U0000267B\U0000fe0f' + "  Running additional clean commands...")
-
     if not config.get_clean()["additional_clean_commands"]:
         return
+
+    print(u'\U0000267B\U0000fe0f' + "  Running additional clean commands...")
 
     for command in config.get_clean()["additional_clean_commands"]:
         print("Running '" + command + "'...")
@@ -209,12 +208,23 @@ def update_very():
     return
 
 
+def needs_sudo(command: str) -> bool:
+    if command == "hosts" and config.get_sources()["hosts"]["sudo"]:
+        return True
+    elif command == "wow-clean" and config.get_clean()["logs"]:
+        return True
+    return False
+
+
 def very():
     name = sys.argv[0]
     if len(sys.argv) < 2:
         Printer.error_message(name)
         sys.exit()
     else:
+        if needs_sudo(sys.argv[1]):
+            Process.run("sudo -v")
+
         if sys.argv[1] == "--_completion":
             if len(sys.argv) == 2:
                 config.get_config(name, "ls")
@@ -232,11 +242,17 @@ def very():
             ls()
             exit()
         elif sys.argv[1] == "clean":
+            old_space = Process.get_space_available()
             clean()
+            Printer.print_saved(old_space)
+            exit()
         elif sys.argv[1] == "wow-clean":
+            old_bytes = Process.get_space_available()
             clean()
             clear_logs()
             additional_clean()
+            Printer.print_saved(old_bytes)
+            exit()
         elif sys.argv[1] == "update":
             update()
         elif sys.argv[1] == "system-update":
