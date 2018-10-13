@@ -53,10 +53,10 @@
       "command": "brew cask",
       "install": "brew cask install",
       "remove": "brew cask remove",
-      "clean": "brew cask cleanup",
+      "clean": "brew cleanup",
       "update": "",
       "upgrade": "",
-      "search": "brew cask search",
+      "search": "brew search",
       "list": "brew cask list"
     },
     {
@@ -97,8 +97,7 @@
     }
   },
   "clean": {
-    "additional_clean_commands": [],
-    "logs": true,
-    "log_directories": []
+    "commands": [],
+    "directories": []
   }
 }

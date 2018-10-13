@@ -92,22 +92,22 @@ def clean():
     return
 
 
-def clear_logs():
-    if not config.get_clean()["logs"]:
+def clean_directories():
+    if not config.get_clean()["directories"]:
         return
-    print(u'\U0000267B\U0000fe0f' + "  Clearing log files...")
-    for directory in config.get_clean()["log_directories"]:
+    print(u'\U00001F4C1' + "  Clearing directories...")
+    for directory in config.get_clean()["directories"]:
         print("Clearing '" + directory + "'")
-        Process.run("rm -rf " + directory)
+        Process.run("sudo rm -rf " + directory)
 
 
-def additional_clean():
-    if not config.get_clean()["additional_clean_commands"]:
+def clean_additional():
+    if not config.get_clean()["commands"]:
         return
 
-    print(u'\U0000267B\U0000fe0f' + "  Running additional clean commands...")
+    print(u'\U00001F4DF' + "  Running additional clean commands...")
 
-    for command in config.get_clean()["additional_clean_commands"]:
+    for command in config.get_clean()["commands"]:
         print("Running '" + command + "'...")
         Process.run(command)
     return
@@ -211,7 +211,7 @@ def update_very():
 def needs_sudo(command: str) -> bool:
     if command == "hosts" and config.get_sources()["hosts"]["sudo"]:
         return True
-    elif command == "wow-clean" and config.get_clean()["logs"]:
+    elif command == "wow-clean" and config.get_clean()["directories"]:
         return True
     return False
 
@@ -249,8 +249,8 @@ def very():
         elif sys.argv[1] == "wow-clean":
             old_bytes = Process.get_space_available()
             clean()
-            clear_logs()
-            additional_clean()
+            clean_directories()
+            clean_additional()
             Printer.print_saved(old_bytes)
             exit()
         elif sys.argv[1] == "update":
