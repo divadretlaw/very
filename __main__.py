@@ -95,9 +95,9 @@ def clean():
 def clean_directories():
     if not config.get_clean()["directories"]:
         return
-    print(u'\U0001F4C1' + " Clearing directories...")
+    print(u'\U0001F4C1' + " Cleaning directories...")
     for directory in config.get_clean()["directories"]:
-        print("Clearing '" + directory + "'")
+        print("Cleaning '" + directory + "'")
         Process.run("sudo rm -rf " + directory)
 
 
@@ -209,6 +209,8 @@ def update_very():
 
 
 def needs_sudo(command: str) -> bool:
+    if command == "very" and (config.get_sources()["hosts"]["sudo"] or config.get_clean()["directories"]):
+            return True
     if command == "hosts" and config.get_sources()["hosts"]["sudo"]:
         return True
     elif command == "wow-clean" and config.get_clean()["directories"]:
