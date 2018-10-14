@@ -48,6 +48,7 @@ class Printer:
         print("hosts")
         print("wallpaper")
         print("gitignore")
+        print("very")
 
         config = configuration.Configuration()
 
@@ -77,6 +78,7 @@ class Printer:
         print("Updates '" + config.get_sources()["hosts"]["target"] + "'")  # hosts
         print("Sets the wallpaper")  # wallpaper
         print("Loads a .gitignore file from gitignore.io")  # gitignore
+        print("Updates, Upgrades loads hosts and does a cleanup")  # very
 
         for packageManager in config.get_additional():
             if Process.has_package(packageManager["command"]):

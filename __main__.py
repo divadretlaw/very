@@ -231,6 +231,13 @@ def very():
             else:
                 config.get_config(name, sys.argv[2])
             exit()
+        elif sys.argv[1] == "very":
+            update()
+            upgrade()
+            hosts()
+            clean()
+            clean_directories()
+            clean_additional()
         elif sys.argv[1] == "install":
             install()
         elif sys.argv[1] == "remove":
