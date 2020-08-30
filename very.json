@@ -1,103 +1,28 @@
 {
-  "package_managers": [
-    {
-      "command": "brew",
-      "install": "brew install",
-      "remove": "brew remove",
-      "clean": "brew cleanup",
-      "update": "brew update",
-      "upgrade": "brew upgrade",
-      "system_upgrade": "softwareupdate -i -a",
-      "search": "brew search",
-      "list": "brew list"
+  "sources" : {
+    "ip" : "http://ipecho.net/plain",
+    "hosts" : {
+      "defaults" : true,
+      "source" : "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts",
+      "sudo" : true,
+      "target" : "/etc/hosts"
     },
-    {
-      "command": "apt-get",
-      "install": "sudo apt-get install",
-      "remove": "sudo apt-get remove",
-      "clean": "sudo apt-get autoremove",
-      "update": "sudo apt-get update",
-      "upgrade": "sudo apt-get upgrade",
-      "system_upgrade": "sudo apt-get dist-upgrade",
-      "search": "apt-cache pkgnames",
-      "list": "dpkg --get-selections | grep -v deinstall"
-    },
-    {
-      "command": "pacman",
-      "install": "sudo pacman -S",
-      "remove": "sudo pacman -Rs",
-      "clean": "sudo pacman -Qdtq | sudo pacman -Rs",
-      "update": "sudo pacman -Syu",
-      "upgrade": "",
-      "system_upgrade": "sudo pacman -Syu",
-      "search": "pacman -Ssq",
-      "list": "pacman -Qq"
-    }
-  ],
-  "additional": [
-    {
-      "id": "atom",
-      "description": "Atom Package Manager",
-      "command": "apm",
-      "install": "apm install",
-      "remove": "apm remove",
-      "clean": "apm clean",
-      "update": "apm update --no-confirm",
-      "upgrade": "",
-      "search": "apm search",
-      "list": "apm list"
-    },
-    {
-      "id": "cask",
-      "description": "Homebrew Cask",
-      "command": "brew cask",
-      "install": "brew cask install",
-      "remove": "brew cask remove",
-      "clean": "brew cleanup",
-      "update": "",
-      "upgrade": "",
-      "search": "brew search",
-      "list": "brew cask list"
-    },
-    {
-      "id": "mas",
-      "description": "Mac App Store",
-      "command": "mas",
-      "install": "mas install",
-      "remove": "",
-      "clean": "",
-      "update": "mas outdated",
-      "upgrade": "mas upgrade",
-      "search": "mas search",
-      "list": "mas list"
-    },
-    {
-      "id": "npm",
-      "description": "Node.js Package Manager",
-      "command": "npm",
-      "install": "npm -g install",
-      "remove": "npm -g remove",
-      "clean": "",
-      "update": "npm -g update",
-      "upgrade": "",
-      "search": "npm -g find",
-      "list": "npm -g list"
-    }
-  ],
-  "sources": {
-    "downloadtest": "",
-    "ip": "http://ipecho.net/plain",
-    "ping": "1.1.1.1",
-    "wallpaper": "",
-    "hosts": {
-      "sudo": true,
-      "defaults": true,
-      "source": "http://winhelp2002.mvps.org/hosts.txt",
-      "target": "/etc/hosts"
-    }
+    "ping" : "1.1.1.1"
   },
-  "clean": {
-    "commands": [],
-    "directories": []
+  "package_managers" : {
+    "additional" : [
+
+    ],
+    "main" : [
+
+    ]
+  },
+  "clean" : {
+    "commands" : [
+
+    ],
+    "directories" : [
+
+    ]
   }
 }
