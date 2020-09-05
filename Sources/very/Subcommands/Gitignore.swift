@@ -16,7 +16,7 @@ extension Very {
         @CollectedParam var array: [String]
         
         func execute() throws {
-            Log.message("🌐", "Downloading .gitignore file...")
+            Log.message(Log.Icon.internet, "Downloading .gitignore file...")
             
             guard let path = array.joined(separator: ",").addingPercentEncoding(withAllowedCharacters: .urlPathAllowed),
                 let url = URL(string: "https://www.gitignore.io/api/\(path)") else {
@@ -24,19 +24,16 @@ extension Very {
                     return
             }
             
-            let (rawData, response, error) = URLSession.shared.synchronousDataTask(with: url)
+            let (rawData, response, error) = Very.urlSession.synchronousDataTask(with: url)
             
             guard response.isSuccess, let data = rawData else {
                 Log.error(error)
                 return
             }
             
-            guard let fileURL = URL(string: "file://\(FileManager.default.currentDirectoryPath)")?.appendingPathComponent(".gitignore") else {
-                Log.error(nil)
-                return
-            }
-            
+            let fileURL = URL(fileURLWithPath: FileManager.default.currentDirectoryPath).appendingPathComponent(".gitignore")
             Log.debug("\(fileURL)")
+            
             do {
                 try data.write(to: fileURL)
                 Log.done()

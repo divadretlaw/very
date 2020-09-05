@@ -33,7 +33,7 @@ struct UpdateCommands {
     private static func packageManager(_ packageManager: PackageManager.Main) {
         guard packageManager.isAvailable else { return }
         
-        Log.message("📦", "Updating packages using '\(packageManager.command)'...")
+        Log.message(Log.Icon.package, "Updating packages using '\(packageManager.command)'...")
         try? Task.run(bash: packageManager.update)
         
         guard let upgrade = packageManager.upgrade else { return }
@@ -43,7 +43,7 @@ struct UpdateCommands {
     private static func packageManager(_ packageManager: PackageManager.Additional) {
         guard packageManager.isAvailable else { return }
         
-        Log.message("📦", "Updating packages using '\(packageManager.command)'...")
+        Log.message(Log.Icon.package, "Updating packages using '\(packageManager.command)'...")
         try? Task.run(bash: packageManager.update)
         
         guard let upgrade = packageManager.upgrade else { return }
@@ -52,7 +52,7 @@ struct UpdateCommands {
     
     private static func systemUpgrade(_ packageManager: PackageManager.Main) {
         guard packageManager.isAvailable, let systemUpgrade = packageManager.systemUpgrade else { return }
-        Log.message("🔄", "Upgrading System...")
+        Log.message(Log.Icon.update, "Upgrading System...")
         try? Task.run(bash: systemUpgrade)
     }
 }

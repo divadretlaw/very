@@ -5,7 +5,7 @@ import PackageDescription
 
 let package = Package(
     name: "very",
-    platforms: [.macOS(.v10_12)],
+    platforms: [.macOS(.v10_13)],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         // .package(url: /* package url */, from: "1.0.0"),

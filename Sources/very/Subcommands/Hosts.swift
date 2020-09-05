@@ -26,9 +26,9 @@ extension Very {
                 return
             }
             
-            Log.message("📝", "Updating \(Log.path(hosts.target)) from \(Log.url(hosts.source))...")
+            Log.message(Log.Icon.notes, "Updating \(Log.path(hosts.target)) from \(Log.url(hosts.source))...")
             
-            let (rawData, response, error) = URLSession.shared.synchronousDataTask(with: url)
+            let (rawData, response, error) = Very.urlSession.synchronousDataTask(with: url)
             
             guard response.isSuccess, let data = rawData, let text = String(data: data, encoding: .utf8) else {
                 Log.error(error)

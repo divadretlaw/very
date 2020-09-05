@@ -18,9 +18,9 @@ extension Very {
                 Log.error("Invalid URL.")
                 return
             }
-            Log.message("🖼 ", "Downloading Wallpaper from \(Log.url(url))...")
+            Log.message(Log.Icon.wallpaper, "Downloading Wallpaper from \(Log.url(url))...")
 
-            let (rawData, response, error) = URLSession.shared.synchronousDataTask(with: url)
+            let (rawData, response, error) = Very.urlSession.synchronousDataTask(with: url)
 
             guard response.isSuccess, let data = rawData else {
                 Log.error(error)

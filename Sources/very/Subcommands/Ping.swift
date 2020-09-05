@@ -18,7 +18,7 @@ extension Very {
         
         func execute() throws {
             let host = self.host ?? Configuration.shared.sources.ping
-            Log.message("🌐", "Starting ping test...")
+            Log.message(Log.Icon.internet, "Starting ping test...")
             try? Task.run("ping", host)
             Log.done()
         }

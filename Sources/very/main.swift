@@ -1,6 +1,5 @@
 import Foundation
 import Dispatch
-import SwiftCLI
 
 let very = Very()
 
@@ -18,8 +17,6 @@ do {
     }
 } catch {
     Log.fatal("Unable to load configuration.", error.localizedDescription)
-//    Log.error(error)
-//    exit(1)
 }
 
 #if DEBUG

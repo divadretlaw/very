@@ -39,7 +39,7 @@ struct Configuration: Codable, CustomStringConvertible {
             Log.debug("Using user configuration: \(url.path)")
         } else {
             Log.warning("No configuration was found.")
-            Log.message("ℹ️ ", "Generating default configuration...")
+            Log.message(Log.Icon.info, "Generating default configuration...")
             
             self = Configuration(values: true)
             
@@ -49,7 +49,7 @@ struct Configuration: Codable, CustomStringConvertible {
             
             try self.data.write(to: url)
             
-            Log.message("ℹ️ ", "Default configuration was stored at \(Log.path("~/.config/very/very.json")).")
+            Log.message(Log.Icon.info, "Default configuration was stored at \(Log.path("~/.config/very/very.json")).")
             return
         }
         
@@ -61,19 +61,19 @@ struct Configuration: Codable, CustomStringConvertible {
     }
     
     private init(values: Bool) {
-        self.packageManagers = PackageManager(main: [],
-                                              additional: [])
+        self.packageManagers = PackageManager()
+        
+        let ip = values ? URL(string: "http://ipecho.net/plain") : nil
+        let hosts = values ? Hosts(sudo: true,
+                                  defaults: true,
+                                  source: URL(string: "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts")!,
+                                  target: "/etc/hosts") : nil
         
         self.sources = Sources(downloadtest: nil,
-                               ip: values ? URL(string: "http://ipecho.net/plain") : nil,
+                               ip: ip,
                                wallpaper: nil,
                                ping: "1.1.1.1",
-                               hosts: values ?
-                                Hosts(sudo: true,
-                                      defaults: true,
-                                      source: URL(string: "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts")!,
-                                      target: "/etc/hosts")
-                                : nil)
+                               hosts: hosts)
         
         self.clean = Clean(commands: [],
                            directories: [])

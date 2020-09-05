@@ -17,7 +17,7 @@ struct CleanCommands {
     }
     
     static func `default`() {
-        Log.message("♻️ ", "Cleaning system...")
+        Log.message(Log.Icon.clean, "Cleaning system...")
         
         if let main = Configuration.shared.packageManagers.getMain() {
             CleanCommands.packageManager(main)
@@ -29,8 +29,17 @@ struct CleanCommands {
     }
     
     static func trash() {
-        Log.message("🗑 ", "Emptying trash...")
-        // TODO: Empty the trash
+        Log.message(Log.Icon.trash, "Emptying trash...")
+        let fileManager = FileManager.default
+
+        do {
+            let files = try fileManager.contentsOfDirectory(at: URL(fileURLWithPath: "~/.Trash/".expandingTildeInPath), includingPropertiesForKeys: nil)
+            try files.forEach {
+                try fileManager.removeItem(at: $0)
+            }
+        } catch {
+            Log.error(error.localizedDescription)
+        }
     }
     
     static func additional() {
@@ -38,7 +47,11 @@ struct CleanCommands {
         guard !cleanCommands.isEmpty else { return }
         
         cleanCommands.forEach {
-            try? Task.run(bash: $0)
+            do {
+                try Task.run(bash: $0)
+            } catch {
+                Log.error(error)
+            }
         }
     }
     
@@ -48,14 +61,19 @@ struct CleanCommands {
             return
         }
         
-        Log.message("📁", "Cleaning directories...")
+        Log.message(Log.Icon.directory, "Cleaning directories...")
         let fileManager = FileManager.default
         
         cleanDirectories.forEach {
             Log.message("Cleaning '\($0)'")
-            let files = try? fileManager.contentsOfDirectory(at: URL(fileURLWithPath: $0.expandingTildeInPath), includingPropertiesForKeys: nil)
-            files?.forEach {
-                try? fileManager.removeItem(at: $0)
+            
+            do {
+                let files = try fileManager.contentsOfDirectory(at: URL(fileURLWithPath: $0.expandingTildeInPath), includingPropertiesForKeys: nil)
+                try files.forEach {
+                    try fileManager.removeItem(at: $0)
+                }
+            } catch {
+                Log.error("Unable to clean '\($0)'", error.localizedDescription)
             }
         }
     }

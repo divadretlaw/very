@@ -9,8 +9,8 @@ import Foundation
 import SwiftCLI
 
 struct PackageManager: Codable {
-    let main: [Main]
-    let additional: [Additional]
+    private let main: [Main]
+    private let additional: [Additional]
 
     func getMain() -> Main? {
         let main = Self.main.first { $0.isAvailable }
@@ -21,6 +21,11 @@ struct PackageManager: Codable {
         var additional = Self.additional
         additional.append(contentsOf: self.additional)
         return additional
+    }
+    
+    init() {
+        self.main = []
+        self.additional = []
     }
 }
 

@@ -10,13 +10,16 @@ import Dispatch
 import SwiftCLI
 
 class Very {
+    static let name = "very"
+    static let version = "2.0.1"
+    
     fileprivate static let pathFlag = Key<String>("--path", description: "Specify a config path")
     let very: CLI
     
     init() {
-        very = CLI(name: "very",
-                       version: "2.0.0",
-                       description: "Helpful utilities.")
+        very = CLI(name: Very.name,
+                   version: Very.version,
+                   description: "Helpful utilities.")
         very.commands = [
             Very.Clean(),
             Very.Update(),
@@ -67,6 +70,12 @@ class Very {
         input <<< password
         task.finish()
     }
+    
+    static let urlSession: URLSession = {
+        let config = URLSessionConfiguration.default
+        config.httpAdditionalHeaders = ["User-Agent": "curl/0.0.0 \(Very.name)/\(Very.version)"]
+        return URLSession(configuration: config)
+    }()
 }
 
 

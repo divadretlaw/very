@@ -26,6 +26,8 @@ extension Very {
         var wow: Bool
         
         func execute() throws {
+            let freeSpaceBefore = DiskCommands.getFreeSpace()
+            
             if wow {
                 CleanCommands.all()
             } else if anyFlag {
@@ -45,7 +47,14 @@ extension Very {
                 CleanCommands.default()
             }
             
-            Log.done()
+            guard let bytes = DiskCommands.getFreeSpace(relativeTo: freeSpaceBefore) else {
+                Log.done()
+                return
+            }
+            
+            let formatter = ByteCountFormatter()
+            formatter.countStyle = .file
+            Log.done("\(formatter.string(fromByteCount: Int64(bytes)).cyan) of space was saved.")
         }
         
         var anyFlag: Bool {
