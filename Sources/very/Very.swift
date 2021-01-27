@@ -58,7 +58,10 @@ class Very {
         let password = Input.readLine(prompt: "Password:", secure: true, validation: [], errorResponse: nil)
         var arguments = ["-S"]
         arguments.append(contentsOf: ProcessInfo.processInfo.arguments)
-
+        if !arguments.contains("--path"), let path = Configuration.url?.path {
+            arguments.append(contentsOf: ["--path", path])
+        }
+        
         let input = PipeStream()
         let task = Task(executable: "sudo",
                         arguments: arguments,

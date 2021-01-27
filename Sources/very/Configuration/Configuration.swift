@@ -9,6 +9,7 @@ import Foundation
 
 struct Configuration: Codable, CustomStringConvertible {
     static var shared: Configuration!
+    static var url: URL?
     
     let packageManagers: PackageManager
     let sources: Sources
@@ -52,6 +53,8 @@ struct Configuration: Codable, CustomStringConvertible {
             Log.message(Log.Icon.info, "Default configuration was stored at \(Log.path("~/.config/very/very.json")).")
             return
         }
+        
+        Self.url = url
         
         let data = try Data(contentsOf: url)
         let decoder = JSONDecoder()
