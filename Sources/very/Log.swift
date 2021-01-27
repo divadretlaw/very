@@ -15,7 +15,7 @@ struct Log {
         static let info = "ℹ️ "
         static let warning = "⚠️ "
         static let debug = "🕵️‍♂️ "
-        static let error = "❌"
+        static let error = "❌ "
         static let fatal = "☠️ "
         
         static let internet = "🌐"
