@@ -30,15 +30,27 @@ struct CleanCommands {
     
     static func trash() {
         Log.message(Log.Icon.trash, "Emptying trash...")
-        let fileManager = FileManager.default
-
-        do {
-            let files = try fileManager.contentsOfDirectory(at: URL(fileURLWithPath: "~/.Trash/".expandingTildeInPath), includingPropertiesForKeys: nil)
-            try files.forEach {
-                try fileManager.removeItem(at: $0)
-            }
-        } catch {
-            Log.error(error.localizedDescription)
+        
+        let source = """
+tell application "Finder"
+if length of (items in the trash as string) is 0 then return
+empty trash
+repeat until (count items of trash) = 0
+delay 1
+end repeat
+end tell
+"""
+        
+        guard let script = NSAppleScript(source: source) else {
+            Log.error("Invalid Script.")
+            return
+        }
+        
+        var error: NSDictionary?
+        script.executeAndReturnError(&error)
+        
+        if let error = error {
+            Log.error("\(error)")
         }
     }
     
