@@ -11,7 +11,7 @@ import SwiftCLI
 
 class Very {
     static let name = "very"
-    static let version = "2.0.1"
+    static let version = "2.0.2"
     
     fileprivate static let pathFlag = Key<String>("--path", description: "Specify a config path")
     let very: CLI
