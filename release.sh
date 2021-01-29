@@ -3,15 +3,19 @@
 tag=$1
 
 # Cleanup
-rm -rf .build
+rm -rf .build/output
 
 # Build
 swift build -c release
 
 mkdir -p .build/output
 
+cp .build/release/very .build/output/very
+
+cd .build/output
+
 # Zip
-zip .build/output/very.zip .build/release/very
+zip very.zip very
 
 cd .build/output
 
