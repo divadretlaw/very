@@ -14,5 +14,6 @@ extension Configuration {
         let wallpaper: URL?
         let ping: String
         let hosts: Hosts?
+        let dotFiles: DotFiles?
     }
 }

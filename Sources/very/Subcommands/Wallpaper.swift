@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  Wallpaper.swift
 //  very
 //
 //  Created by David Walter on 28.08.20.

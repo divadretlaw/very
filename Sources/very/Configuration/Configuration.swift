@@ -76,7 +76,8 @@ struct Configuration: Codable, CustomStringConvertible {
                                ip: ip,
                                wallpaper: nil,
                                ping: "1.1.1.1",
-                               hosts: hosts)
+                               hosts: hosts,
+                               dotFiles: nil)
         
         self.clean = Clean(commands: [],
                            directories: [])

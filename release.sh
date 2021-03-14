@@ -23,8 +23,8 @@ cd .build/output
 
 shasum=`shasum -a 256 very.zip | cut -f1 -d' '`
 
-gh release delete "$tag"
-gh release create "$tag"
+gh release delete "$tag" --yes
+gh release create "$tag" -t "$tag" -n ""
 gh release upload "$tag" very.zip
 
 git clone git@github.com:divadretlaw/homebrew-tap.git

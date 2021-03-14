@@ -27,7 +27,8 @@ class Very {
             Very.Gitignore(),
             Very.IP(),
             Very.Ping(),
-            Very.Wallpaper()
+            Very.Wallpaper(),
+            Very.DotFiles()
         ]
         very.globalOptions.append(Very.pathFlag)
     }

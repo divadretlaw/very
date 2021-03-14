@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  Gitignore.swift
 //  very
 //
 //  Created by David Walter on 28.08.20.
