@@ -25,6 +25,7 @@ python3 very.py [command]
 * **download** Starts a download test
 * **hosts** Updates `/etc/hosts` from [http://winhelp2002.mvps.org](http://winhelp2002.mvps.org)
 * **wallpaper** Sets the wallpaper
+* **dotfiles** Version control helper for dotfiles
 
 # License
 
