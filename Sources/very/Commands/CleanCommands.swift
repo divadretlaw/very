@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import SwiftCLI
+import Shell
 
 struct CleanCommands {
     static func all() {
@@ -59,11 +59,7 @@ end tell
         guard !cleanCommands.isEmpty else { return }
         
         cleanCommands.forEach {
-            do {
-                try Task.run(bash: $0)
-            } catch {
-                Log.error(error)
-            }
+            shell($0)
         }
     }
     
@@ -92,11 +88,11 @@ end tell
     
     static func packageManager(_ packageManager: PackageManager.Main) {
         guard packageManager.isAvailable else { return }
-        try? Task.run(bash: packageManager.clean)
+        shell(packageManager.clean)
     }
     
     static func packageManager(_ packageManager: PackageManager.Additional) {
         guard packageManager.isAvailable else { return }
-        try? Task.run(bash: packageManager.clean)
+        shell(packageManager.clean)
     }
 }

@@ -1,28 +1,95 @@
 {
-  "sources" : {
-    "ip" : "http://ipecho.net/plain",
-    "hosts" : {
-      "defaults" : true,
-      "source" : "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts",
-      "sudo" : true,
-      "target" : "/etc/hosts"
+    "sources" : {
+        "ip" : "http://ipecho.net/plain",
+        "hosts" : {
+            "defaults" : true,
+            "source" : "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts",
+            "sudo" : true,
+            "target" : "/etc/hosts"
+        },
+        "ping" : "1.1.1.1"
     },
-    "ping" : "1.1.1.1"
-  },
-  "package_managers" : {
-    "additional" : [
-
-    ],
-    "main" : [
-
-    ]
-  },
-  "clean" : {
-    "commands" : [
-
-    ],
-    "directories" : [
-
-    ]
-  }
+    "package_managers" : {
+        "additional" : [
+            
+        ],
+        "main" : [
+            
+        ]
+    },
+    "clean" : {
+        "commands" : [
+            
+        ],
+        "directories" : [
+            
+        ]
+    },
+    "setup" : {
+        "packages" : [
+            "mas",
+            "node",
+            "ruby",
+            "python",
+            "git",
+            "git-secret",
+            "git-flow",
+            "git-lfs",
+            "nano",
+            "neofetch",
+            "trash",
+            "youtube-dl",
+            "xcbeautify",
+            "xcodegen",
+            "robotsandpencils/made/xcodes",
+            "swiftlint",
+            "rswift",
+            "uncrustify",
+            "sourcekitten",
+            "cloc",
+            "zsh-autosuggestions",
+            "zsh-completions",
+        ],
+        "casks" : [
+            "appcleaner",
+            "bartender",
+            "gpg-suite-no-mail",
+            "the-unarchiver",
+            "transmission",
+            "spotify",
+            "signal",
+            "omnidisksweeper",
+            "discord",
+            "electrum",
+            "fork",
+            "hex-fiend",
+            "java",
+            "cyberduck",
+            "visual-studio-code",
+            "swiftformat-for-xcode",
+        ],
+        "taps" : [
+            "divadretlaw/tap"
+        ],
+        "open" : [
+            "https://davidwalter.at",
+            "https://github.com/divadretlaw/urban",
+            "https://instagram.com",
+            "https://youtube.com",
+            "https://twitch.com",
+            "https://amazon.de",
+            "https://reddit.com",
+            "https://twitter.com"
+        ],
+        "additional" : [
+            {
+                comment: "Set TextEdit to text by default",
+                command: "defaults write com.apple.TextEdit RichText -int 0"
+            },
+            {
+                comment: "Allow SSH",
+                command: "sudo launchctl load -w /System/Library/LaunchDaemons/ssh.plist"
+            }
+        ],
+    }
 }

@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftCLI
+import Shell
 
 extension Very {
     class Ping: Command {
@@ -19,7 +20,7 @@ extension Very {
         func execute() throws {
             let host = self.host ?? Configuration.shared.sources.ping
             Log.message(Log.Icon.internet, "Starting ping test...")
-            try? Task.run("ping", host)
+            shell("ping \(host)")
             Log.done()
         }
     }

@@ -28,7 +28,8 @@ class Very {
             Very.IP(),
             Very.Ping(),
             Very.Wallpaper(),
-            Very.DotFiles()
+            Very.DotFiles(),
+            Very.Setup()
         ]
         very.globalOptions.append(Very.pathFlag)
     }
