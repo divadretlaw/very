@@ -1,28 +1,43 @@
 {
-  "sources" : {
-    "ip" : "http://ipecho.net/plain",
-    "hosts" : {
-      "defaults" : true,
-      "source" : "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts",
-      "sudo" : true,
-      "target" : "/etc/hosts"
+    "sources" : {
+        "ip" : "http://ipecho.net/plain",
+        "hosts" : {
+            "defaults" : true,
+            "source" : "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts",
+            "sudo" : true,
+            "target" : "/etc/hosts"
+        },
+        "ping" : "1.1.1.1"
     },
-    "ping" : "1.1.1.1"
-  },
-  "package_managers" : {
-    "additional" : [
-
-    ],
-    "main" : [
-
-    ]
-  },
-  "clean" : {
-    "commands" : [
-
-    ],
-    "directories" : [
-
-    ]
-  }
+    "package_managers" : {
+        "additional" : [
+            
+        ],
+        "main" : [
+            
+        ]
+    },
+    "clean" : {
+        "commands" : [
+            
+        ],
+        "directories" : [
+            
+        ]
+    },
+    "setup" : {
+        "packages" : [],
+        "casks" : [],
+        "taps" : [
+        ],
+        "open" : [
+            "https://github.com/"
+        ],
+        "additional" : [
+            {
+                "comment" : "Run an additional command",
+                "command" : "echo 'This is an additional command'"
+            }
+        ]
+    }
 }

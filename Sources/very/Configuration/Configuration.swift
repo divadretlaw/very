@@ -15,6 +15,8 @@ struct Configuration: Codable, CustomStringConvertible {
     let sources: Sources
     let clean: Clean
     
+    var setup: Setup?
+    
     static func load(path: String? = nil) throws {
         if let path = path {
             Configuration.shared = try Configuration(path: URL(fileURLWithPath: path))
@@ -76,8 +78,7 @@ struct Configuration: Codable, CustomStringConvertible {
                                ip: ip,
                                wallpaper: nil,
                                ping: "1.1.1.1",
-                               hosts: hosts,
-                               dotFiles: nil)
+                               hosts: hosts)
         
         self.clean = Clean(commands: [],
                            directories: [])

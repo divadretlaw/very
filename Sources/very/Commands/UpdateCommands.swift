@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import SwiftCLI
+import Shell
 
 struct UpdateCommands {
     static func all() {
@@ -34,25 +34,25 @@ struct UpdateCommands {
         guard packageManager.isAvailable else { return }
         
         Log.message(Log.Icon.package, "Updating packages using '\(packageManager.command)'...")
-        try? Task.run(bash: packageManager.update)
+        Shell.run(packageManager.update)
         
         guard let upgrade = packageManager.upgrade else { return }
-        try? Task.run(bash: upgrade)
+        Shell.run(upgrade)
     }
     
     private static func packageManager(_ packageManager: PackageManager.Additional) {
         guard packageManager.isAvailable else { return }
         
         Log.message(Log.Icon.package, "Updating packages using '\(packageManager.command)'...")
-        try? Task.run(bash: packageManager.update)
+        Shell.run(packageManager.update)
         
         guard let upgrade = packageManager.upgrade else { return }
-        try? Task.run(bash: upgrade)
+        Shell.run(upgrade)
     }
     
     private static func systemUpgrade(_ packageManager: PackageManager.Main) {
         guard packageManager.isAvailable, let systemUpgrade = packageManager.systemUpgrade else { return }
         Log.message(Log.Icon.update, "Upgrading System...")
-        try? Task.run(bash: systemUpgrade)
+        Shell.run(systemUpgrade)
     }
 }

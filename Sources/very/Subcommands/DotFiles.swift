@@ -7,47 +7,43 @@
 
 import Foundation
 import SwiftCLI
+import Shell
 
 extension Very {
     class DotFiles: Command {
         let name = "dotfiles"
-        let shortDescription = "Prints your global IP address"
+        let shortDescription = "Init and update dotFiles in your home directory"
         
-        @Flag("-i", "--init", description: "Initialize dotFiles")
-        var shouldInit: Bool
+        @Key("-i", "--init", description: "")
+        var origin: String?
         
         @Key("-h", "--home", description: "")
         var home: String?
         
         func execute() throws {
-            guard let dotFiles = Configuration.shared.sources.dotFiles else {
-                Log.error("No configuration for dotFiles found")
-                return
-            }
-            
             let home = self.home ?? "~"
             
-            if shouldInit {
+            if let origin = self.origin {
                 Log.message(Log.Icon.notes, "Intializing dotfiles")
                 let initScript = """
                 cd \(home)
                 git init
                 git config --local status.showUntrackedFiles no
-                git remote add origin \(dotFiles.repository)
+                git remote add origin \(origin)
                 git branch -M main
                 git pull origin main
                 git branch --set-upstream-to=origin/main main
                 """
-                try Task.run(bash: initScript)
+                Shell.run(initScript)
                 
-                let password = Input.readLine(prompt: "Enter the shared secret:", secure: true, validation: [], errorResponse: nil)
                 let updateScript = """
                 cd \(home)
                 git fetch
                 git pull
-                git secret reveal -f -p \(password)
+                brew install git-secret
+                git secret reveal -f
                 """
-                try Task.run(bash: updateScript)
+                Shell.run(updateScript)
             } else {
                 Log.message(Log.Icon.notes, "Updating dotfiles")
                 let script = """
@@ -56,7 +52,7 @@ extension Very {
                 git pull --rebase
                 git secret reveal -f
                 """
-                try Task.run(bash: script)
+                Shell.run(script)
             }
         }
     }
