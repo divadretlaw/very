@@ -14,8 +14,9 @@ struct PackageManager: Codable {
     private let additional: [Additional]
 
     func getMain() -> Main? {
-        let main = Self.main.first { $0.isAvailable }
-        return main ?? self.main.first { $0.isAvailable }
+        // Check all package manager in the config and if non-available check the default
+        // main package managers pre-configured
+        return self.main.first { $0.isAvailable } ?? Self.main.first { $0.isAvailable }
     }
     
     func getAdditional() -> [Additional] {
