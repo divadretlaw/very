@@ -62,24 +62,15 @@ class Very {
         generator.writeCompletions()
     }
     
+    /// Rerun very as sudo
     static func sudo() {
-        let password = Input.readLine(prompt: "Password:", secure: true, validation: [], errorResponse: nil)
-        var arguments = ["-S"]
+        var arguments = [] as [String]
         arguments.append(contentsOf: ProcessInfo.processInfo.arguments)
         if !arguments.contains("--path"), let path = Configuration.url?.path {
             arguments.append(contentsOf: ["--path", path])
         }
         
-        let input = PipeStream()
-        let task = Task(executable: "sudo",
-                        arguments: arguments,
-                        directory: nil,
-                        stdout: Term.stdout,
-                        stderr: Term.stderr,
-                        stdin: input)
-        task.runAsync()
-        input <<< password
-        task.finish()
+        Shell.run("sudo \(arguments.joined(separator: " "))")
     }
     
     static let urlSession: URLSession = {
