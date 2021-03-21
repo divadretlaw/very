@@ -26,70 +26,18 @@
         ]
     },
     "setup" : {
-        "packages" : [
-            "mas",
-            "node",
-            "ruby",
-            "python",
-            "git",
-            "git-secret",
-            "git-flow",
-            "git-lfs",
-            "nano",
-            "neofetch",
-            "trash",
-            "youtube-dl",
-            "xcbeautify",
-            "xcodegen",
-            "robotsandpencils/made/xcodes",
-            "swiftlint",
-            "rswift",
-            "uncrustify",
-            "sourcekitten",
-            "cloc",
-            "zsh-autosuggestions",
-            "zsh-completions",
-        ],
-        "casks" : [
-            "appcleaner",
-            "bartender",
-            "gpg-suite-no-mail",
-            "the-unarchiver",
-            "transmission",
-            "spotify",
-            "signal",
-            "omnidisksweeper",
-            "discord",
-            "electrum",
-            "fork",
-            "hex-fiend",
-            "java",
-            "cyberduck",
-            "visual-studio-code",
-            "swiftformat-for-xcode",
-        ],
+        "packages" : [],
+        "casks" : [],
         "taps" : [
-            "divadretlaw/tap"
         ],
         "open" : [
-            "https://davidwalter.at",
-            "https://github.com/divadretlaw/urban",
-            "https://instagram.com",
-            "https://youtube.com",
-            "https://twitch.com",
-            "https://amazon.de",
-            "https://reddit.com",
-            "https://twitter.com"
+            "https://github.com/"
         ],
         "additional" : [
             {
-                comment: "Set TextEdit to text by default",
-                command: "defaults write com.apple.TextEdit RichText -int 0"
-            },
-            {
-                comment: "Allow SSH",
-                command: "sudo launchctl load -w /System/Library/LaunchDaemons/ssh.plist"
+                "comment" : "Run an additional command",
+                "command" : "echo 'This is an additional command'"
             }
-        ],
+        ]
     }
 }

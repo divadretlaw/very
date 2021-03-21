@@ -7,6 +7,7 @@
 
 import Foundation
 import Dispatch
+import Shell
 import SwiftCLI
 
 class Very {
@@ -31,6 +32,11 @@ class Very {
             Very.DotFiles(),
             Very.Setup()
         ]
+        
+        #if DEBUG
+        very.commands.append(Very.Test())
+        #endif
+        
         very.globalOptions.append(Very.pathFlag)
     }
     

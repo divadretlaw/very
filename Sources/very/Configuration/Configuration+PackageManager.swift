@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Shell
 import SwiftCLI
 
 struct PackageManager: Codable {
@@ -42,7 +43,7 @@ extension PackageManager {
         let list: String
 
         var isAvailable: Bool {
-            return Task.isAvailable(command: command)
+            return Shell.isAvailable(command)
         }
     }
 }
@@ -62,7 +63,7 @@ extension PackageManager {
         let list: String
 
         var isAvailable: Bool {
-            return Task.isAvailable(command: command)
+            return Shell.isAvailable(command)
         }
     }
 }

@@ -12,31 +12,32 @@ struct SetupCommands {
     
     static func install(packages: [String]) {
         // Install requires homebrew to be installed
-        guard shell("which brew") == 0 else { return }
+        guard Shell.isAvailable("brew") else { return }
         
         Log.message(Log.Icon.package, "Installing packages...")
-        packages.forEach { shell("brew install \($0)") }
+        packages.forEach { Shell.run("brew install \($0)") }
     }
     
     static func install(casks: [String]) {
         // Install requires homebrew to be installed
-        guard shell("which brew") == 0 else { return }
+        guard Shell.isAvailable("brew") else { return }
         
         Log.message(Log.Icon.package, "Installing casks...")
-        casks.forEach { shell("brew install --cask \($0)") }
+        casks.forEach { Shell.run("brew install --cask \($0)") }
     }
     
     static func tap(repositories: [String]) {
         // Tap requires homebrew to be installed
-        guard shell("which brew") == 0 else { return }
+        guard Shell.isAvailable("brew") else { return }
         
         Log.message(Log.Icon.package, "Tapping repositories...")
-        repositories.forEach { shell("brew tap \($0)") }
-        shell("brew update")
+        repositories.forEach { Shell.run("brew tap \($0)") }
+        Shell.run("brew update")
     }
     
     static func open(_ open: [String]) {
-        open.forEach { shell("open \($0)") }
+        Log.message(Log.Icon.info, "Opening links...")
+        open.forEach { Shell.run("open \($0)") }
     }
     
 }

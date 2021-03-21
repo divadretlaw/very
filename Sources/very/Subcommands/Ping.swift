@@ -20,7 +20,7 @@ extension Very {
         func execute() throws {
             let host = self.host ?? Configuration.shared.sources.ping
             Log.message(Log.Icon.internet, "Starting ping test...")
-            shell("ping \(host)")
+            Shell.run("ping \(host)")
             Log.done()
         }
     }

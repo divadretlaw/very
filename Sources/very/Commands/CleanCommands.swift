@@ -59,7 +59,7 @@ end tell
         guard !cleanCommands.isEmpty else { return }
         
         cleanCommands.forEach {
-            shell($0)
+            Shell.run($0)
         }
     }
     
@@ -88,11 +88,11 @@ end tell
     
     static func packageManager(_ packageManager: PackageManager.Main) {
         guard packageManager.isAvailable else { return }
-        shell(packageManager.clean)
+        Shell.run(packageManager.clean)
     }
     
     static func packageManager(_ packageManager: PackageManager.Additional) {
         guard packageManager.isAvailable else { return }
-        shell(packageManager.clean)
+        Shell.run(packageManager.clean)
     }
 }

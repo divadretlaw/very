@@ -1,11 +1,11 @@
 //
 //  Shell.cpp
-//  Shell
+//  ShellCore
 //
 //  Created by David Walter on 20.03.21.
 //
 
-#include "include/Shell.h"
+#include "include/ShellCore.h"
 #include <iostream>
 using namespace std;
 

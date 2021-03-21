@@ -1,6 +1,6 @@
 //
 //  Shell.h
-//  Shell
+//  ShellCore
 //
 //  Created by David Walter on 20.03.21.
 //

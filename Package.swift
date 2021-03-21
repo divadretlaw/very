@@ -21,6 +21,8 @@ let package = Package(
             dependencies: ["SwiftCLI", "Rainbow", "Wallpaper", "Shell"]
         ),
         .target(name: "Shell",
+                dependencies: ["ShellCore"]),
+        .target(name: "ShellCore",
                 dependencies: [])
     ]
 )

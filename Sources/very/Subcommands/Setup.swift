@@ -29,7 +29,7 @@ extension Very {
             
             setup.additional.forEach { additional in
                 Log.message(Log.Icon.info, additional.comment)
-                shell(additional.command)
+                Shell.run(additional.command)
             }
         }
     }

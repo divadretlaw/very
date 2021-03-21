@@ -34,7 +34,7 @@ extension Very {
                 git pull origin main
                 git branch --set-upstream-to=origin/main main
                 """
-                shell(script: initScript)
+                Shell.run(initScript)
                 
                 let updateScript = """
                 cd \(home)
@@ -43,7 +43,7 @@ extension Very {
                 brew install git-secret
                 git secret reveal -f
                 """
-                shell(script: updateScript)
+                Shell.run(updateScript)
             } else {
                 Log.message(Log.Icon.notes, "Updating dotfiles")
                 let script = """
@@ -52,7 +52,7 @@ extension Very {
                 git pull --rebase
                 git secret reveal -f
                 """
-                shell(script: script)
+                Shell.run(script)
             }
         }
     }
