@@ -6,11 +6,11 @@ tag=$1
 rm -rf .build/output
 
 # Build
-swift build -c release
+swift build -c release --arch arm64 --arch x86_64
 
 mkdir -p .build/output
 
-cp .build/release/very .build/output/very
+cp .build/apple/Products/Release/very .build/output/very
 
 cd .build/output
 
