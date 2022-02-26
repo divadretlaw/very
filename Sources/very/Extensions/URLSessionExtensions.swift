@@ -15,13 +15,14 @@ extension URLSession {
         
         let semaphore = DispatchSemaphore(value: 0)
         
-        let dataTask = self.dataTask(with: url) {
+        let dataTask = dataTask(with: url) {
             data = $0
             response = $1
             error = $2
             
             semaphore.signal()
         }
+        
         dataTask.resume()
         
         _ = semaphore.wait(timeout: .distantFuture)
@@ -30,26 +31,26 @@ extension URLSession {
     }
     
     func synchronousDataTask(with url: URL, completion: (Data?, URLResponse?, Error?) -> Void) {
-        let (data, response, error) = self.synchronousDataTask(with: url)
+        let (data, response, error) = synchronousDataTask(with: url)
         completion(data, response, error)
     }
 }
 
 extension Optional where Wrapped == URLResponse {
     var isSuccess: Bool {
-        return (self as? HTTPURLResponse)?.isSuccess ?? false
+        (self as? HTTPURLResponse)?.isSuccess ?? false
     }
     
     var isRedirection: Bool {
-        return (self as? HTTPURLResponse)?.isRedirection ?? false
+        (self as? HTTPURLResponse)?.isRedirection ?? false
     }
     
     var isClientError: Bool {
-        return (self as? HTTPURLResponse)?.isClientError ?? false
+        (self as? HTTPURLResponse)?.isClientError ?? false
     }
     
     var isServerError: Bool {
-        return (self as? HTTPURLResponse)?.isServerError ?? false
+        (self as? HTTPURLResponse)?.isServerError ?? false
     }
     
     func isHttpStatus(range: Int) -> Bool {
@@ -63,19 +64,19 @@ extension Optional where Wrapped == URLResponse {
 
 extension URLResponse {
     var isSuccess: Bool {
-        return self.isHttpStatus(range: 200)
+        isHttpStatus(range: 200)
     }
     
     var isRedirection: Bool {
-        return self.isHttpStatus(range: 300)
+        isHttpStatus(range: 300)
     }
     
     var isClientError: Bool {
-        return self.isHttpStatus(range: 400)
+        isHttpStatus(range: 400)
     }
     
     var isServerError: Bool {
-        return self.isHttpStatus(range: 400)
+        isHttpStatus(range: 400)
     }
     
     func isHttpStatus(range: Int) -> Bool {

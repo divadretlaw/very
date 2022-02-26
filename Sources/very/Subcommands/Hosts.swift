@@ -5,15 +5,21 @@
 //  Created by David Walter on 26.08.20.
 //
 
+import ArgumentParser
 import Foundation
-import SwiftCLI
 
 extension Very {
-    class Hosts: Command {
-        let name = "hosts"
-        let shortDescription = "Updates '/etc/hosts'"
+    struct Hosts: ParsableCommand {
+        @OptionGroup var options: Options
         
-        func execute() throws {
+        static var configuration = CommandConfiguration(
+            commandName: "hosts",
+            abstract: "Updates '/etc/hosts'"
+        )
+        
+        func run() throws {
+            try options.load()
+            
             guard let hosts = Configuration.shared.sources.hosts else {
                 Log.error("Hosts configuration missing.")
                 return
@@ -39,13 +45,13 @@ extension Very {
             
             if hosts.defaults {
                 let defaults = """
-                            \n
-                            127.0.0.1 localhost
-                            ::1 localhost
-                            255.255.255.255 broadcasthost
-                            127.0.0.1 127.0.0.1
-                            \n
-                            """
+                \n
+                127.0.0.1 localhost
+                ::1 localhost
+                255.255.255.255 broadcasthost
+                127.0.0.1 127.0.0.1
+                \n
+                """
                 file.append(defaults)
             }
             

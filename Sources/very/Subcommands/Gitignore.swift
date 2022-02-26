@@ -5,35 +5,41 @@
 //  Created by David Walter on 28.08.20.
 //
 
+import ArgumentParser
 import Foundation
-import SwiftCLI
 
 extension Very {
-    class Gitignore: Command {
-        let name = "gitignore"
-        let shortDescription = "Loads a .gitignore file from gitignore.io"
+    struct Gitignore: ParsableCommand {
+        @OptionGroup var options: Options
         
-        @CollectedParam var array: [String]
+        static var configuration = CommandConfiguration(
+            commandName: "gitignore",
+            abstract: "Loads a .gitignore file from gitignore.io"
+        )
         
-        func execute() throws {
+        @Argument
+        var array: [String] = []
+        
+        func run() throws {
+            try options.load()
             Log.message(Log.Icon.internet, "Downloading .gitignore file...")
-            
+
             guard let path = array.joined(separator: ",").addingPercentEncoding(withAllowedCharacters: .urlPathAllowed),
-                let url = URL(string: "https://www.gitignore.io/api/\(path)") else {
-                    Log.error("Invalid URL.")
-                    return
+                  let url = URL(string: "https://www.gitignore.io/api/\(path)") else {
+                Log.error("Invalid URL.")
+                return
             }
-            
+
             let (rawData, response, error) = Very.urlSession.synchronousDataTask(with: url)
-            
+
             guard response.isSuccess, let data = rawData else {
                 Log.error(error)
                 return
             }
-            
+
             let fileURL = URL(fileURLWithPath: FileManager.default.currentDirectoryPath).appendingPathComponent(".gitignore")
             Log.debug("\(fileURL)")
-            
+
             do {
                 try data.write(to: fileURL)
                 Log.done()

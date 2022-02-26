@@ -5,15 +5,20 @@
 //  Created by David Walter on 28.08.20.
 //
 
+import ArgumentParser
 import Foundation
-import SwiftCLI
 
 extension Very {
-    class Wallpaper: Command {
-        let name: String = "wallpaper"
-        let shortDescription = "Sets the wallpaper"
+    struct Wallpaper: ParsableCommand {
+        @OptionGroup var options: Options
+        
+        static var configuration = CommandConfiguration(
+            commandName: "wallpaper",
+            abstract: "Sets the wallpaper"
+        )
 
-        func execute() throws {
+        func run() throws {
+            try options.load()
             guard let url = Configuration.shared.sources.wallpaper else {
                 Log.error("Invalid URL.")
                 return

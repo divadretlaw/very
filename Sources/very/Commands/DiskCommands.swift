@@ -10,8 +10,10 @@ import Foundation
 struct DiskCommands {
     static func getFreeSpace() -> Int? {
         let url = URL(fileURLWithPath: "/")
+        
         do {
             let values = try url.resourceValues(forKeys: [.volumeAvailableCapacityKey])
+            
             if let capacity = values.volumeAvailableCapacity {
                 return capacity
             } else {

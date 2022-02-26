@@ -5,6 +5,7 @@
 //  Created by David Walter on 05.07.20.
 //
 
+import ArgumentParser
 import Foundation
 
 struct Configuration: Codable, CustomStringConvertible {
@@ -70,9 +71,9 @@ struct Configuration: Codable, CustomStringConvertible {
         
         let ip = values ? URL(string: "http://ipecho.net/plain") : nil
         let hosts = values ? Hosts(sudo: true,
-                                  defaults: true,
-                                  source: URL(string: "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts")!,
-                                  target: "/etc/hosts") : nil
+                                   defaults: true,
+                                   source: URL(string: "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts")!,
+                                   target: "/etc/hosts") : nil
         
         self.sources = Sources(downloadtest: nil,
                                ip: ip,
@@ -87,7 +88,7 @@ struct Configuration: Codable, CustomStringConvertible {
     // MARK: - CustomStringConvertible
     
     var description: String {
-        return String(data: self.data, encoding: .utf8)!
+        String(data: data, encoding: .utf8)!
     }
     
     var data: Data {

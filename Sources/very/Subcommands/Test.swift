@@ -6,23 +6,21 @@
 //
 
 #if DEBUG
+import ArgumentParser
 import Foundation
-import SwiftCLI
-import Shell
 
 extension Very {
-    class Test: Command {
-        let name = "test"
-        let shortDescription = "DEBUG only: Run some test command"
+    struct Test: ParsableCommand {
+        @OptionGroup var options: Options
         
-        func execute() throws {
-            let home = "~"
-            
-            let script = """
-            cd \(home)
-            pwd
-            """
-            Shell.run(script)
+        static var configuration = CommandConfiguration(
+            commandName: "test",
+            abstract: "DEBUG only: Run some test command"
+        )
+        
+        mutating func run() throws {
+            try options.load()
+            print("Hello World")
         }
     }
 }

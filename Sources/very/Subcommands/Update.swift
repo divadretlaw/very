@@ -1,28 +1,34 @@
 //
-//  File.swift
+//  Update.swift
 //  very
 //
 //  Created by David Walter on 28.08.20.
 //
 
+import ArgumentParser
 import Foundation
-import SwiftCLI
 
 extension Very {
-    class Update: Command {
-        let name = "update"
-        let shortDescription = "Checks for updates and installs them"
+    struct Update: ParsableCommand {
+        @OptionGroup var options: Options
         
-        @Flag("--system", description: "Checks for system updates and installs them.")
-        var system: Bool
+        static var configuration = CommandConfiguration(
+            commandName: "update",
+            abstract: "Checks for package updates and installs them"
+        )
         
-        @Flag("--much", description: "Checks for package and system updates and install them.")
-        var much: Bool
+        @Flag(help: "Checks for system updates and installs them.")
+        var system = false
         
-        func execute() throws {
-            if self.much {
+        @Flag(help: "Checks for package and system updates and install them.")
+        var much = false
+        
+        func run() throws {
+            try options.load()
+            
+            if much {
                 UpdateCommands.all()
-            } else if self.system {
+            } else if system {
                 UpdateCommands.system()
             } else {
                 UpdateCommands.default()

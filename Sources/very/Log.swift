@@ -9,7 +9,7 @@ import Foundation
 import Rainbow
 
 struct Log {
-    struct Icon {
+    enum Icon {
         static let done = "✅"
         
         static let info = "ℹ️ "
@@ -75,14 +75,15 @@ struct Log {
         return exit(1)
     }
     
-    private init() {}
+    private init() {
+    }
     
     static func url(_ url: URL) -> String {
-        return Self.path(url.absoluteString.underline)
+        Self.path(url.absoluteString.underline)
     }
     
     static func path(_ path: String) -> String {
-        return "'\(path)'".blue
+        "'\(path)'".blue
     }
 }
 

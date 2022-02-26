@@ -7,7 +7,6 @@
 
 import Foundation
 import Shell
-import SwiftCLI
 
 struct PackageManager: Codable {
     private let main: [Main]
@@ -16,7 +15,7 @@ struct PackageManager: Codable {
     func getMain() -> Main? {
         // Check all package manager in the config and if non-available check the default
         // main package managers pre-configured
-        return self.main.first { $0.isAvailable } ?? Self.main.first { $0.isAvailable }
+        main.first { $0.isAvailable } ?? Self.main.first { $0.isAvailable }
     }
     
     func getAdditional() -> [Additional] {
@@ -44,7 +43,7 @@ extension PackageManager {
         let list: String
 
         var isAvailable: Bool {
-            return Shell.isAvailable(command)
+            Shell.isAvailable(command)
         }
     }
 }
@@ -64,7 +63,7 @@ extension PackageManager {
         let list: String
 
         var isAvailable: Bool {
-            return Shell.isAvailable(command)
+            Shell.isAvailable(command)
         }
     }
 }

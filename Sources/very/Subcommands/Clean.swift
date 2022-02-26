@@ -5,27 +5,33 @@
 //  Created by David Walter on 05.07.20.
 //
 
+import ArgumentParser
 import Foundation
-import SwiftCLI
 
 extension Very {
-    class Clean: Command {
-        let name = "clean"
-        let shortDescription = "Cleans the system"
+    struct Clean: ParsableCommand {
+        @OptionGroup var options: Options
         
-        @Flag("-a", "--additional", description: "Runs additional clean commands.")
-        var additional: Bool
+        static var configuration = CommandConfiguration(
+            commandName: "clean",
+            abstract: "Cleans the system"
+        )
         
-        @Flag("-d", "--directories", description: "Removes contents of directories.")
-        var directories: Bool
+        @Flag(help: "Runs additional clean commands.")
+        var additional = false
         
-        @Flag("-t", "--trash", description: "Empties the trash.")
-        var trash: Bool
+        @Flag(help: "Removes contents of directories.")
+        var directories = false
         
-        @Flag("--wow", description: "Runs all clean commands.")
-        var wow: Bool
+        @Flag(help: "Empties the trash.")
+        var trash = false
         
-        func execute() throws {
+        @Flag(help: "Runs all clean commands.")
+        var wow = false
+        
+        func run() throws {
+            try options.load()
+            
             let freeSpaceBefore = DiskCommands.getFreeSpace()
             
             if wow {
@@ -58,7 +64,7 @@ extension Very {
         }
         
         var anyFlag: Bool {
-            return additional || directories || trash || wow
+            additional || directories || trash || wow
         }
     }
 }

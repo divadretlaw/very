@@ -5,25 +5,31 @@
 //  Created by David Walter on 14.03.21.
 //
 
+import ArgumentParser
 import Foundation
-import SwiftCLI
 import Shell
 
 extension Very {
-    class DotFiles: Command {
-        let name = "dotfiles"
-        let shortDescription = "Init and update dotFiles in your home directory"
+    struct DotFiles: ParsableCommand {
+        @OptionGroup var options: Options
         
-        @Key("-i", "--init", description: "")
+        static var configuration = CommandConfiguration(
+            commandName: "dotfiles",
+            abstract: "Init and update dotFiles in your home directory"
+        )
+        
+        @Option(name: .customLong("init"))
         var origin: String?
         
-        @Key("-h", "--home", description: "")
+        @Option
         var home: String?
         
-        func execute() throws {
-            let home = self.home ?? "~"
+        func run() throws {
+            try options.load()
             
-            if let origin = self.origin {
+            let home = home ?? "~"
+            
+            if let origin = origin {
                 Log.message(Log.Icon.notes, "Intializing dotfiles")
                 let initScript = """
                 cd \(home)

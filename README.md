@@ -2,30 +2,36 @@
 
 # very
 
-A package manager wrapper and some simple additional commands
+A collection of useful commandline tools
 
-### Usage
+## Installation
 
 ```
-python3 very.py [command]
+brew install divadretlaw/tap/very
 ```
 
-* **install** Install one ore more packages
-* **remove** Remove one ore more packages
-* **search** Search for packages by name
-* **list** List installed packages
-* **clean** Cleans the system
-* **wow-clean** Cleans the system and empties the trash
-* **update** Checks for package updates and installs them
-* **system-update** Checks for system updates and installs them
-* **much-update** Checks for package and system updates and installs them
-* **very-update** Updates the script to the newest version
-* **ip** Prints global IP
-* **ping** Starts a ping test
-* **download** Starts a download test
-* **hosts** Updates `/etc/hosts` from [http://winhelp2002.mvps.org](http://winhelp2002.mvps.org)
-* **wallpaper** Sets the wallpaper
-* **dotfiles** Version control helper for dotfiles
+## Usage
+
+```
+very [command]
+```
+
+* **`clean`** Cleans the system
+* **`dotfiles`** Version control helper for dotfiles
+* **`gitignore`** Loads a .gitignore file from gitignore.io
+* **`hosts`** Updates `/etc/hosts` from [StevenBlack/hosts](https://github.com/StevenBlack/hosts)
+* **`ip`** Prints global IP
+* **`ping`** Runs a quick ping test
+* **`setup`** Makes an initial setup on this machine
+* **`ping`** Starts a ping test
+* **`update`** Checks for package updates and installs them
+* **`wallpaper`** Sets the wallpaper
+
+## Configuration
+
+Very will create a config file when first run in `~/.config/very/very.json`. See [very.json](very.json) for the default configuration.
+
+You can specify to load a different configuration with `--configuration /path/to/configuration/very.json`
 
 # License
 

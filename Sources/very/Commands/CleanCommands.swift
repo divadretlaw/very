@@ -32,14 +32,14 @@ struct CleanCommands {
         Log.message(Log.Icon.trash, "Emptying trash...")
         
         let source = """
-tell application "Finder"
-if length of (items in the trash as string) is 0 then return
-empty trash
-repeat until (count items of trash) = 0
-delay 1
-end repeat
-end tell
-"""
+        tell application "Finder"
+        if length of (items in the trash as string) is 0 then return
+        empty trash
+        repeat until (count items of trash) = 0
+        delay 1
+        end repeat
+        end tell
+        """
         
         guard let script = NSAppleScript(source: source) else {
             Log.error("Invalid Script.")
@@ -65,6 +65,7 @@ end tell
     
     static func directories() {
         let cleanDirectories = Configuration.shared.clean.directories
+        
         guard !cleanDirectories.isEmpty else {
             return
         }
@@ -76,7 +77,8 @@ end tell
             Log.message("Cleaning '\($0)'")
             
             do {
-                let files = try fileManager.contentsOfDirectory(at: URL(fileURLWithPath: $0.expandingTildeInPath), includingPropertiesForKeys: nil)
+                let files = try fileManager.contentsOfDirectory(at: URL(fileURLWithPath: $0.expandingTildeInPath),
+                                                                includingPropertiesForKeys: nil)
                 try files.forEach {
                     try fileManager.removeItem(at: $0)
                 }

@@ -9,7 +9,6 @@ import Foundation
 import Shell
 
 struct SetupCommands {
-    
     static func install(packages: [String]) {
         // Install requires homebrew to be installed
         guard Shell.isAvailable("brew") else { return }
@@ -39,5 +38,4 @@ struct SetupCommands {
         Log.message(Log.Icon.info, "Opening links...")
         open.forEach { Shell.run("open \($0)") }
     }
-    
 }

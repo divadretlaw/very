@@ -16,10 +16,9 @@ public struct Shell {
     }
     
     public static func isAvailable(_ command: String) -> Bool {
-        return shell("command -v \(command) > /dev/null 2>&1") == 0
+        shell("command -v \(command) > /dev/null 2>&1") == 0
     }
     
     private init() {
-        
     }
 }

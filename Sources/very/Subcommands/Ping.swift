@@ -5,20 +5,26 @@
 //  Created by David Walter on 05.07.20.
 //
 
+import ArgumentParser
 import Foundation
-import SwiftCLI
 import Shell
 
 extension Very {
-    class Ping: Command {
-        let name = "ping"
-        let shortDescription = "Runs quick ping test"
+    struct Ping: ParsableCommand {
+        @OptionGroup var options: Options
         
-        @Key("-h", "--host", description: "")
+        static var configuration = CommandConfiguration(
+            commandName: "ping",
+            abstract: "Runs a quick ping test"
+        )
+        
+        @Option(help: "The host to ping")
         var host: String?
         
-        func execute() throws {
-            let host = self.host ?? Configuration.shared.sources.ping
+        func run() throws {
+            try options.load()
+            
+            let host = host ?? Configuration.shared.sources.ping
             Log.message(Log.Icon.internet, "Starting ping test...")
             Shell.run("ping \(host)")
             Log.done()

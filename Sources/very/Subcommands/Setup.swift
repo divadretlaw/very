@@ -5,16 +5,22 @@
 //  Created by David Walter on 20.03.21.
 //
 
+import ArgumentParser
 import Foundation
-import SwiftCLI
 import Shell
 
 extension Very {
-    class Setup: Command {
-        let name = "setup"
-        let shortDescription = "Makes an initial setup on this computer"
+    struct Setup: ParsableCommand {
+        @OptionGroup var options: Options
         
-        func execute() throws {
+        static var configuration = CommandConfiguration(
+            commandName: "setup",
+            abstract: "Makes an initial setup on this machine"
+        )
+        
+        func run() throws {
+            try options.load()
+            
             guard let setup = Configuration.shared.setup else {
                 Log.error("No setup configuration found")
                 return
