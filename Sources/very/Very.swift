@@ -33,8 +33,8 @@ struct Very: ParsableCommand {
     static func sudo() {
         var arguments = [] as [String]
         arguments.append(contentsOf: ProcessInfo.processInfo.arguments)
-        if !arguments.contains("--path"), let path = Configuration.url?.path {
-            arguments.append(contentsOf: ["--path", path])
+        if !arguments.contains("--configuration"), let path = Configuration.url?.path {
+            arguments.append(contentsOf: ["--configuration", path])
         }
         
         Shell.run("sudo \(arguments.joined(separator: " "))")

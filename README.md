@@ -31,7 +31,7 @@ very [command]
 
 Very will create a config file when first run in `~/.config/very/very.json`. See [very.json](very.json) for the default configuration.
 
-You can specify to load a different configuration with `--configuration /path/to/configuration/very.json`
+You can specify to load a different configuration with `--configuration`
 
 # License
 
