@@ -12,7 +12,7 @@ extension Very {
     struct IP: AsyncParsableCommand {
         @OptionGroup var options: Options
         
-        static var configuration = CommandConfiguration(
+        static let configuration = CommandConfiguration(
             commandName: "ip",
             abstract: "Prints your global IP address"
         )

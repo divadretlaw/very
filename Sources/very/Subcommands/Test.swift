@@ -13,13 +13,13 @@ extension Very {
     struct Test: AsyncParsableCommand {
         @OptionGroup var options: Options
         
-        static var configuration = CommandConfiguration(
+        static let configuration = CommandConfiguration(
             commandName: "test",
             abstract: "DEBUG only: Run some test command"
         )
         
         mutating func run() async throws {
-            let configuration = try await options.load()
+            let _ = try await options.load()
             print("Hello World")
         }
     }

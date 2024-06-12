@@ -13,7 +13,7 @@ extension Very {
     struct Ping: AsyncParsableCommand {
         @OptionGroup var options: Options
         
-        static var configuration = CommandConfiguration(
+        static let configuration = CommandConfiguration(
             commandName: "ping",
             abstract: "Runs a quick ping test"
         )

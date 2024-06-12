@@ -12,7 +12,7 @@ extension Very {
     struct Update: AsyncParsableCommand {
         @OptionGroup var options: Options
         
-        static var configuration = CommandConfiguration(
+        static let configuration = CommandConfiguration(
             commandName: "update",
             abstract: "Checks for package updates and installs them"
         )

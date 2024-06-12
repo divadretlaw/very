@@ -12,7 +12,7 @@ extension Very {
     struct Clean: AsyncParsableCommand {
         @OptionGroup var options: Options
         
-        static var configuration = CommandConfiguration(
+        static let configuration = CommandConfiguration(
             commandName: "clean",
             abstract: "Cleans the system"
         )

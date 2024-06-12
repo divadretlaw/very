@@ -12,7 +12,7 @@ extension Very {
     struct Wallpaper: AsyncParsableCommand {
         @OptionGroup var options: Options
         
-        static var configuration = CommandConfiguration(
+        static let configuration = CommandConfiguration(
             commandName: "wallpaper",
             abstract: "Sets the wallpaper"
         )

@@ -13,7 +13,7 @@ extension Very {
     struct Setup: AsyncParsableCommand {
         @OptionGroup var options: Options
         
-        static var configuration = CommandConfiguration(
+        static let configuration = CommandConfiguration(
             commandName: "setup",
             abstract: "Makes an initial setup on this machine"
         )

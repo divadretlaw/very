@@ -13,7 +13,7 @@ extension Very {
     struct DotFiles: AsyncParsableCommand {
         @OptionGroup var options: Options
         
-        static var configuration = CommandConfiguration(
+        static let configuration = CommandConfiguration(
             commandName: "dotfiles",
             abstract: "Init and update dotFiles in your home directory"
         )

@@ -12,7 +12,7 @@ extension Very {
     struct Gitignore: AsyncParsableCommand {
         @OptionGroup var options: Options
         
-        static var configuration = CommandConfiguration(
+        static let configuration = CommandConfiguration(
             commandName: "gitignore",
             abstract: "Loads a .gitignore file from gitignore.io"
         )

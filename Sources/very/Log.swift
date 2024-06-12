@@ -29,8 +29,6 @@ struct Log {
         static let directory = "📁"
     }
     
-    static var standardError = FileHandle.standardError
-    
     static func message(_ items: String..., separator: String = " ", terminator: String = "\n") {
         let output = items.joined(separator: separator)
         print(output, separator: separator, terminator: terminator)
@@ -66,11 +64,13 @@ struct Log {
     
     static func error(_ items: String..., separator: String = " ", terminator: String = "\n") {
         let output = Log.Icon.error.appending(items.joined(separator: separator))
+        var standardError = FileHandle.standardError
         print(output.red, separator: separator, terminator: terminator, to: &standardError)
     }
     
     static func fatal(_ items: String..., separator: String = " ", terminator: String = "\n") -> Never {
         let output = Log.Icon.fatal.appending(items.joined(separator: separator))
+        var standardError = FileHandle.standardError
         print(output.black.onRed, separator: separator, terminator: terminator, to: &standardError)
         return exit(1)
     }
