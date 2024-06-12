@@ -54,19 +54,22 @@ struct Configuration: Codable, CustomStringConvertible {
         self.packageManagers = PackageManager()
         
         let ip = URL(string: "http://ipecho.net/plain")
-        let hosts = Hosts(sudo: true,
-                          defaults: true,
-                          source: URL(string: "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts")!,
-                          target: "/etc/hosts")
+        let hosts = Hosts(
+            sudo: true,
+            defaults: true,
+            source: URL(string: "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts")!,
+            target: "/etc/hosts"
+        )
         
-        self.sources = Sources(downloadtest: nil,
-                               ip: ip,
-                               wallpaper: nil,
-                               ping: "1.1.1.1",
-                               hosts: hosts)
+        self.sources = Sources(
+            downloadtest: nil,
+            ip: ip,
+            wallpaper: nil,
+            ping: "1.1.1.1",
+            hosts: hosts
+        )
         
-        self.clean = Clean(commands: [],
-                           directories: [])
+        self.clean = Clean(commands: [], directories: [])
         
         self.setup = nil
     }

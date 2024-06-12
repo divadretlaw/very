@@ -79,10 +79,12 @@ struct CleanCommands {
             Log.message("Cleaning '\(cleanDirectory)'")
             
             do {
-                let files = try fileManager.contentsOfDirectory(at: URL(fileURLWithPath: cleanDirectory.expandingTildeInPath),
-                                                                includingPropertiesForKeys: nil)
-                try files.forEach {
-                    try fileManager.removeItem(at: $0)
+                let files = try fileManager.contentsOfDirectory(
+                    at: URL(fileURLWithPath: cleanDirectory.expandingTildeInPath),
+                    includingPropertiesForKeys: nil
+                )
+                for file in files {
+                    try fileManager.removeItem(at: file)
                 }
             } catch {
                 Log.error("Unable to clean '\(cleanDirectory)'", error.localizedDescription)

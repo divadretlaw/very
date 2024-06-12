@@ -10,8 +10,7 @@ import Dispatch
 import Foundation
 import Shell
 
-@main
-struct Very: AsyncParsableCommand {
+@main struct Very: AsyncParsableCommand {
     static let configuration = {
         var subcommands: [any ParsableCommand.Type] = [
             Clean.self,

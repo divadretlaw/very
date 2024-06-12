@@ -15,12 +15,7 @@ struct DiskCommands {
         
         do {
             let values = try url.resourceValues(forKeys: [.volumeAvailableCapacityKey])
-            
-            if let capacity = values.volumeAvailableCapacity {
-                return capacity
-            } else {
-                return nil
-            }
+            return values.volumeAvailableCapacity
         } catch {
             return nil
         }

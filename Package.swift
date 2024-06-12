@@ -18,18 +18,9 @@ let package = Package(
             name: "very",
             dependencies: [
                 "Shell",
-                .product(
-                    name: "Rainbow",
-                    package: "Rainbow"
-                ),
-                .product(
-                    name: "Wallpaper",
-                    package: "macos-wallpaper"
-                ),
-                .product(
-                    name: "ArgumentParser",
-                    package: "swift-argument-parser"
-                )
+                .product(name: "Rainbow", package: "Rainbow"),
+                .product(name: "Wallpaper", package: "macos-wallpaper"),
+                .product(name: "ArgumentParser", package: "swift-argument-parser")
             ],
             swiftSettings: [
                 .enableExperimentalFeature("StrictConcurrency")
@@ -39,9 +30,6 @@ let package = Package(
             name: "Shell",
             dependencies: ["ShellCore"]
         ),
-        .target(
-            name: "ShellCore",
-            dependencies: []
-        )
+        .target(name: "ShellCore")
     ]
 )

@@ -16,7 +16,9 @@ struct SetupCommands {
         guard Shell.isAvailable("brew") else { return }
         
         Log.message(Log.Icon.package, "Installing packages...")
-        packages.forEach { Shell.run("brew install \($0)") }
+        for package in packages {
+            Shell.run("brew install \(package)")
+        }
     }
     
     func install(casks: [String]) {
@@ -24,7 +26,9 @@ struct SetupCommands {
         guard Shell.isAvailable("brew") else { return }
         
         Log.message(Log.Icon.package, "Installing casks...")
-        casks.forEach { Shell.run("brew install --cask \($0)") }
+        for package in casks {
+            Shell.run("brew install \(package)")
+        }
     }
     
     func tap(repositories: [String]) {
@@ -32,12 +36,16 @@ struct SetupCommands {
         guard Shell.isAvailable("brew") else { return }
         
         Log.message(Log.Icon.package, "Tapping repositories...")
-        repositories.forEach { Shell.run("brew tap \($0)") }
+        for repository in repositories {
+            Shell.run("brew install \(repository)")
+        }
         Shell.run("brew update")
     }
     
     func open(_ open: [String]) {
         Log.message(Log.Icon.info, "Opening links...")
-        open.forEach { Shell.run("open \($0)") }
+        for link in open {
+            Shell.run("brew install \(link)")
+        }
     }
 }
