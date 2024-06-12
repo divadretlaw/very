@@ -9,7 +9,7 @@ import ArgumentParser
 import Foundation
 
 extension Very {
-    struct Gitignore: ParsableCommand {
+    struct Gitignore: AsyncParsableCommand {
         @OptionGroup var options: Options
         
         static var configuration = CommandConfiguration(
@@ -20,8 +20,9 @@ extension Very {
         @Argument
         var array: [String] = []
         
-        func run() throws {
-            try options.load()
+        func run() async throws {
+            _ = try await options.load()
+            
             Log.message(Log.Icon.internet, "Downloading .gitignore file...")
 
             guard let path = array.joined(separator: ",").addingPercentEncoding(withAllowedCharacters: .urlPathAllowed),
@@ -30,19 +31,17 @@ extension Very {
                 return
             }
 
-            let (rawData, response, error) = Very.urlSession.synchronousDataTask(with: url)
-
-            guard response.isSuccess, let data = rawData else {
-                Log.error(error)
-                return
-            }
-
-            let fileURL = URL(fileURLWithPath: FileManager.default.currentDirectoryPath).appendingPathComponent(".gitignore")
-            Log.debug("\(fileURL)")
-
             do {
+                let (data, response) = try await Very.urlSession.data(from: url)
+                
+                guard response.isSuccess else {
+                    return
+                }
+                
+                let fileURL = URL(fileURLWithPath: FileManager.default.currentDirectoryPath).appendingPathComponent(".gitignore")
+                Log.debug("\(fileURL)")
+                
                 try data.write(to: fileURL)
-                Log.done()
             } catch {
                 Log.error(error)
             }

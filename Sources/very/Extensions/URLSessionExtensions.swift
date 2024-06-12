@@ -7,35 +7,6 @@
 
 import Foundation
 
-extension URLSession {
-    func synchronousDataTask(with url: URL) -> (Data?, URLResponse?, Error?) {
-        var data: Data?
-        var response: URLResponse?
-        var error: Error?
-        
-        let semaphore = DispatchSemaphore(value: 0)
-        
-        let dataTask = dataTask(with: url) {
-            data = $0
-            response = $1
-            error = $2
-            
-            semaphore.signal()
-        }
-        
-        dataTask.resume()
-        
-        _ = semaphore.wait(timeout: .distantFuture)
-        
-        return (data, response, error)
-    }
-    
-    func synchronousDataTask(with url: URL, completion: (Data?, URLResponse?, Error?) -> Void) {
-        let (data, response, error) = synchronousDataTask(with: url)
-        completion(data, response, error)
-    }
-}
-
 extension Optional where Wrapped == URLResponse {
     var isSuccess: Bool {
         (self as? HTTPURLResponse)?.isSuccess ?? false

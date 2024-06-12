@@ -10,7 +10,7 @@ import Foundation
 import Shell
 
 extension Very {
-    struct Ping: ParsableCommand {
+    struct Ping: AsyncParsableCommand {
         @OptionGroup var options: Options
         
         static var configuration = CommandConfiguration(
@@ -21,10 +21,10 @@ extension Very {
         @Option(help: "The host to ping")
         var host: String?
         
-        func run() throws {
-            try options.load()
+        func run() async throws {
+            let configuration = try await options.load()
             
-            let host = host ?? Configuration.shared.sources.ping
+            let host = host ?? configuration.sources.ping
             Log.message(Log.Icon.internet, "Starting ping test...")
             Shell.run("ping \(host)")
             Log.done()

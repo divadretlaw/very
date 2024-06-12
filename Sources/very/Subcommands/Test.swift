@@ -10,7 +10,7 @@ import ArgumentParser
 import Foundation
 
 extension Very {
-    struct Test: ParsableCommand {
+    struct Test: AsyncParsableCommand {
         @OptionGroup var options: Options
         
         static var configuration = CommandConfiguration(
@@ -18,8 +18,8 @@ extension Very {
             abstract: "DEBUG only: Run some test command"
         )
         
-        mutating func run() throws {
-            try options.load()
+        mutating func run() async throws {
+            let configuration = try await options.load()
             print("Hello World")
         }
     }

@@ -9,7 +9,7 @@ import ArgumentParser
 import Foundation
 
 extension Very {
-    struct Clean: ParsableCommand {
+    struct Clean: AsyncParsableCommand {
         @OptionGroup var options: Options
         
         static var configuration = CommandConfiguration(
@@ -29,31 +29,33 @@ extension Very {
         @Flag(help: "Runs all clean commands.")
         var wow = false
         
-        func run() throws {
-            try options.load()
+        func run() async throws {
+            let configuration = try await options.load()
+            let cleanCommands = CleanCommands(configuration: configuration)
+            let diskCommands = DiskCommands(configuration: configuration)
             
-            let freeSpaceBefore = DiskCommands.getFreeSpace()
+            let freeSpaceBefore = diskCommands.getFreeSpace()
             
             if wow {
-                CleanCommands.all()
+                cleanCommands.all()
             } else if anyFlag {
-                CleanCommands.default()
+                cleanCommands.default()
                 if trash {
-                    CleanCommands.trash()
+                    cleanCommands.trash()
                 }
                 
                 if additional {
-                    CleanCommands.additional()
+                    cleanCommands.additional()
                 }
                 
                 if directories {
-                    CleanCommands.directories()
+                    cleanCommands.directories()
                 }
             } else {
-                CleanCommands.default()
+                cleanCommands.default()
             }
             
-            guard let bytes = DiskCommands.getFreeSpace(relativeTo: freeSpaceBefore) else {
+            guard let bytes = diskCommands.getFreeSpace(relativeTo: freeSpaceBefore) else {
                 Log.done()
                 return
             }

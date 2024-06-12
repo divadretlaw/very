@@ -79,7 +79,7 @@ struct Log {
     }
     
     static func url(_ url: URL) -> String {
-        Self.path(url.absoluteString.underline)
+        path(url.absoluteString.underline)
     }
     
     static func path(_ path: String) -> String {
@@ -89,7 +89,6 @@ struct Log {
 
 extension FileHandle: TextOutputStream {
     public func write(_ string: String) {
-        guard let data = string.data(using: .utf8) else { return }
-        write(data)
+        write(Data(string.utf8))
     }
 }

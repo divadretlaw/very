@@ -8,7 +8,9 @@
 import Foundation
 
 struct DiskCommands {
-    static func getFreeSpace() -> Int? {
+    let configuration: Configuration
+    
+    func getFreeSpace() -> Int? {
         let url = URL(fileURLWithPath: "/")
         
         do {
@@ -24,8 +26,8 @@ struct DiskCommands {
         }
     }
     
-    static func getFreeSpace(relativeTo: Int?) -> Int? {
-        guard let before = relativeTo, let after = DiskCommands.getFreeSpace() else { return nil }
+    func getFreeSpace(relativeTo: Int?) -> Int? {
+        guard let before = relativeTo, let after = getFreeSpace() else { return nil }
         let bytes = before - after
         guard bytes > 0 else { return nil }
         return bytes

@@ -9,29 +9,15 @@ import ArgumentParser
 import Foundation
 
 struct Configuration: Codable, CustomStringConvertible {
-    static var shared: Configuration!
-    static var url: URL?
-    
     let packageManagers: PackageManager
     let sources: Sources
     let clean: Clean
     
-    var setup: Setup?
+    let setup: Setup?
     
-    static func load(path: String? = nil) throws {
-        if let path = path {
-            Configuration.shared = try Configuration(path: URL(fileURLWithPath: path))
-        } else {
-            Configuration.shared = try Configuration()
-        }
-        Log.debug("Loaded configuration:")
-        #if DEBUG
-        Log.message(Configuration.shared.description)
-        #endif
-    }
-    
-    init(path: URL? = nil) throws {
+    init(path: URL?) throws {
         let url: URL
+        
         if let path = path, FileManager.default.fileExists(atPath: path.path) {
             url = path
             Log.debug("Using provided configuration Path: \(url.path)")
@@ -45,19 +31,17 @@ struct Configuration: Codable, CustomStringConvertible {
             Log.warning("No configuration was found.")
             Log.message(Log.Icon.info, "Generating default configuration...")
             
-            self = Configuration(values: true)
+            self = Configuration()
             
             url = URL(fileURLWithPath: "~/.config/very/very.json".expandingTildeInPath)
             let directory = url.deletingLastPathComponent()
             try? FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true, attributes: [:])
             
-            try self.data.write(to: url)
+            try jsonData.write(to: url)
             
             Log.message(Log.Icon.info, "Default configuration was stored at \(Log.path("~/.config/very/very.json")).")
             return
         }
-        
-        Self.url = url
         
         let data = try Data(contentsOf: url)
         let decoder = JSONDecoder()
@@ -66,14 +50,14 @@ struct Configuration: Codable, CustomStringConvertible {
         self = try decoder.decode(Configuration.self, from: data)
     }
     
-    private init(values: Bool) {
+    private init() {
         self.packageManagers = PackageManager()
         
-        let ip = values ? URL(string: "http://ipecho.net/plain") : nil
-        let hosts = values ? Hosts(sudo: true,
-                                   defaults: true,
-                                   source: URL(string: "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts")!,
-                                   target: "/etc/hosts") : nil
+        let ip = URL(string: "http://ipecho.net/plain")
+        let hosts = Hosts(sudo: true,
+                          defaults: true,
+                          source: URL(string: "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts")!,
+                          target: "/etc/hosts")
         
         self.sources = Sources(downloadtest: nil,
                                ip: ip,
@@ -83,15 +67,17 @@ struct Configuration: Codable, CustomStringConvertible {
         
         self.clean = Clean(commands: [],
                            directories: [])
+        
+        self.setup = nil
     }
     
     // MARK: - CustomStringConvertible
     
     var description: String {
-        String(data: data, encoding: .utf8)!
+        String(decoding: jsonData, as: UTF8.self)
     }
     
-    var data: Data {
+    private var jsonData: Data {
         let encoder = JSONEncoder()
         encoder.keyEncodingStrategy = .convertToSnakeCase
         

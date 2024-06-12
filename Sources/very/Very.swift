@@ -11,12 +11,9 @@ import Foundation
 import Shell
 
 @main
-struct Very: ParsableCommand {
-    static var configuration = CommandConfiguration(
-        commandName: "very",
-        abstract: "very",
-        version: "3.0.0",
-        subcommands: [
+struct Very: AsyncParsableCommand {
+    static let configuration = {
+        var subcommands: [any ParsableCommand.Type] = [
             Clean.self,
             DotFiles.self,
             Gitignore.self,
@@ -27,13 +24,22 @@ struct Very: ParsableCommand {
             Update.self,
             Wallpaper.self
         ]
-    )
+        #if DEBUG
+        subcommands.append(Test.self)
+        #endif
+        return CommandConfiguration(
+            commandName: "very",
+            abstract: "very",
+            version: "3.1.0",
+            subcommands: subcommands
+        )
+    }()
     
     /// Rerun as with sudo
-    static func sudo() {
-        var arguments = [] as [String]
+    static func sudo() async {
+        var arguments: [String] = []
         arguments.append(contentsOf: ProcessInfo.processInfo.arguments)
-        if !arguments.contains("--configuration"), let path = Configuration.url?.path {
+        if !arguments.contains("--configuration"), let path = await VeryActor.shared.url?.path {
             arguments.append(contentsOf: ["--configuration", path])
         }
         
@@ -51,12 +57,8 @@ struct Options: ParsableArguments {
     @Option(help: "Overwrite the default configuration", completion: .file())
     var configuration: String?
     
-    func load() throws {
-        guard let path = configuration else {
-            try Configuration.load()
-            return
-        }
-        
-        try Configuration.load(path: path)
+    func load() async throws -> Configuration {
+        try await VeryActor.shared.load(path: configuration)
+        return await VeryActor.shared.configuration
     }
 }

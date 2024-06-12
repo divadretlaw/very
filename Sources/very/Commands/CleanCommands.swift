@@ -9,26 +9,28 @@ import Foundation
 import Shell
 
 struct CleanCommands {
-    static func all() {
-        CleanCommands.default()
-        CleanCommands.trash()
-        CleanCommands.additional()
-        CleanCommands.directories()
+    let configuration: Configuration
+    
+    func all() {
+        `default`()
+        trash()
+        additional()
+        directories()
     }
     
-    static func `default`() {
+    func `default`() {
         Log.message(Log.Icon.clean, "Cleaning system...")
         
-        if let main = Configuration.shared.packageManagers.getMain() {
-            CleanCommands.packageManager(main)
+        if let main = configuration.packageManagers.getMain() {
+            packageManager(main)
         }
         
-        Configuration.shared.packageManagers.getAdditional().forEach {
-            CleanCommands.packageManager($0)
+        for item in configuration.packageManagers.getAdditional() {
+            packageManager(item)
         }
     }
     
-    static func trash() {
+    func trash() {
         Log.message(Log.Icon.trash, "Emptying trash...")
         
         let source = """
@@ -54,17 +56,17 @@ struct CleanCommands {
         }
     }
     
-    static func additional() {
-        let cleanCommands = Configuration.shared.clean.commands
+    func additional() {
+        let cleanCommands = configuration.clean.commands
         guard !cleanCommands.isEmpty else { return }
         
-        cleanCommands.forEach {
-            Shell.run($0)
+        for cleanCommand in cleanCommands {
+            Shell.run(cleanCommand)
         }
     }
     
-    static func directories() {
-        let cleanDirectories = Configuration.shared.clean.directories
+    func directories() {
+        let cleanDirectories = configuration.clean.directories
         
         guard !cleanDirectories.isEmpty else {
             return
@@ -73,27 +75,27 @@ struct CleanCommands {
         Log.message(Log.Icon.directory, "Cleaning directories...")
         let fileManager = FileManager.default
         
-        cleanDirectories.forEach {
-            Log.message("Cleaning '\($0)'")
+        for cleanDirectory in cleanDirectories {
+            Log.message("Cleaning '\(cleanDirectory)'")
             
             do {
-                let files = try fileManager.contentsOfDirectory(at: URL(fileURLWithPath: $0.expandingTildeInPath),
+                let files = try fileManager.contentsOfDirectory(at: URL(fileURLWithPath: cleanDirectory.expandingTildeInPath),
                                                                 includingPropertiesForKeys: nil)
                 try files.forEach {
                     try fileManager.removeItem(at: $0)
                 }
             } catch {
-                Log.error("Unable to clean '\($0)'", error.localizedDescription)
+                Log.error("Unable to clean '\(cleanDirectory)'", error.localizedDescription)
             }
         }
     }
     
-    static func packageManager(_ packageManager: PackageManager.Main) {
+    func packageManager(_ packageManager: PackageManager.Main) {
         guard packageManager.isAvailable else { return }
         Shell.run(packageManager.clean)
     }
     
-    static func packageManager(_ packageManager: PackageManager.Additional) {
+    func packageManager(_ packageManager: PackageManager.Additional) {
         guard packageManager.isAvailable else { return }
         Shell.run(packageManager.clean)
     }

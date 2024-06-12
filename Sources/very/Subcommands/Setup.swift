@@ -10,7 +10,7 @@ import Foundation
 import Shell
 
 extension Very {
-    struct Setup: ParsableCommand {
+    struct Setup: AsyncParsableCommand {
         @OptionGroup var options: Options
         
         static var configuration = CommandConfiguration(
@@ -18,22 +18,23 @@ extension Very {
             abstract: "Makes an initial setup on this machine"
         )
         
-        func run() throws {
-            try options.load()
+        func run() async throws {
+            let configuration = try await options.load()
+            let commands = SetupCommands(configuration: configuration)
             
-            guard let setup = Configuration.shared.setup else {
+            guard let setup = configuration.setup else {
                 Log.error("No setup configuration found")
                 return
             }
             
-            SetupCommands.tap(repositories: setup.taps)
+            commands.tap(repositories: setup.taps)
             
-            SetupCommands.open(setup.open)
+            commands.open(setup.open)
             
-            SetupCommands.install(packages: setup.packages)
-            SetupCommands.install(casks: setup.casks)
+            commands.install(packages: setup.packages)
+            commands.install(casks: setup.casks)
             
-            setup.additional.forEach { additional in
+            for additional in setup.additional {
                 Log.message(Log.Icon.info, additional.comment)
                 Shell.run(additional.command)
             }

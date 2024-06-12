@@ -15,4 +15,3 @@ int shell(const char *cmd) {
     int out = system(cmd);
     return WEXITSTATUS(out);
 }
-

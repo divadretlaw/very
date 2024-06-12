@@ -9,7 +9,7 @@ import ArgumentParser
 import Foundation
 
 extension Very {
-    struct Update: ParsableCommand {
+    struct Update: AsyncParsableCommand {
         @OptionGroup var options: Options
         
         static var configuration = CommandConfiguration(
@@ -23,15 +23,16 @@ extension Very {
         @Flag(help: "Checks for package and system updates and install them.")
         var much = false
         
-        func run() throws {
-            try options.load()
+        func run() async throws {
+            let configuration = try await options.load()
+            let commands = UpdateCommands(configuration: configuration)
             
             if much {
-                UpdateCommands.all()
+                commands.all()
             } else if system {
-                UpdateCommands.system()
+                commands.system()
             } else {
-                UpdateCommands.default()
+                commands.default()
             }
         }
     }

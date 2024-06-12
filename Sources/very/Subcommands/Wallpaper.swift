@@ -9,7 +9,7 @@ import ArgumentParser
 import Foundation
 
 extension Very {
-    struct Wallpaper: ParsableCommand {
+    struct Wallpaper: AsyncParsableCommand {
         @OptionGroup var options: Options
         
         static var configuration = CommandConfiguration(
@@ -17,32 +17,33 @@ extension Very {
             abstract: "Sets the wallpaper"
         )
 
-        func run() throws {
-            try options.load()
-            guard let url = Configuration.shared.sources.wallpaper else {
+        func run() async throws {
+            let configuration = try await options.load()
+            let commands = WallpaperCommands(configuration: configuration)
+            
+            guard let url = configuration.sources.wallpaper else {
                 Log.error("Invalid URL.")
                 return
             }
             Log.message(Log.Icon.wallpaper, "Downloading Wallpaper from \(Log.url(url))...")
 
-            let (rawData, response, error) = Very.urlSession.synchronousDataTask(with: url)
-
-            guard response.isSuccess, let data = rawData else {
-                Log.error(error)
-                return
-            }
-
-            guard let pictureDirectory = FileManager.default.urls(for: .picturesDirectory, in: .userDomainMask).first else {
-                Log.error("No picture directory.")
-                return
-            }
-
-            let wallpaperURL = pictureDirectory.appendingPathComponent(data.fileName(name: "Wallpaper"))
-            
             do {
+                let (data, response) = try await Very.urlSession.data(from: url)
+                
+                guard response.isSuccess else {
+                    return
+                }
+                
+                guard let pictureDirectory = FileManager.default.urls(for: .picturesDirectory, in: .userDomainMask).first else {
+                    Log.error("No picture directory.")
+                    return
+                }
+                
+                let wallpaperURL = pictureDirectory.appendingPathComponent(data.fileName(name: "Wallpaper"))
+                
                 Log.debug("\(wallpaperURL)")
                 try data.write(to: wallpaperURL)
-                try WallpaperCommands.set(wallpaperURL)
+                try commands.set(wallpaperURL)
                 Log.done()
             } catch {
                 Log.error(error)

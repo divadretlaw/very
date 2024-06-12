@@ -10,7 +10,7 @@ import Foundation
 import Shell
 
 extension Very {
-    struct DotFiles: ParsableCommand {
+    struct DotFiles: AsyncParsableCommand {
         @OptionGroup var options: Options
         
         static var configuration = CommandConfiguration(
@@ -24,8 +24,8 @@ extension Very {
         @Option
         var home: String?
         
-        func run() throws {
-            try options.load()
+        func run() async throws {
+            _ = try await options.load()
             
             let home = home ?? "~"
             

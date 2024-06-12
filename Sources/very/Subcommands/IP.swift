@@ -9,7 +9,7 @@ import ArgumentParser
 import Foundation
 
 extension Very {
-    struct IP: ParsableCommand {
+    struct IP: AsyncParsableCommand {
         @OptionGroup var options: Options
         
         static var configuration = CommandConfiguration(
@@ -17,22 +17,25 @@ extension Very {
             abstract: "Prints your global IP address"
         )
         
-        func run() throws {
-            try options.load()
+        func run() async throws {
+            let configuration = try await options.load()
             
-            guard let url = Configuration.shared.sources.ip else {
+            guard let url = configuration.sources.ip else {
                 Log.error("Invalid URL")
                 return
             }
             
-            let (rawData, response, error) = Very.urlSession.synchronousDataTask(with: url)
-            
-            guard response.isSuccess, let data = rawData, let text = String(data: data, encoding: .utf8) else {
+            do {
+                let (data, response) = try await Very.urlSession.data(from: url)
+                
+                guard response.isSuccess, let text = String(data: data, encoding: .utf8) else {
+                    return
+                }
+                
+                Log.message(text)
+            } catch {
                 Log.error(error)
-                return
             }
-            
-            Log.message(text)
         }
     }
 }

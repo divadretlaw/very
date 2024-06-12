@@ -9,7 +9,9 @@ import Foundation
 import Shell
 
 struct SetupCommands {
-    static func install(packages: [String]) {
+    let configuration: Configuration
+    
+    func install(packages: [String]) {
         // Install requires homebrew to be installed
         guard Shell.isAvailable("brew") else { return }
         
@@ -17,7 +19,7 @@ struct SetupCommands {
         packages.forEach { Shell.run("brew install \($0)") }
     }
     
-    static func install(casks: [String]) {
+    func install(casks: [String]) {
         // Install requires homebrew to be installed
         guard Shell.isAvailable("brew") else { return }
         
@@ -25,7 +27,7 @@ struct SetupCommands {
         casks.forEach { Shell.run("brew install --cask \($0)") }
     }
     
-    static func tap(repositories: [String]) {
+    func tap(repositories: [String]) {
         // Tap requires homebrew to be installed
         guard Shell.isAvailable("brew") else { return }
         
@@ -34,7 +36,7 @@ struct SetupCommands {
         Shell.run("brew update")
     }
     
-    static func open(_ open: [String]) {
+    func open(_ open: [String]) {
         Log.message(Log.Icon.info, "Opening links...")
         open.forEach { Shell.run("open \($0)") }
     }
