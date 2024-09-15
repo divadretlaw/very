@@ -11,22 +11,22 @@ import Shell
 struct CleanCommands {
     let configuration: Configuration
     
-    func all() {
-        `default`()
+    func all() async throws {
+        try await `default`()
         trash()
-        additional()
+        try await additional()
         directories()
     }
     
-    func `default`() {
+    func `default`() async throws {
         Log.message(Log.Icon.clean, "Cleaning system...")
         
-        if let main = configuration.packageManagers.getMain() {
-            packageManager(main)
+        if let main = await configuration.packageManagers.getMain() {
+            try await packageManager(main)
         }
         
         for item in configuration.packageManagers.getAdditional() {
-            packageManager(item)
+            try await packageManager(item)
         }
     }
     
@@ -56,12 +56,13 @@ struct CleanCommands {
         }
     }
     
-    func additional() {
+    func additional() async throws {
         let cleanCommands = configuration.clean.commands
         guard !cleanCommands.isEmpty else { return }
         
         for cleanCommand in cleanCommands {
-            Shell.run(cleanCommand)
+            let script = Script(cleanCommand)
+            try await script()
         }
     }
     
@@ -92,13 +93,15 @@ struct CleanCommands {
         }
     }
     
-    func packageManager(_ packageManager: PackageManager.Main) {
-        guard packageManager.isAvailable else { return }
-        Shell.run(packageManager.clean)
+    func packageManager(_ packageManager: PackageManager.Main) async throws {
+        guard await packageManager.isAvailable else { return }
+        let script = Script(packageManager.clean)
+        try await script()
     }
     
-    func packageManager(_ packageManager: PackageManager.Additional) {
-        guard packageManager.isAvailable else { return }
-        Shell.run(packageManager.clean)
+    func packageManager(_ packageManager: PackageManager.Additional) async throws {
+        guard await packageManager.isAvailable else { return }
+        let script = Script(packageManager.clean)
+        try await script()
     }
 }

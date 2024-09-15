@@ -12,10 +12,20 @@ struct PackageManager: Codable {
     private let main: [Main]
     private let additional: [Additional]
 
-    func getMain() -> Main? {
+    func getMain() async -> Main? {
         // Check all package manager in the config and if non-available check the default
         // main package managers pre-configured
-        main.first { $0.isAvailable } ?? Self.main.first { $0.isAvailable }
+        for packageManager in main {
+            if await packageManager.isAvailable {
+                return packageManager
+            }
+        }
+        for packageManager in Self.main {
+            if await packageManager.isAvailable {
+                return packageManager
+            }
+        }
+        return nil
     }
     
     func getAdditional() -> [Additional] {
@@ -43,7 +53,9 @@ extension PackageManager {
         let list: String
 
         var isAvailable: Bool {
-            Shell.isAvailable(command)
+            get async {
+                await Command.isAvailable(command)
+            }
         }
     }
 }
@@ -63,7 +75,9 @@ extension PackageManager {
         let list: String
 
         var isAvailable: Bool {
-            Shell.isAvailable(command)
+            get async {
+                await Command.isAvailable(command)
+            }
         }
     }
 }

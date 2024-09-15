@@ -1,4 +1,4 @@
-// swift-tools-version:5.9
+// swift-tools-version:5.10
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -6,10 +6,11 @@ import PackageDescription
 let package = Package(
     name: "very",
     platforms: [
-        .macOS(.v12)
+        .macOS(.v13)
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-argument-parser", from: "1.4.0"),
+        .package(url: "https://github.com/divadretlaw/Shell", from: "0.4.0"),
         .package(url: "https://github.com/divadretlaw/macos-wallpaper", from: "2.3.2"),
         .package(url: "https://github.com/onevcat/Rainbow", from: "4.0.1")
     ],
@@ -17,7 +18,7 @@ let package = Package(
         .executableTarget(
             name: "very",
             dependencies: [
-                "Shell",
+                .product(name: "Shell", package: "Shell"),
                 .product(name: "Rainbow", package: "Rainbow"),
                 .product(name: "Wallpaper", package: "macos-wallpaper"),
                 .product(name: "ArgumentParser", package: "swift-argument-parser")
@@ -25,11 +26,6 @@ let package = Package(
             swiftSettings: [
                 .enableExperimentalFeature("StrictConcurrency")
             ]
-        ),
-        .target(
-            name: "Shell",
-            dependencies: ["ShellCore"]
-        ),
-        .target(name: "ShellCore")
+        )
     ]
 )

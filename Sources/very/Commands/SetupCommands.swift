@@ -11,41 +11,46 @@ import Shell
 struct SetupCommands {
     let configuration: Configuration
     
-    func install(packages: [String]) {
+    func install(packages: [String]) async throws {
         // Install requires homebrew to be installed
-        guard Shell.isAvailable("brew") else { return }
+        guard await Command.isAvailable("brew") else { return }
         
         Log.message(Log.Icon.package, "Installing packages...")
         for package in packages {
-            Shell.run("brew install \(package)")
+            let script = Script("brew install \(package)")
+            try await script()
         }
     }
     
-    func install(casks: [String]) {
+    func install(casks: [String]) async throws {
         // Install requires homebrew to be installed
-        guard Shell.isAvailable("brew") else { return }
+        guard await Command.isAvailable("brew") else { return }
         
         Log.message(Log.Icon.package, "Installing casks...")
         for package in casks {
-            Shell.run("brew install \(package)")
+            let script = Script("brew install \(package)")
+            try await script()
         }
     }
     
-    func tap(repositories: [String]) {
+    func tap(repositories: [String]) async throws {
         // Tap requires homebrew to be installed
-        guard Shell.isAvailable("brew") else { return }
+        guard await Command.isAvailable("brew") else { return }
         
         Log.message(Log.Icon.package, "Tapping repositories...")
         for repository in repositories {
-            Shell.run("brew install \(repository)")
+            let script = Script("brew install \(repository)")
+            try await script()
         }
-        Shell.run("brew update")
+        let script = Script("brew update")
+        try await script()
     }
     
-    func open(_ open: [String]) {
+    func open(_ open: [String]) async throws {
         Log.message(Log.Icon.info, "Opening links...")
         for link in open {
-            Shell.run("brew install \(link)")
+            let script = Script("brew install \(link)")
+            try await script()
         }
     }
 }

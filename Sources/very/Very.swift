@@ -29,20 +29,21 @@ import Shell
         return CommandConfiguration(
             commandName: "very",
             abstract: "very",
-            version: "3.1.0",
+            version: "3.2.0",
             subcommands: subcommands
         )
     }()
     
     /// Rerun as with sudo
-    static func sudo() async {
+    static func sudo() async throws {
         var arguments: [String] = []
         arguments.append(contentsOf: ProcessInfo.processInfo.arguments)
         if !arguments.contains("--configuration"), let path = await VeryActor.shared.url?.path {
             arguments.append(contentsOf: ["--configuration", path])
         }
         
-        Shell.run("sudo \(arguments.joined(separator: " "))")
+        let script = UnsafeScript("sudo \(arguments.joined(separator: " "))")
+        try await script()
     }
 
     static let urlSession: URLSession = {

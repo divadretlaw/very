@@ -28,11 +28,11 @@ extension Very {
             let commands = UpdateCommands(configuration: configuration)
             
             if much {
-                commands.all()
+                try await commands.all()
             } else if system {
-                commands.system()
+                try await commands.system()
             } else {
-                commands.default()
+                try await commands.default()
             }
         }
     }

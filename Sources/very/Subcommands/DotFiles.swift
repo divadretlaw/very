@@ -31,34 +31,40 @@ extension Very {
             
             if let origin = origin {
                 Log.message(Log.Icon.notes, "Intializing dotfiles")
-                let initScript = """
-                cd \(home)
-                git init
-                git config --local status.showUntrackedFiles no
-                git remote add origin \(origin)
-                git branch -M main
-                git pull origin main
-                git branch --set-upstream-to=origin/main main
-                """
-                Shell.run(initScript)
+                let initScript = Script {
+                    """
+                    cd \(home)
+                    git init
+                    git config --local status.showUntrackedFiles no
+                    git remote add origin \(origin)
+                    git branch -M main
+                    git pull origin main
+                    git branch --set-upstream-to=origin/main main
+                    """
+                }
+                try await initScript()
                 
-                let updateScript = """
-                cd \(home)
-                git fetch
-                git pull
-                brew install git-secret
-                git secret reveal -f
-                """
-                Shell.run(updateScript)
+                let updateScript = Script {
+                    """
+                    cd \(home)
+                    git fetch
+                    git pull
+                    brew install git-secret
+                    git secret reveal -f
+                    """
+                }
+                try await updateScript()
             } else {
                 Log.message(Log.Icon.notes, "Updating dotfiles")
-                let script = """
-                cd \(home)
-                git fetch
-                git pull --rebase
-                git secret reveal -f
-                """
-                Shell.run(script)
+                let script = Script {
+                    """
+                    cd \(home)
+                    git fetch
+                    git pull --rebase
+                    git secret reveal -f
+                    """
+                }
+                try await script()
             }
         }
     }

@@ -26,7 +26,8 @@ extension Very {
             
             let host = host ?? configuration.sources.ping
             Log.message(Log.Icon.internet, "Starting ping test...")
-            Shell.run("ping \(host)")
+            let command = Command("ping", host)
+            try await command()
             Log.done()
         }
     }

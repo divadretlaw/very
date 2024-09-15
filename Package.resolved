@@ -1,4 +1,5 @@
 {
+  "originHash" : "beb96756bc2838cd8314a05c2a496647118b49f0b325953cfdd93202a88b6ecc",
   "pins" : [
     {
       "identity" : "macos-wallpaper",
@@ -16,6 +17,15 @@
       "state" : {
         "revision" : "e0dada9cd44e3fa7ec3b867e49a8ddbf543e3df3",
         "version" : "4.0.1"
+      }
+    },
+    {
+      "identity" : "shell",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/divadretlaw/Shell",
+      "state" : {
+        "revision" : "268e869ef9f37a2bf7f572f54ffb791d083b411c",
+        "version" : "0.4.0"
       }
     },
     {
@@ -37,5 +47,5 @@
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }

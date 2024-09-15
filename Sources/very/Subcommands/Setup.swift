@@ -27,16 +27,17 @@ extension Very {
                 return
             }
             
-            commands.tap(repositories: setup.taps)
+            try await commands.tap(repositories: setup.taps)
             
-            commands.open(setup.open)
+            try await commands.open(setup.open)
             
-            commands.install(packages: setup.packages)
-            commands.install(casks: setup.casks)
+            try await commands.install(packages: setup.packages)
+            try await commands.install(casks: setup.casks)
             
             for additional in setup.additional {
                 Log.message(Log.Icon.info, additional.comment)
-                Shell.run(additional.command)
+                let script = Script(additional.command)
+                try await script()
             }
         }
     }

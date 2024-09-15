@@ -28,7 +28,7 @@ extension Very {
             let url = hosts.source
             
             if hosts.sudo, ProcessInfo.processInfo.userName != "root" {
-                await Very.sudo()
+                try await Very.sudo()
                 return
             }
             

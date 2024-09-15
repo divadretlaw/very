@@ -11,50 +11,55 @@ import Shell
 struct UpdateCommands {
     let configuration: Configuration
     
-    func all() {
-        `default`()
-        system()
+    func all() async throws {
+        try await `default`()
+        try await system()
     }
     
-    func `default`() {
-        if let main = configuration.packageManagers.getMain() {
-            packageManager(main)
+    func `default`() async throws {
+        if let main = await configuration.packageManagers.getMain() {
+            try await packageManager(main)
         }
         
         for item in configuration.packageManagers.getAdditional() {
-            packageManager(item)
+            try await packageManager(item)
         }
     }
     
-    func system() {
-        if let main = configuration.packageManagers.getMain() {
-            systemUpgrade(main)
+    func system() async throws {
+        if let main = await configuration.packageManagers.getMain() {
+            try await systemUpgrade(main)
         }
     }
     
-    private func packageManager(_ packageManager: PackageManager.Main) {
-        guard packageManager.isAvailable else { return }
+    private func packageManager(_ packageManager: PackageManager.Main) async throws {
+        guard await packageManager.isAvailable else { return }
         
         Log.message(Log.Icon.package, "Updating packages using '\(packageManager.command)'...")
-        Shell.run(packageManager.update)
+        let updateScript = Script(packageManager.update)
+        try await updateScript()
         
         guard let upgrade = packageManager.upgrade else { return }
-        Shell.run(upgrade)
+        let upgradeScript = Script(upgrade)
+        try await upgradeScript()
     }
     
-    private func packageManager(_ packageManager: PackageManager.Additional) {
-        guard packageManager.isAvailable else { return }
+    private func packageManager(_ packageManager: PackageManager.Additional) async throws {
+        guard await packageManager.isAvailable else { return }
         
         Log.message(Log.Icon.package, "Updating packages using '\(packageManager.command)'...")
-        Shell.run(packageManager.update)
+        let updateScript = Script(packageManager.update)
+        try await updateScript()
         
         guard let upgrade = packageManager.upgrade else { return }
-        Shell.run(upgrade)
+        let upgradeScript = Script(upgrade)
+        try await upgradeScript()
     }
     
-    private func systemUpgrade(_ packageManager: PackageManager.Main) {
-        guard packageManager.isAvailable, let systemUpgrade = packageManager.systemUpgrade else { return }
+    private func systemUpgrade(_ packageManager: PackageManager.Main) async throws {
+        guard await packageManager.isAvailable, let systemUpgrade = packageManager.systemUpgrade else { return }
         Log.message(Log.Icon.update, "Upgrading System...")
-        Shell.run(systemUpgrade)
+        let upgradeScript = Script(systemUpgrade)
+        try await upgradeScript()
     }
 }

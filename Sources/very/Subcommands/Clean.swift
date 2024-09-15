@@ -37,22 +37,22 @@ extension Very {
             let freeSpaceBefore = diskCommands.getFreeSpace()
             
             if wow {
-                cleanCommands.all()
+                try await cleanCommands.all()
             } else if anyFlag {
-                cleanCommands.default()
+                try await cleanCommands.default()
                 if trash {
                     cleanCommands.trash()
                 }
                 
                 if additional {
-                    cleanCommands.additional()
+                    try await cleanCommands.additional()
                 }
                 
                 if directories {
                     cleanCommands.directories()
                 }
             } else {
-                cleanCommands.default()
+                try await cleanCommands.default()
             }
             
             guard let bytes = diskCommands.getFreeSpace(relativeTo: freeSpaceBefore) else {
