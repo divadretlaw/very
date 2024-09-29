@@ -1,4 +1,4 @@
-// swift-tools-version:5.10
+// swift-tools-version:6.0
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -10,7 +10,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-argument-parser", from: "1.4.0"),
-        .package(url: "https://github.com/divadretlaw/Shell", from: "0.4.0"),
+        .package(url: "https://github.com/divadretlaw/Shell", from: "0.7.0"),
         .package(url: "https://github.com/divadretlaw/macos-wallpaper", from: "2.3.2"),
         .package(url: "https://github.com/onevcat/Rainbow", from: "4.0.1")
     ],

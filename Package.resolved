@@ -1,13 +1,13 @@
 {
-  "originHash" : "beb96756bc2838cd8314a05c2a496647118b49f0b325953cfdd93202a88b6ecc",
+  "originHash" : "52f6fe9e86900dca1d79e5100099aa1bef92e6aa8a58ab13e6910ae6a0241934",
   "pins" : [
     {
       "identity" : "macos-wallpaper",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/divadretlaw/macos-wallpaper",
       "state" : {
-        "revision" : "edb19dc8cdf5ff2bb758d63b2b89f2b91a42d3ac",
-        "version" : "2.3.2"
+        "revision" : "f7743333daac770ff396ef82446261b7cd8f4eb5",
+        "version" : "2.4.0"
       }
     },
     {
@@ -24,8 +24,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/divadretlaw/Shell",
       "state" : {
-        "revision" : "268e869ef9f37a2bf7f572f54ffb791d083b411c",
-        "version" : "0.4.0"
+        "revision" : "04252a5190a858efa75f66199793625d1f6a7c0e",
+        "version" : "0.7.0"
       }
     },
     {
@@ -42,8 +42,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-argument-parser",
       "state" : {
-        "revision" : "0fbc8848e389af3bb55c182bc19ca9d5dc2f255b",
-        "version" : "1.4.0"
+        "revision" : "41982a3656a71c768319979febd796c6fd111d5c",
+        "version" : "1.5.0"
       }
     }
   ],

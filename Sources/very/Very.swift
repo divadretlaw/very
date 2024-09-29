@@ -29,7 +29,7 @@ import Shell
         return CommandConfiguration(
             commandName: "very",
             abstract: "very",
-            version: "3.2.0",
+            version: "3.2.1",
             subcommands: subcommands
         )
     }()
@@ -58,6 +58,8 @@ struct Options: ParsableArguments {
     var configuration: String?
     
     func load() async throws -> Configuration {
+        ShellEnvironment.shared.set(environment: ["HOMEBREW_COLOR": "1"])
+        
         try await VeryActor.shared.load(path: configuration)
         return await VeryActor.shared.configuration
     }
