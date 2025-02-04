@@ -1,5 +1,5 @@
 {
-  "originHash" : "52f6fe9e86900dca1d79e5100099aa1bef92e6aa8a58ab13e6910ae6a0241934",
+  "originHash" : "56b60dd685bd22cefbcf87a69858e9d8b8429b588f4117e50b5991bae432b98f",
   "pins" : [
     {
       "identity" : "macos-wallpaper",
@@ -15,8 +15,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/onevcat/Rainbow",
       "state" : {
-        "revision" : "e0dada9cd44e3fa7ec3b867e49a8ddbf543e3df3",
-        "version" : "4.0.1"
+        "revision" : "0c627a4f8a39ef37eadec1ceec02e4a7f55561ac",
+        "version" : "4.1.0"
       }
     },
     {
@@ -24,8 +24,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/divadretlaw/Shell",
       "state" : {
-        "revision" : "04252a5190a858efa75f66199793625d1f6a7c0e",
-        "version" : "0.7.0"
+        "revision" : "adab6142705a04651131d8b993752d3df280b23c",
+        "version" : "0.8.0"
       }
     },
     {
