@@ -52,26 +52,36 @@ struct Configuration: Codable, CustomStringConvertible {
     
     private init() {
         self.packageManagers = PackageManager()
-        
-        let ip = URL(string: "http://ipecho.net/plain")
-        let hosts = Hosts(
-            sudo: true,
-            defaults: true,
-            source: URL(string: "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts")!,
-            target: "/etc/hosts"
-        )
-        
-        self.sources = Sources(
-            downloadtest: nil,
-            ip: ip,
-            wallpaper: nil,
-            ping: "1.1.1.1",
-            hosts: hosts
-        )
-        
-        self.clean = Clean(commands: [], directories: [])
-        
+        self.sources = Sources()
+        self.clean = Clean()
         self.setup = nil
+    }
+    
+    // MARK: - Codable
+    
+    private enum CodingKeys: CodingKey {
+        case packageManagers
+        case sources
+        case clean
+        case setup
+    }
+    
+    init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        self.packageManagers = try container.decodeIfPresent(PackageManager.self, forKey: .packageManagers) ?? PackageManager()
+        self.sources = try container.decodeIfPresent(Sources.self, forKey: .sources) ?? Sources()
+        self.clean = try container.decodeIfPresent(Clean.self, forKey: .clean) ?? Clean()
+        self.setup = try container.decodeIfPresent(Setup.self, forKey: .setup)
+    }
+    
+    func encode(to encoder: any Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encode(packageManagers, forKey: .packageManagers)
+        try container.encode(sources, forKey: .sources)
+        try container.encode(clean, forKey: .clean)
+        try container.encodeIfPresent(setup, forKey: .setup)
     }
     
     // MARK: - CustomStringConvertible

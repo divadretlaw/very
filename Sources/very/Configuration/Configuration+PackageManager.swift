@@ -11,6 +11,16 @@ import Shell
 struct PackageManager: Codable {
     private let main: [Main]
     private let additional: [Additional]
+    
+    init() {
+        self.main = []
+        self.additional = []
+    }
+    
+    init(main: [Main], additional: [Additional]) {
+        self.main = main
+        self.additional = additional
+    }
 
     func getMain() async -> Main? {
         // Check all package manager in the config and if non-available check the default
@@ -32,11 +42,6 @@ struct PackageManager: Codable {
         var additional = Self.additional // pre-configured additionals
         additional.append(contentsOf: self.additional) // additionals from config
         return additional
-    }
-    
-    init() {
-        self.main = []
-        self.additional = []
     }
 }
 

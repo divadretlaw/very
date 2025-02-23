@@ -14,6 +14,20 @@ extension Configuration {
         let taps: [String]
         let open: [String]
         let additional: [SetupCommand]
+        
+        init(
+            packages: [String],
+            casks: [String],
+            taps: [String],
+            open: [String],
+            additional: [SetupCommand]
+        ) {
+            self.packages = packages
+            self.casks = casks
+            self.taps = taps
+            self.open = open
+            self.additional = additional
+        }
     }
     
     struct SetupCommand: Codable {

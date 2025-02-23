@@ -22,11 +22,7 @@ extension Very {
         func run() async throws {
             let configuration = try await options.load()
             
-            guard let hosts = configuration.sources.hosts else {
-                Log.error("Hosts configuration missing.")
-                return
-            }
-            
+            let hosts = configuration.sources.hosts
             let url = hosts.source
             
             if hosts.sudo, ProcessInfo.processInfo.userName != "root" {

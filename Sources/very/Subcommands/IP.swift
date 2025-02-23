@@ -23,7 +23,7 @@ extension Very {
             let configuration = try await options.load()
             
             guard let url = configuration.sources.ip else {
-                Log.error("Invalid URL")
+                Log.error("Invalid or missing URL")
                 return
             }
             
