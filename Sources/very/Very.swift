@@ -17,6 +17,7 @@ import Shell
             Gitignore.self,
             Hosts.self,
             IP.self,
+            Metal.self,
             Ping.self,
             Setup.self,
             Update.self,
@@ -28,7 +29,7 @@ import Shell
         return CommandConfiguration(
             commandName: "very",
             abstract: "very",
-            version: "3.2.2",
+            version: "3.3.0",
             subcommands: subcommands
         )
     }()
