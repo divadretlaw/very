@@ -5,8 +5,8 @@
 //  Created by David Walter on 05.07.20.
 //
 
-import ArgumentParser
 import Foundation
+import ArgumentParser
 
 extension Very {
     struct Clean: AsyncParsableCommand {
@@ -28,6 +28,8 @@ extension Very {
         
         @Flag(help: "Runs all clean commands.")
         var wow = false
+        
+        // MARK: - AsyncParsableCommand
         
         func run() async throws {
             let configuration = try await options.load()

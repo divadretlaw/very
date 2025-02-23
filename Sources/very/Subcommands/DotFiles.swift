@@ -5,8 +5,8 @@
 //  Created by David Walter on 14.03.21.
 //
 
-import ArgumentParser
 import Foundation
+import ArgumentParser
 import Shell
 
 extension Very {
@@ -24,8 +24,10 @@ extension Very {
         @Option
         var home: String?
         
+        // MARK: - AsyncParsableCommand
+        
         func run() async throws {
-            _ = try await options.load()
+            try await options.load()
             
             let home = home ?? "~"
             

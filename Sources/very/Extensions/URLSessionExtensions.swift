@@ -23,14 +23,6 @@ extension Optional where Wrapped == URLResponse {
     var isServerError: Bool {
         (self as? HTTPURLResponse)?.isServerError ?? false
     }
-    
-    func isHttpStatus(range: Int) -> Bool {
-        guard let http = self as? HTTPURLResponse else {
-            return false
-        }
-        
-        return http.isHttpStatus(range: range)
-    }
 }
 
 extension URLResponse {
@@ -50,7 +42,7 @@ extension URLResponse {
         isHttpStatus(range: 400)
     }
     
-    func isHttpStatus(range: Int) -> Bool {
+    private func isHttpStatus(range: Int) -> Bool {
         guard let http = self as? HTTPURLResponse else {
             return false
         }

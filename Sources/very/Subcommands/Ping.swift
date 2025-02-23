@@ -5,8 +5,8 @@
 //  Created by David Walter on 05.07.20.
 //
 
-import ArgumentParser
 import Foundation
+import ArgumentParser
 import Shell
 
 extension Very {
@@ -20,6 +20,8 @@ extension Very {
         
         @Option(help: "The host to ping")
         var host: String?
+        
+        // MARK: - AsyncParsableCommand
         
         func run() async throws {
             let configuration = try await options.load()

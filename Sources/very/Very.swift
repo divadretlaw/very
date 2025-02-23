@@ -5,9 +5,8 @@
 //  Created by David Walter on 29.08.20.
 //
 
-import ArgumentParser
-import Dispatch
 import Foundation
+import ArgumentParser
 import Shell
 
 @main struct Very: AsyncParsableCommand {
@@ -57,6 +56,7 @@ struct Options: ParsableArguments {
     @Option(help: "Overwrite the default configuration", completion: .file())
     var configuration: String?
     
+    @discardableResult
     func load() async throws -> Configuration {
         ShellEnvironment.shared.set(environment: ["HOMEBREW_COLOR": "1"])
         

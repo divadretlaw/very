@@ -5,8 +5,8 @@
 //  Created by David Walter on 28.08.20.
 //
 
-import ArgumentParser
 import Foundation
+import ArgumentParser
 
 extension Very {
     struct Wallpaper: AsyncParsableCommand {
@@ -16,7 +16,9 @@ extension Very {
             commandName: "wallpaper",
             abstract: "Sets the wallpaper"
         )
-
+        
+        // MARK: - AsyncParsableCommand
+        
         func run() async throws {
             let configuration = try await options.load()
             let commands = WallpaperCommands(configuration: configuration)
@@ -31,6 +33,7 @@ extension Very {
                 let (data, response) = try await Very.urlSession.data(from: url)
                 
                 guard response.isSuccess else {
+                    Log.error("Unable to fetch data.")
                     return
                 }
                 

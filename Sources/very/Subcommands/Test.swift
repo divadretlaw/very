@@ -6,8 +6,8 @@
 //
 
 #if DEBUG
-import ArgumentParser
 import Foundation
+import ArgumentParser
 
 extension Very {
     struct Test: AsyncParsableCommand {
@@ -18,8 +18,10 @@ extension Very {
             abstract: "DEBUG only: Run some test command"
         )
         
+        // MARK: - AsyncParsableCommand
+        
         mutating func run() async throws {
-            let _ = try await options.load()
+            try await options.load()
             print("Hello World")
         }
     }

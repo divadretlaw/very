@@ -5,8 +5,8 @@
 //  Created by David Walter on 26.08.20.
 //
 
-import ArgumentParser
 import Foundation
+import ArgumentParser
 
 extension Very {
     struct Hosts: AsyncParsableCommand {
@@ -16,6 +16,8 @@ extension Very {
             commandName: "hosts",
             abstract: "Updates '/etc/hosts'"
         )
+        
+        // MARK: - AsyncParsableCommand
         
         func run() async throws {
             let configuration = try await options.load()
@@ -38,6 +40,7 @@ extension Very {
                 let (data, response) = try await Very.urlSession.data(from: url)
                 
                 guard response.isSuccess, let text = String(data: data, encoding: .utf8) else {
+                    Log.error("Unable to fetch data.")
                     return
                 }
                 
@@ -45,13 +48,13 @@ extension Very {
                 
                 if hosts.defaults {
                     let defaults = """
-                \n
-                127.0.0.1 localhost
-                ::1 localhost
-                255.255.255.255 broadcasthost
-                127.0.0.1 127.0.0.1
-                \n
-                """
+                    \n
+                    127.0.0.1 localhost
+                    ::1 localhost
+                    255.255.255.255 broadcasthost
+                    127.0.0.1 127.0.0.1
+                    \n
+                    """
                     file.append(defaults)
                 }
                 

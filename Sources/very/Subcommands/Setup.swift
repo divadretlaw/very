@@ -5,8 +5,8 @@
 //  Created by David Walter on 20.03.21.
 //
 
-import ArgumentParser
 import Foundation
+import ArgumentParser
 import Shell
 
 extension Very {
@@ -17,6 +17,8 @@ extension Very {
             commandName: "setup",
             abstract: "Makes an initial setup on this machine"
         )
+        
+        // MARK: - AsyncParsableCommand
         
         func run() async throws {
             let configuration = try await options.load()

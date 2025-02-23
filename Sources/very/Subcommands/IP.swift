@@ -5,8 +5,8 @@
 //  Created by David Walter on 05.07.20.
 //
 
-import ArgumentParser
 import Foundation
+import ArgumentParser
 
 extension Very {
     struct IP: AsyncParsableCommand {
@@ -16,6 +16,8 @@ extension Very {
             commandName: "ip",
             abstract: "Prints your global IP address"
         )
+        
+        // MARK: - AsyncParsableCommand
         
         func run() async throws {
             let configuration = try await options.load()
@@ -29,6 +31,7 @@ extension Very {
                 let (data, response) = try await Very.urlSession.data(from: url)
                 
                 guard response.isSuccess, let text = String(data: data, encoding: .utf8) else {
+                    Log.error("Unable to fetch data.")
                     return
                 }
                 

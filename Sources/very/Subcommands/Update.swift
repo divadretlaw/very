@@ -5,8 +5,8 @@
 //  Created by David Walter on 28.08.20.
 //
 
-import ArgumentParser
 import Foundation
+import ArgumentParser
 
 extension Very {
     struct Update: AsyncParsableCommand {
@@ -22,6 +22,8 @@ extension Very {
         
         @Flag(help: "Checks for package and system updates and install them.")
         var much = false
+        
+        // MARK: - AsyncParsableCommand
         
         func run() async throws {
             let configuration = try await options.load()

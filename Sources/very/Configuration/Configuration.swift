@@ -5,8 +5,8 @@
 //  Created by David Walter on 05.07.20.
 //
 
-import ArgumentParser
 import Foundation
+import ArgumentParser
 
 struct Configuration: Codable, CustomStringConvertible {
     let packageManagers: PackageManager
