@@ -8,24 +8,24 @@
 import Foundation
 import Rainbow
 
-struct Log {
+enum Log {
     enum Icon {
         static let done = "✅"
         
-        static let info = "ℹ️ "
-        static let warning = "⚠️ "
-        static let debug = "🕵️‍♂️ "
-        static let error = "❌ "
-        static let fatal = "☠️ "
+        static let info = "ℹ️ " // Looks better with trailing space
+        static let warning = "⚠️ " // Looks better with trailing space
+        static let debug = "🕵️‍♂️ " // Looks better with trailing space
+        static let error = "❌ " // Looks better with trailing space
+        static let fatal = "☠️ " // Looks better with trailing space
         
         static let internet = "🌐"
-        static let wallpaper = "🖼 "
+        static let wallpaper = "🖼 " // Looks better with trailing space
         static let notes = "📝"
         static let package = "📦"
         static let update = "🔄"
         
-        static let clean = "♻️ "
-        static let trash = "🗑 "
+        static let clean = "♻️ " // Looks better with trailing space
+        static let trash = "🗑 " // Looks better with trailing space
         static let directory = "📁"
     }
     
@@ -73,9 +73,6 @@ struct Log {
         var standardError = FileHandle.standardError
         print(output.black.onRed, separator: separator, terminator: terminator, to: &standardError)
         return exit(1)
-    }
-    
-    private init() {
     }
     
     static func url(_ url: URL) -> String {

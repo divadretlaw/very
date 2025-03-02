@@ -44,8 +44,7 @@ extension Very {
                 }
                 
                 let fileURL = URL(fileURLWithPath: FileManager.default.currentDirectoryPath).appendingPathComponent(".gitignore")
-                Log.debug("\(fileURL)")
-                
+                Log.debug(Log.url(fileURL))
                 try data.write(to: fileURL)
             } catch {
                 Log.error(error)

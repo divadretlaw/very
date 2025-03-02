@@ -51,7 +51,7 @@ struct CleanCommands {
         var error: NSDictionary?
         script.executeAndReturnError(&error)
         
-        if let error = error {
+        if let error {
             Log.error("\(error)")
         }
     }

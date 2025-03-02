@@ -44,7 +44,7 @@ extension Very {
                 
                 let wallpaperURL = pictureDirectory.appendingPathComponent(data.fileName(name: "Wallpaper"))
                 
-                Log.debug("\(wallpaperURL)")
+                Log.debug(Log.url(wallpaperURL))
                 try data.write(to: wallpaperURL)
                 try commands.set(wallpaperURL)
                 Log.done()
