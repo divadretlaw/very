@@ -34,14 +34,14 @@ import Shell
         )
     }()
     
-    /// Rerun as with sudo
+    /// Rerun with sudo
     static func sudo() async throws {
         var arguments: [String] = []
         arguments.append(contentsOf: ProcessInfo.processInfo.arguments)
         if !arguments.contains("--configuration"), let path = await VeryActor.shared.url?.path {
             arguments.append(contentsOf: ["--configuration", path])
         }
-        
+
         let script = UnsafeScript("sudo \(arguments.joined(separator: " "))")
         try await script()
     }

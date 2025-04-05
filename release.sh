@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e
+
 tag=$1
 
 # Cleanup
@@ -16,8 +18,6 @@ cd .build/output
 
 # Zip
 zip very.zip very
-
-cd .build/output
 
 # SHA256
 
