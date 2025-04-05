@@ -29,7 +29,7 @@ import Shell
         return CommandConfiguration(
             commandName: "very",
             abstract: "very",
-            version: "3.3.1",
+            version: "3.3.2",
             subcommands: subcommands
         )
     }()
