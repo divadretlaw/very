@@ -18,6 +18,7 @@ struct Configuration: Codable {
     init(contentsOf url: URL) throws {
         let data = try Data(contentsOf: url)
         let decoder = JSONDecoder()
+        decoder.allowsJSON5 = true
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         
         self = try decoder.decode(Configuration.self, from: data)
