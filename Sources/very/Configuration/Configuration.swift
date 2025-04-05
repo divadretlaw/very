@@ -8,7 +8,7 @@
 import Foundation
 import ArgumentParser
 
-struct Configuration: Codable, CustomStringConvertible {
+struct Configuration: Codable {
     let packageManagers: PackageManager
     let sources: Sources
     let clean: Clean
@@ -56,23 +56,13 @@ struct Configuration: Codable, CustomStringConvertible {
         try container.encode(clean, forKey: .clean)
         try container.encodeIfPresent(setup, forKey: .setup)
     }
-    
-    // MARK: - CustomStringConvertible
-    
-    var description: String {
-        String(decoding: jsonData, as: UTF8.self)
-    }
-    
-    var jsonData: Data {
+}
+
+extension Data {
+    init(_ configuration: Configuration) throws {
         let encoder = JSONEncoder()
         encoder.keyEncodingStrategy = .convertToSnakeCase
-        
-        if #available(OSX 10.15, *) {
-            encoder.outputFormatting = [.prettyPrinted, .withoutEscapingSlashes]
-        } else {
-            encoder.outputFormatting = [.prettyPrinted]
-        }
-        
-        return try! encoder.encode(self)
+        encoder.outputFormatting = [.prettyPrinted, .withoutEscapingSlashes]
+        self = try encoder.encode(configuration)
     }
 }

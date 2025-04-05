@@ -37,16 +37,23 @@ import Foundation
             let directory = url.deletingLastPathComponent()
             try? FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true, attributes: [:])
 
-            try configuration.jsonData.write(to: url)
+            let data = try Data(configuration)
+            try data.write(to: url)
+
             Log.message(Log.Icon.info, "Default configuration was stored at \(Log.path("~/.config/very/very.json")).")
         }
 
         self.configuration = configuration
         self.url = url
-        
-        Log.debug("Loaded configuration from \(url):")
+
         #if DEBUG
-        Log.message(configuration.description)
+        do {
+            let data = try Data(configuration)
+            Log.debug("Loaded configuration from \(url):")
+            Log.message(String(decoding: data, as: UTF8.self))
+        } catch {
+            Log.error(error)
+        }
         #endif
     }
 }
