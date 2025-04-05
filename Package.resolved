@@ -1,13 +1,13 @@
 {
-  "originHash" : "5b7ce5f653d24aebc88d2bd128ba26c81d8a6b502428ef44d0f16d3efaf57183",
+  "originHash" : "fe19362d0394e4d7dbaefb707c3f87c53b134d08788ab625db0e4d8037fac5a1",
   "pins" : [
     {
       "identity" : "macos-wallpaper",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/divadretlaw/macos-wallpaper",
       "state" : {
-        "revision" : "f7743333daac770ff396ef82446261b7cd8f4eb5",
-        "version" : "2.4.0"
+        "revision" : "ebdd84bad09dce5b20f74ef9521c66305869c964",
+        "version" : "2.4.1"
       }
     },
     {
@@ -24,8 +24,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/divadretlaw/Shell",
       "state" : {
-        "revision" : "b845b9eb83f2dff3f28d3ad3da4e9aab86d92d7c",
-        "version" : "1.0.0"
+        "revision" : "d149bbdfe3913c7ef8cc6df8fc09bdd7ea002ae9",
+        "version" : "1.1.0"
       }
     },
     {

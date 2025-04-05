@@ -10,8 +10,8 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-argument-parser", from: "1.5.0"),
-        .package(url: "https://github.com/divadretlaw/Shell", from: "1.0.0"),
-        .package(url: "https://github.com/divadretlaw/macos-wallpaper", from: "2.4.0"),
+        .package(url: "https://github.com/divadretlaw/Shell", from: "1.1.0"),
+        .package(url: "https://github.com/divadretlaw/macos-wallpaper", from: "2.4.1"),
         .package(url: "https://github.com/onevcat/Rainbow", from: "4.1.0")
     ],
     targets: [

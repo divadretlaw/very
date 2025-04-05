@@ -8,6 +8,7 @@
 #if DEBUG
 import Foundation
 import ArgumentParser
+import Shell
 
 extension Very {
     struct Test: AsyncParsableCommand {
@@ -23,6 +24,8 @@ extension Very {
         mutating func run() async throws {
             try await options.load()
             print("Hello World")
+            let command = Command("sudo", "echo", "Hello")
+            try await command()
         }
     }
 }
