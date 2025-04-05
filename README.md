@@ -21,6 +21,7 @@ very [command]
 * **`gitignore`** Loads a .gitignore file from gitignore.io
 * **`hosts`** Updates `/etc/hosts` from [StevenBlack/hosts](https://github.com/StevenBlack/hosts)
 * **`ip`** Prints global IP
+* **`metal`** Configure the Metal HUD
 * **`ping`** Runs a quick ping test
 * **`setup`** Makes an initial setup on this machine
 * **`ping`** Starts a ping test
@@ -35,4 +36,4 @@ You can specify to load a different configuration with `--configuration`
 
 # License
 
-See LICENSE
+See [LICENSE](LICENSE)
