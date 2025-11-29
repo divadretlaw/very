@@ -19,7 +19,6 @@ import Shell
             IP.self,
             Metal.self,
             Ping.self,
-            Setup.self,
             Update.self,
             Wallpaper.self
         ]

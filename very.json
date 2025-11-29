@@ -24,27 +24,5 @@
         "directories" : [
             // List of directories to purge when cleaning
         ]
-    },
-    "setup" : {
-        "packages" : [
-            // List of packages to install when running setup
-        ],
-        "casks" : [
-            // List of casks to install when running setup
-        ],
-        "taps" : [
-            // List of taps to use when running setup
-        ],
-        "open" : [
-            // List of websites to open when running setup
-            "https://github.com/"
-        ],
-        "additional" : [
-            // List of additional commands to run when running setup
-            {
-                "comment" : "Run an additional command",
-                "command" : "echo 'This is an additional command'"
-            }
-        ]
     }
 }

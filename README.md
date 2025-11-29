@@ -23,7 +23,6 @@ very [command]
 * **`ip`** Prints global IP
 * **`metal`** Configure the Metal HUD
 * **`ping`** Runs a quick ping test
-* **`setup`** Makes an initial setup on this machine
 * **`ping`** Starts a ping test
 * **`update`** Checks for package updates and installs them
 * **`wallpaper`** Sets the wallpaper

@@ -12,9 +12,7 @@ struct Configuration: Codable {
     let packageManagers: PackageManager
     let sources: Sources
     let clean: Clean
-    
-    let setup: Setup?
-    
+
     init(contentsOf url: URL) throws {
         let data = try Data(contentsOf: url)
         let decoder = JSONDecoder()
@@ -28,7 +26,6 @@ struct Configuration: Codable {
         self.packageManagers = PackageManager()
         self.sources = Sources()
         self.clean = Clean()
-        self.setup = nil
     }
     
     // MARK: - Codable
@@ -37,7 +34,6 @@ struct Configuration: Codable {
         case packageManagers
         case sources
         case clean
-        case setup
     }
     
     init(from decoder: any Decoder) throws {
@@ -46,7 +42,6 @@ struct Configuration: Codable {
         self.packageManagers = try container.decodeIfPresent(PackageManager.self, forKey: .packageManagers) ?? PackageManager()
         self.sources = try container.decodeIfPresent(Sources.self, forKey: .sources) ?? Sources()
         self.clean = try container.decodeIfPresent(Clean.self, forKey: .clean) ?? Clean()
-        self.setup = try container.decodeIfPresent(Setup.self, forKey: .setup)
     }
     
     func encode(to encoder: any Encoder) throws {
@@ -55,7 +50,6 @@ struct Configuration: Codable {
         try container.encode(packageManagers, forKey: .packageManagers)
         try container.encode(sources, forKey: .sources)
         try container.encode(clean, forKey: .clean)
-        try container.encodeIfPresent(setup, forKey: .setup)
     }
 }
 
