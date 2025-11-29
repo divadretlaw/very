@@ -12,20 +12,20 @@ import Shell
 extension Very {
     struct Metal: AsyncParsableCommand {
         @OptionGroup var options: Options
-        
+
         static let configuration = CommandConfiguration(
             commandName: "metal",
             abstract: "Metal Status / Helpers"
         )
-        
+
         @Option(help: "Metal HUD")
         var hud: Bool?
-        
+
         // MARK: - AsyncParsableCommand
-        
+
         func run() async throws {
             try await options.load()
-            
+
             switch hud {
             case true:
                 let command = Command("/bin/launchctl", "setenv", "MTL_HUD_ENABLED", "1")
@@ -36,7 +36,7 @@ extension Very {
             default:
                 break
             }
-            
+
             let command = Command("/bin/launchctl", "getenv", "MTL_HUD_ENABLED")
             let output = try await command.capture()
             switch output.trimmingCharacters(in: .whitespacesAndNewlines) {

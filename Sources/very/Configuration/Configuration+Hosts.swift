@@ -13,14 +13,14 @@ extension Configuration {
         let defaults: Bool
         let source: URL
         let target: String
-        
+
         init() {
             self.sudo = true
             self.defaults = true
             self.source = URL(string: "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts")!
             self.target = "/etc/hosts"
         }
-        
+
         init(
             sudo: Bool,
             defaults: Bool,

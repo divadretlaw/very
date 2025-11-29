@@ -11,24 +11,24 @@ import ArgumentParser
 extension Very {
     struct Update: AsyncParsableCommand {
         @OptionGroup var options: Options
-        
+
         static let configuration = CommandConfiguration(
             commandName: "update",
             abstract: "Checks for package updates and installs them"
         )
-        
+
         @Flag(help: "Checks for system updates and installs them.")
         var system = false
-        
+
         @Flag(help: "Checks for package and system updates and install them.")
         var much = false
-        
+
         // MARK: - AsyncParsableCommand
-        
+
         func run() async throws {
             let configuration = try await options.load()
             let commands = UpdateCommands(configuration: configuration)
-            
+
             if much {
                 try await commands.all()
             } else if system {

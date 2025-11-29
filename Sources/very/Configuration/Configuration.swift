@@ -18,7 +18,7 @@ struct Configuration: Codable {
         let decoder = JSONDecoder()
         decoder.allowsJSON5 = true
         decoder.keyDecodingStrategy = .convertFromSnakeCase
-        
+
         self = try decoder.decode(Configuration.self, from: data)
     }
 
@@ -27,26 +27,26 @@ struct Configuration: Codable {
         self.sources = Sources()
         self.clean = Clean()
     }
-    
+
     // MARK: - Codable
-    
+
     private enum CodingKeys: CodingKey {
         case packageManagers
         case sources
         case clean
     }
-    
+
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        
+
         self.packageManagers = try container.decodeIfPresent(PackageManager.self, forKey: .packageManagers) ?? PackageManager()
         self.sources = try container.decodeIfPresent(Sources.self, forKey: .sources) ?? Sources()
         self.clean = try container.decodeIfPresent(Clean.self, forKey: .clean) ?? Clean()
     }
-    
+
     func encode(to encoder: any Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        
+
         try container.encode(packageManagers, forKey: .packageManagers)
         try container.encode(sources, forKey: .sources)
         try container.encode(clean, forKey: .clean)

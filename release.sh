@@ -23,7 +23,7 @@ zip very.zip very
 
 shasum=`shasum -a 256 very.zip | cut -f1 -d' '`
 
-gh release delete "$tag" --yes
+gh release delete "$tag" --yes || true
 gh release create "$tag" -t "$tag" -n ""
 gh release upload "$tag" very.zip
 

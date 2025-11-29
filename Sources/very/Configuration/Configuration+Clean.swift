@@ -11,12 +11,12 @@ extension Configuration {
     struct Clean: Codable {
         let commands: [String]
         let directories: [String]
-        
+
         init() {
             self.commands = []
             self.directories = []
         }
-        
+
         init(
             commands: [String],
             directories: [String]

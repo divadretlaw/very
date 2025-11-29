@@ -1,5 +1,5 @@
 {
-  "originHash" : "fe19362d0394e4d7dbaefb707c3f87c53b134d08788ab625db0e4d8037fac5a1",
+  "originHash" : "81d0d994ec60ab837fbb9313acc923dbddd675dd29bdf92587718f9ce17a4512",
   "pins" : [
     {
       "identity" : "macos-wallpaper",
@@ -11,21 +11,12 @@
       }
     },
     {
-      "identity" : "rainbow",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/onevcat/Rainbow",
-      "state" : {
-        "revision" : "0c627a4f8a39ef37eadec1ceec02e4a7f55561ac",
-        "version" : "4.1.0"
-      }
-    },
-    {
       "identity" : "shell",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/divadretlaw/Shell",
       "state" : {
-        "revision" : "d149bbdfe3913c7ef8cc6df8fc09bdd7ea002ae9",
-        "version" : "1.1.0"
+        "revision" : "f3e82d71cf54a5175465c7243e97774d49d94484",
+        "version" : "1.2.1"
       }
     },
     {
@@ -33,8 +24,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/stephencelis/SQLite.swift",
       "state" : {
-        "revision" : "a95fc6df17d108bd99210db5e8a9bac90fe984b8",
-        "version" : "0.15.3"
+        "revision" : "392dd6058624d9f6c5b4c769d165ddd8c7293394",
+        "version" : "0.15.4"
       }
     },
     {
@@ -42,8 +33,17 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-argument-parser",
       "state" : {
-        "revision" : "41982a3656a71c768319979febd796c6fd111d5c",
-        "version" : "1.5.0"
+        "revision" : "cdd0ef3755280949551dc26dee5de9ddeda89f54",
+        "version" : "1.6.2"
+      }
+    },
+    {
+      "identity" : "swift-toolchain-sqlite",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/swiftlang/swift-toolchain-sqlite",
+      "state" : {
+        "revision" : "b626d3002773b1a1304166643e7f118f724b2132",
+        "version" : "1.0.4"
       }
     }
   ],

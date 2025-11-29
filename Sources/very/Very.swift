@@ -14,7 +14,7 @@ import Shell
         var subcommands: [any ParsableCommand.Type] = [
             Clean.self,
             DotFiles.self,
-            Gitignore.self,
+            GitIgnore.self,
             Hosts.self,
             IP.self,
             Metal.self,
@@ -28,11 +28,11 @@ import Shell
         return CommandConfiguration(
             commandName: "very",
             abstract: "very",
-            version: "3.3.2",
+            version: "3.4.0",
             subcommands: subcommands
         )
     }()
-    
+
     /// Rerun with sudo
     static func sudo() async throws {
         var arguments: [String] = []
@@ -50,17 +50,4 @@ import Shell
         config.httpAdditionalHeaders = ["User-Agent": "curl/0.0.0 very/\(Very.configuration.version)"]
         return URLSession(configuration: config)
     }()
-}
-
-struct Options: ParsableArguments {
-    @Option(help: "Overwrite the default configuration", completion: .file())
-    var configuration: String?
-    
-    @discardableResult
-    func load() async throws -> Configuration {
-        ShellEnvironment.shared.set(environment: ["HOMEBREW_COLOR": "1"])
-        
-        try await VeryActor.shared.load(path: configuration)
-        return await VeryActor.shared.configuration
-    }
 }

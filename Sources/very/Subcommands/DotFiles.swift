@@ -12,25 +12,25 @@ import Shell
 extension Very {
     struct DotFiles: AsyncParsableCommand {
         @OptionGroup var options: Options
-        
+
         static let configuration = CommandConfiguration(
             commandName: "dotfiles",
             abstract: "Init and update dotFiles in your home directory"
         )
-        
+
         @Option(name: .customLong("init"))
         var origin: String?
-        
+
         @Option
         var home: String?
-        
+
         // MARK: - AsyncParsableCommand
-        
+
         func run() async throws {
             try await options.load()
-            
+
             let home = home ?? "~"
-            
+
             if let origin = origin {
                 Log.message(Log.Icon.notes, "Intializing dotfiles")
                 let initScript = Script {
@@ -45,7 +45,7 @@ extension Very {
                     """
                 }
                 try await initScript()
-                
+
                 let updateScript = Script {
                     """
                     cd \(home)

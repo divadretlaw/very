@@ -11,12 +11,12 @@ import Shell
 struct PackageManager: Codable {
     private let main: [Main]
     private let additional: [Additional]
-    
+
     init() {
         self.main = []
         self.additional = []
     }
-    
+
     init(main: [Main], additional: [Additional]) {
         self.main = main
         self.additional = additional
@@ -37,7 +37,7 @@ struct PackageManager: Codable {
         }
         return nil
     }
-    
+
     func getAdditional() -> [Additional] {
         var additional = Self.additional // pre-configured additionals
         additional.append(contentsOf: self.additional) // additionals from config
@@ -90,19 +90,19 @@ extension PackageManager {
 extension PackageManager {
     static let main = [PackageManager.brew]
     static let additional = [PackageManager.mas, PackageManager.npm]
-    
+
     static let brew = PackageManager.Main(
         command: "brew",
         install: "brew install",
         remove: "brew remove",
-        clean: "brew cleanup",
+        clean: "brew cleanup -s",
         update: "brew update",
         upgrade: "brew upgrade",
         systemUpgrade: "softwareupdate -i -a",
         search: "brew serach",
         list: "brew list"
     )
-    
+
     static let mas = PackageManager.Additional(
         id: "mas",
         description: "Mac AppStore",
@@ -115,7 +115,7 @@ extension PackageManager {
         search: "mas search",
         list: "mas list"
     )
-    
+
     static let npm = PackageManager.Additional(
         id: "npm",
         description: "Node.js Package Manager",

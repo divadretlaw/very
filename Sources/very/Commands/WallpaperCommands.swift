@@ -10,7 +10,7 @@ import Wallpaper
 
 struct WallpaperCommands {
     let configuration: Configuration
-    
+
     func set(_ url: URL) throws {
         try Wallpaper.set(url, screen: .all, scale: .auto, fillColor: nil)
     }

@@ -11,18 +11,18 @@ import ArgumentParser
 extension Very {
     struct Wallpaper: AsyncParsableCommand {
         @OptionGroup var options: Options
-        
+
         static let configuration = CommandConfiguration(
             commandName: "wallpaper",
             abstract: "Sets the wallpaper"
         )
-        
+
         // MARK: - AsyncParsableCommand
-        
+
         func run() async throws {
             let configuration = try await options.load()
             let commands = WallpaperCommands(configuration: configuration)
-            
+
             guard let url = configuration.sources.wallpaper else {
                 Log.error("Invalid URL.")
                 return
@@ -31,19 +31,19 @@ extension Very {
 
             do {
                 let (data, response) = try await Very.urlSession.data(from: url)
-                
+
                 guard response.isSuccess else {
                     Log.error("Unable to fetch data.")
                     return
                 }
-                
+
                 guard let pictureDirectory = FileManager.default.urls(for: .picturesDirectory, in: .userDomainMask).first else {
                     Log.error("No picture directory.")
                     return
                 }
-                
+
                 let wallpaperURL = pictureDirectory.appendingPathComponent(data.fileName(name: "Wallpaper"))
-                
+
                 Log.debug(Log.url(wallpaperURL))
                 try data.write(to: wallpaperURL)
                 try commands.set(wallpaperURL)
