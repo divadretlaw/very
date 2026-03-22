@@ -27,6 +27,20 @@ enum Log {
         static let clean = "♻️ " // Looks better with trailing space
         static let trash = "🗑 " // Looks better with trailing space
         static let directory = "📁"
+        static let metal = "🎮"
+    }
+
+    static func header(_ header: String) {
+        let content = "--- \(header) ---"
+        let line = Array(repeating: "-", count: content.count)
+            .joined()
+
+        let message = """
+        \(line)
+        \(content)
+        \(line)
+        """.foregroundColor(.blue)
+        Log.message(message)
     }
 
     static func message(_ items: String..., separator: String = " ", terminator: String = "\n") {

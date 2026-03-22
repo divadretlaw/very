@@ -63,9 +63,7 @@ extension Very {
                 try await command()
             }
 
-            Log.message("=============")
-            Log.message("= Metal HUD =")
-            Log.message("=============")
+            Log.message(Log.Icon.metal, "Metal HUD")
 
             let isEnabledCommand = Command("/bin/launchctl", "getenv", "MTL_HUD_ENABLED")
             let isEnabled = try await isEnabledCommand.capture()
