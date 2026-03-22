@@ -34,14 +34,14 @@ struct CleanCommands {
         Log.message(Log.Icon.trash, "Emptying trash...")
 
         let source = """
-            tell application "Finder"
-            if length of (items in the trash as string) is 0 then return
-            empty trash
-            repeat until (count items of trash) = 0
-            delay 1
-            end repeat
-            end tell
-            """
+        tell application "Finder"
+        if length of (items in the trash as string) is 0 then return
+        empty trash
+        repeat until (count items of trash) = 0
+        delay 1
+        end repeat
+        end tell
+        """
 
         guard let script = NSAppleScript(source: source) else {
             Log.error("Invalid Script.")
@@ -93,15 +93,9 @@ struct CleanCommands {
         }
     }
 
-    func packageManager(_ packageManager: PackageManager.Main) async throws {
-        guard await packageManager.isAvailable else { return }
-        let script = Script(packageManager.clean)
-        try await script()
-    }
-
-    func packageManager(_ packageManager: PackageManager.Additional) async throws {
-        guard await packageManager.isAvailable else { return }
-        let script = Script(packageManager.clean)
+    func packageManager(_ packageManager: PackageManager) async throws {
+        guard let clean = packageManager.clean, await packageManager.isAvailable else { return }
+        let script = Script(clean)
         try await script()
     }
 }
