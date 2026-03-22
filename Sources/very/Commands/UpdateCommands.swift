@@ -32,7 +32,7 @@ struct UpdateCommands {
         }
     }
 
-    private func packageManager(_ packageManager: PackageManager.Main) async throws {
+    private func packageManager(_ packageManager: PackageManager) async throws {
         guard await packageManager.isAvailable else { return }
 
         Log.message(Log.Icon.package, "Updating packages using '\(packageManager.command)'...")
@@ -44,20 +44,8 @@ struct UpdateCommands {
         try await upgradeScript()
     }
 
-    private func packageManager(_ packageManager: PackageManager.Additional) async throws {
-        guard await packageManager.isAvailable else { return }
-
-        Log.message(Log.Icon.package, "Updating packages using '\(packageManager.command)'...")
-        let updateScript = Script(packageManager.update)
-        try await updateScript()
-
-        guard let upgrade = packageManager.upgrade else { return }
-        let upgradeScript = Script(upgrade)
-        try await upgradeScript()
-    }
-
-    private func systemUpgrade(_ packageManager: PackageManager.Main) async throws {
-        guard await packageManager.isAvailable, let systemUpgrade = packageManager.systemUpgrade else { return }
+    private func systemUpgrade(_ packageManager: PackageManager) async throws {
+        guard let systemUpgrade = packageManager.systemUpgrade, await packageManager.isAvailable else { return }
         Log.message(Log.Icon.update, "Upgrading System...")
         let upgradeScript = Script(systemUpgrade)
         try await upgradeScript()

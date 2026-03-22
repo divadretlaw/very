@@ -9,7 +9,7 @@ import Foundation
 import ArgumentParser
 
 struct Configuration: Codable {
-    let packageManagers: PackageManager
+    let packageManagers: PackageManagers
     let sources: Sources
     let clean: Clean
 
@@ -23,7 +23,7 @@ struct Configuration: Codable {
     }
 
     init() {
-        self.packageManagers = PackageManager()
+        self.packageManagers = PackageManagers()
         self.sources = Sources()
         self.clean = Clean()
     }
@@ -39,7 +39,7 @@ struct Configuration: Codable {
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self.packageManagers = try container.decodeIfPresent(PackageManager.self, forKey: .packageManagers) ?? PackageManager()
+        self.packageManagers = try container.decodeIfPresent(PackageManagers.self, forKey: .packageManagers) ?? PackageManagers()
         self.sources = try container.decodeIfPresent(Sources.self, forKey: .sources) ?? Sources()
         self.clean = try container.decodeIfPresent(Clean.self, forKey: .clean) ?? Clean()
     }

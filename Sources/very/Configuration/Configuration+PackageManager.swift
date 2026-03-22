@@ -8,91 +8,120 @@
 import Foundation
 import Shell
 
+extension Configuration {
+    struct PackageManagers: Codable {
+        private let main: [PackageManager]
+        private let additional: [PackageManager]
+
+        init() {
+            self.main = PackageManager.main
+            self.additional = PackageManager.additional
+        }
+
+        init(main: [PackageManager], additional: [PackageManager]) {
+            self.main = main
+            self.additional = additional
+        }
+
+        func getMain() async -> PackageManager? {
+            // Check all package manager in the config
+            for packageManager in main {
+                if await packageManager.isAvailable {
+                    return packageManager
+                }
+            }
+            // If non-available check the default main package managers pre-configured
+            for packageManager in PackageManager.main {
+                if await packageManager.isAvailable {
+                    return packageManager
+                }
+            }
+            return nil
+        }
+
+        func getAdditional() -> [PackageManager] {
+            self.additional
+        }
+
+        // MARK: - Codable
+
+        private enum CodingKeys: CodingKey {
+            case main
+            case additional
+        }
+
+        init(from decoder: any Decoder) throws {
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+
+            self.main = try container.decodeIfPresent([PackageManager].self, forKey: .main) ?? []
+            self.additional = try container.decodeIfPresent([PackageManager].self, forKey: .additional) ?? []
+
+        }
+
+        func encode(to encoder: any Encoder) throws {
+            var container = encoder.container(keyedBy: CodingKeys.self)
+
+            if !main.isEmpty {
+                try container.encode(self.main, forKey: .main)
+            }
+            try container.encodeIfPresent(self.additional, forKey: .additional)
+        }
+    }
+}
+
+// MARK: - Pre-configured package managers
+
 struct PackageManager: Codable {
-    private let main: [Main]
-    private let additional: [Additional]
+    static let main: [PackageManager] = [.brew]
+    static let additional: [PackageManager] = [.mas, .npm]
 
-    init() {
-        self.main = []
-        self.additional = []
+    let command: String
+    let description: String
+
+    let install: String
+    let remove: String
+    let clean: String?
+    let update: String
+    let upgrade: String?
+    let systemUpgrade: String?
+    let search: String
+    let list: String
+
+    init(
+        command: String,
+        description: String,
+        install: String,
+        remove: String,
+        clean: String?,
+        update: String,
+        upgrade: String?,
+        systemUpgrade: String? = nil,
+        search: String,
+        list: String
+    ) {
+        self.description = description
+        self.command = command
+        self.install = install
+        self.remove = remove
+        self.clean = clean
+        self.update = update
+        self.upgrade = upgrade
+        self.systemUpgrade = systemUpgrade
+        self.search = search
+        self.list = list
     }
 
-    init(main: [Main], additional: [Additional]) {
-        self.main = main
-        self.additional = additional
-    }
-
-    func getMain() async -> Main? {
-        // Check all package manager in the config and if non-available check the default
-        // main package managers pre-configured
-        for packageManager in main {
-            if await packageManager.isAvailable {
-                return packageManager
-            }
-        }
-        for packageManager in Self.main {
-            if await packageManager.isAvailable {
-                return packageManager
-            }
-        }
-        return nil
-    }
-
-    func getAdditional() -> [Additional] {
-        var additional = Self.additional // pre-configured additionals
-        additional.append(contentsOf: self.additional) // additionals from config
-        return additional
-    }
-}
-
-extension PackageManager {
-    struct Main: Codable {
-        let command: String
-        let install: String
-        let remove: String
-        let clean: String
-        let update: String
-        let upgrade: String?
-        let systemUpgrade: String?
-        let search: String
-        let list: String
-
-        var isAvailable: Bool {
-            get async {
-                await Command.isAvailable(command)
-            }
+    var isAvailable: Bool {
+        get async {
+            await Command.isAvailable(command)
         }
     }
-}
 
-extension PackageManager {
-    struct Additional: Codable {
-        let id: String
-        let description: String
+    // MARK: - Default implementations
 
-        let command: String
-        let install: String
-        let remove: String
-        let clean: String
-        let update: String
-        let upgrade: String?
-        let search: String
-        let list: String
-
-        var isAvailable: Bool {
-            get async {
-                await Command.isAvailable(command)
-            }
-        }
-    }
-}
-
-extension PackageManager {
-    static let main = [PackageManager.brew]
-    static let additional = [PackageManager.mas, PackageManager.npm]
-
-    static let brew = PackageManager.Main(
+    static let brew = PackageManager(
         command: "brew",
+        description: "Homebrew",
         install: "brew install",
         remove: "brew remove",
         clean: "brew cleanup -s",
@@ -103,26 +132,24 @@ extension PackageManager {
         list: "brew list"
     )
 
-    static let mas = PackageManager.Additional(
-        id: "mas",
-        description: "Mac AppStore",
+    static let mas = PackageManager(
         command: "mas",
+        description: "Mac AppStore",
         install: "mas install",
-        remove: "",
-        clean: "",
+        remove: "mas uninstall",
+        clean: nil,
         update: "mas outdated",
         upgrade: "mas upgrade",
         search: "mas search",
         list: "mas list"
     )
 
-    static let npm = PackageManager.Additional(
-        id: "npm",
-        description: "Node.js Package Manager",
+    static let npm = PackageManager(
         command: "npm",
+        description: "Node.js Package Manager",
         install: "npm -g install",
         remove: "npm -g remove",
-        clean: "",
+        clean: nil,
         update: "npm -g update",
         upgrade: nil,
         search: "npm -g find",
